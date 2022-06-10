@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <TextView
+        android:id="@+id/add_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Activity"
+        android:textSize="70sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/type_activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Type"
+            android:textSize="75sp" />
+
+        <RadioGroup
+            android:id="@+id/activity_options"
+            android:checkedButton="@id/option_run"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <RadioButton
+                android:id="@+id/option_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Run"
+                android:textSize="64sp"
+                android:paddingHorizontal="20dp"/>
+
+            <RadioButton
+                android:id="@+id/option_bike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bike"
+                android:textSize="64sp"
+                android:paddingHorizontal="20dp"/>
+
+            <RadioButton
+                android:id="@+id/option_swim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Swim"
+                android:textSize="64sp"
+                android:paddingHorizontal="20dp"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/time_activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Time"
+            android:textSize="75sp" />
+
+        <Button
+            android:id="@+id/timeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:height="100dp"
+            android:text="Select Time"
+            android:textSize="30sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/date_activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Date"
+            android:textSize="75sp" />
+
+        <Button
+            android:id="@+id/dateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:height="100dp"
+            android:text="Select Date"
+            android:textSize="30sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/distance_activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Distance"
+            android:textSize="75sp" />
+
+        <EditText
+            android:id="@+id/distance_input_numer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberSigned"
+            />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_done"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:text="Done"
+        android:textSize="50sp" />
+
+</LinearLayout>
