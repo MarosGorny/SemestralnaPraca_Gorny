@@ -25,13 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         //binding.button.text = "A button"
 
-        //tu by som mal naplnit arrayList
-        val datumAktivityRun:Date = Date(2022, 11, 23)
-        val casZaciatkuAktivityRun: kotlin.time.Duration = 15.hours + 23.minutes
-        //druhy stlpec
-        val casAktivityRun: kotlin.time.Duration = 48.minutes
-        //stvrty stlpec
-        val casMinPKm: kotlin.time.Duration = 6.minutes + 23.seconds
+
 
     }
 

@@ -11,9 +11,11 @@
         android:id="@+id/add_activity_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:textAlignment="center"
         android:text="Activity"
-        android:textSize="70sp" />
+        android:textAppearance="?attr/textAppearanceHeadline4" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +29,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="Type"
-            android:textSize="75sp" />
+            android:textAppearance="?attr/textAppearanceHeadline4"  />
 
         <RadioGroup
             android:id="@+id/activity_options"
@@ -45,24 +47,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Run"
-                android:textSize="64sp"
-                android:paddingHorizontal="20dp"/>
+                android:textAppearance="?attr/textAppearanceBody1"
+                />
 
             <RadioButton
                 android:id="@+id/option_bike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bike"
-                android:textSize="64sp"
-                android:paddingHorizontal="20dp"/>
+                android:textAppearance="?attr/textAppearanceBody1"
+                />
 
             <RadioButton
                 android:id="@+id/option_swim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Swim"
-                android:textSize="64sp"
-                android:paddingHorizontal="20dp"/>
+                android:textAppearance="?attr/textAppearanceBody1"
+                />
         </RadioGroup>
     </LinearLayout>
 
@@ -78,7 +80,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="Time"
-            android:textSize="75sp" />
+            android:textAppearance="?attr/textAppearanceHeadline4"  />
 
         <Button
             android:id="@+id/timeButton"
@@ -86,9 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:height="100dp"
             android:text="Select Time"
-            android:textSize="30sp" />
+            android:textAppearance="?attr/textAppearanceBody1" />
 
 
     </LinearLayout>
@@ -105,7 +106,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="Date"
-            android:textSize="75sp" />
+            android:textAppearance="?attr/textAppearanceHeadline4"  />
 
         <Button
             android:id="@+id/dateButton"
@@ -113,9 +114,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:height="100dp"
-            android:text="Select Date"
-            android:textSize="30sp" />
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:text="Select Date" />
 
 
     </LinearLayout>
@@ -130,9 +130,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center"
             android:text="Distance"
-            android:textSize="75sp" />
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadline4"  />
 
         <EditText
             android:id="@+id/distance_input_numer"
@@ -154,6 +154,7 @@
         android:layout_gravity="center"
         android:paddingTop="20dp"
         android:text="Done"
-        android:textSize="50sp" />
+        android:textAppearance="?attr/textAppearanceButton"
+ />
 
 </LinearLayout>
