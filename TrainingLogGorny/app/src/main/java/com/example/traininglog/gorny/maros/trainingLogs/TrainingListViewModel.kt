@@ -1,6 +1,8 @@
 package com.example.traininglog.gorny.maros.trainingLogs
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.traininglog.gorny.maros.data.DataSource
 import com.example.traininglog.gorny.maros.data.EnumAktivity
 import com.example.traininglog.gorny.maros.data.TrainingLogRow
@@ -22,7 +24,7 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
                           hourOfAcivity:Int?,minuteOfActivity:Int?,
                           hoursOfActivity:Int,minutesOfActivity:Int,secondsOfActivity:Int,
                           thirdColumnStat:Double?,
-                            fourthColumnTitle:String) {
+                          fourthColumnTitle:String) {
         //If enum or third column stat is null, return
         if(enumAktivity == null || thirdColumnStat == null)
             return
@@ -87,4 +89,17 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 
     }
 
+}
+
+class TrainingListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TrainingListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return TrainingListViewModel(
+                dataSource = DataSource.getDataSource(context.resources)
+            ) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }
