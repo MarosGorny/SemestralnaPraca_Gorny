@@ -1,30 +1,22 @@
-package com.example.traininglog.gorny.maros
+package com.example.traininglog.gorny.traininglog
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.traininglog.gorny.maros.addActivity.AddActivityLog
-import com.example.traininglog.gorny.maros.addActivity.TRAINING_LOG_DISTANCE
-import com.example.traininglog.gorny.maros.data.EnumAktivity
-import com.example.traininglog.gorny.maros.data.TrainingLogRow
-import com.example.traininglog.gorny.maros.databinding.ActivityMainBinding
-import com.example.traininglog.gorny.maros.trainingLogs.HeaderAdapter
-import com.example.traininglog.gorny.maros.trainingLogs.TrainingListViewModel
-import com.example.traininglog.gorny.maros.trainingLogs.TrainingListViewModelFactory
-import com.example.traininglog.gorny.maros.trainingLogs.TrainingLogsRowsAdapter
+import com.example.traininglog.gorny.traininglog.data.EnumAktivity
+import com.example.traininglog.gorny.traininglog.data.TrainingLogRow
+import com.example.traininglog.gorny.traininglog.trainingLogs.HeaderAdapter
+import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingListViewModel
+import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingListViewModelFactory
+import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingLogsRowsAdapter
+import com.example.traininglog.gorny.traininglog.addActivity.AddActivityLog
+import com.example.traininglog.gorny.traininglog.addActivity.TRAINING_LOG_DISTANCE
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 class MainActivity : AppCompatActivity() {
     private val newTrainingLogActivityRequestCode = 1
@@ -47,12 +39,12 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = concatAdapter
 
         //lambda
-        trainingLogListViewModel.trainingLogsLiveData.observe(this) {
+        trainingLogListViewModel.trainingLogsLiveData.observe(this, {
             it?.let {
                 trainingLogsRowsAdapter.submitList(it as MutableList<TrainingLogRow>)
                 headerAdapter.updateTrainingLogCount(it.size)
             }
-        }
+        })
 
         val fab: View = findViewById(R.id.floatingButtonAdd)
         fab.setOnClickListener {
@@ -82,11 +74,12 @@ class MainActivity : AppCompatActivity() {
             intentData?.let { data ->
                 val logDistance = data.getStringExtra(TRAINING_LOG_DISTANCE)
                 //val something = data.getStringExtra(R.id.date_activity_title.toString())
-                val doubleSomething = data.getDoubleExtra(R.id.distance_input_numer.toString(),0.0)
+                val doubleSomething = data.getDoubleExtra(R.id.distance_input_number.toString(),0.0)
 
                 //TU MUSIM POVYBERAT VECI Z toho co stlacim
-                trainingLogListViewModel.insertTrainingLog(EnumAktivity.RUN,Date(22,1,2022),15,23,
-                                                            3,2,15,doubleSomething,"Test")
+                trainingLogListViewModel.insertTrainingLog(
+                    EnumAktivity.RUN,Date(22,1,2022),15,23,
+                    3,2,15,doubleSomething,"Test")
             }
         }
     }

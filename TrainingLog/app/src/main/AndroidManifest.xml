@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.traininglog.gorny.maros">
-
-    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="YOUR_ADMOB_PUB_ID"/>
+    package="com.example.traininglog.gorny.traininglog">
 
     <application
         android:allowBackup="true"
@@ -16,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrainingLog"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.example.traininglog.gorny.traininglog.gornyTrainingLog"
+            android:value="ca-app-pub-9464459440728571~4935657900"
+            ></meta-data>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -25,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".addActivity.AddActivityLog"></activity>
     </application>
 
 </manifest>

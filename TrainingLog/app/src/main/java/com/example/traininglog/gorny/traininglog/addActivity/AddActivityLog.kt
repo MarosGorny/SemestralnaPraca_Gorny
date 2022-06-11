@@ -1,4 +1,4 @@
-package com.example.traininglog.gorny.maros.addActivity
+package com.example.traininglog.gorny.traininglog.addActivity
 
 import android.app.Activity
 import android.content.Intent
@@ -8,10 +8,9 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.example.traininglog.gorny.maros.R
-import com.example.traininglog.gorny.maros.data.EnumAktivity
-import com.example.traininglog.gorny.maros.databinding.ActivityMainBinding
+
+import com.example.traininglog.gorny.traininglog.data.EnumAktivity
+import com.example.traininglog.gorny.traininglog.R
 
 const val TRAINING_LOG_DISTANCE = "distance"
 class AddActivityLog: AppCompatActivity() {
@@ -40,7 +39,7 @@ class AddActivityLog: AppCompatActivity() {
             addTrainingLog()
         }
 
-        addDistance = findViewById(R.id.distance_input_numer)
+        addDistance = findViewById(R.id.distance_input_number)
     }
 
 
