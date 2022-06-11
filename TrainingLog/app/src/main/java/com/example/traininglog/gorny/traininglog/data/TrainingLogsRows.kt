@@ -1,59 +1,45 @@
 package com.example.traininglog.gorny.traininglog.data
 
 import android.content.res.Resources
-import com.example.traininglog.gorny.traininglog.data.TrainingLogRow
-import java.util.*
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 fun trainingLogsList(resources: Resources): List<TrainingLogRow> {
     return listOf(
         TrainingLogRow(
-            1,
-            "Bike",
-            Date(2022,11,23),
-            (15.hours + 23.minutes),
-            "Time",
-            (23.minutes),
-            "km",
-            23.3,
-            "km/h",
-            6.minutes
+            id = 1,
+            logTypeTitle = "Swim",
+            dateOfLog = "2024 - 11 - 23",
+            timeOfLog = "15:23",
+            timeTitle = "Time",
+            durationOfLog = "00:39:23",
+            distanceMetricTitle = "m",
+            distance = 500.0,
+            fourthColumnTitle = "min/km",
+            fourthColumnMinPKm = "4:00"
         ),
         TrainingLogRow(
-            2,
-            "Run",
-            Date(2022,2,23),
-            (15.hours + 23.minutes),
-            "Time",
-            (23.minutes),
-            "km",
-            23.3,
-            "km/h",
-            6.minutes
+            id = 2,
+            logTypeTitle = "Run",
+            dateOfLog = "2022 - 11 - 23",
+            timeOfLog = "15:23",
+            timeTitle = "Time",
+            durationOfLog = "00:24:23",
+            distanceMetricTitle = "km",
+            distance = 30.3,
+            fourthColumnTitle = "km/h",
+            fourthColumnMinPKm = "6:00"
         ),
         TrainingLogRow(
-            3,
-            "Swim",
-            Date(2022,11,23),
-            (15.hours + 23.minutes),
-            "Time",
-            (40.minutes),
-            "km",
-            0.5,
-            "km/h",
-            10.minutes
+            id = 1,
+            logTypeTitle = "Bike",
+            dateOfLog = "2019 - 11 - 23",
+            timeOfLog = "15:23",
+            timeTitle = "Time",
+            durationOfLog = "00:00:23",
+            distanceMetricTitle = "km",
+            distance = 23.3,
+            fourthColumnTitle = "km/h",
+            fourthColumnMinPKm = "8:00"
         ),
 
     )
 }
-
-/*
-            //tu by som mal naplnit arrayList
-            val datumAktivityRun:Date = Date(2022, 11, 23)
-    val casZaciatkuAktivityRun: kotlin.time.Duration = 15.hours + 23.minutes
-    //druhy stlpec
-    val casAktivityRun: kotlin.time.Duration = 48.minutes
-    //stvrty stlpec
-    val casMinPKm: kotlin.time.Duration = 6.minutes + 23.seconds
- */

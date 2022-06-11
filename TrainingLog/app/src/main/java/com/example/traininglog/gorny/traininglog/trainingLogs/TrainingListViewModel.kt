@@ -1,6 +1,8 @@
 package com.example.traininglog.gorny.traininglog.trainingLogs
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.traininglog.gorny.traininglog.data.DataSource
@@ -11,6 +13,8 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.math.log
+import kotlin.properties.Delegates
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -20,69 +24,58 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 
     val trainingLogsLiveData = dataSource.getTrainingLogList()
 
-    fun insertTrainingLog(enumAktivity: EnumAktivity?, dateOfLog:Date?,
-                          hourOfAcivity:Int?, minuteOfActivity:Int?,
-                          hoursOfActivity:Int, minutesOfActivity:Int, secondsOfActivity:Int,
-                          thirdColumnStat:Double?,
-                          fourthColumnTitle:String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun insertTrainingLog(logType: String?, dateOfLog: String?,
+                          timeOfLog: String?, duration: String?,
+                          distance: Double?) {
         //If enum or third column stat is null, return
-        if(enumAktivity == null || thirdColumnStat == null)
+        if(logType == null)
             return
 
-        //Date of activity
-        var newDate: Date? = dateOfLog
-        if (dateOfLog == null) {
-            val localDate = LocalDate.now()
-            newDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
-        }
-
-        //Time of activity
-        val timeOfActivity: kotlin.time.Duration
-        if(hourOfAcivity == null || minuteOfActivity == null) {
-            var newHourOfActivity: Int? = hourOfAcivity
-            var newMinuteOfActivity: Int? = minuteOfActivity
+        var formattedHour:String = ""
+        if (timeOfLog == null) {
             val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("HH")
+            formattedHour = current.format(formatter)
+        }
 
-            val formatterHour = DateTimeFormatter.ofPattern("HH")
-            val formatterMinute = DateTimeFormatter.ofPattern("mm")
-            val formattedHour = current.format(formatterHour)
-            val formattedMinute = current.format(formatterMinute)
-            newHourOfActivity = formattedHour.toInt()
-            newMinuteOfActivity = formattedMinute.toInt()
-            timeOfActivity = newHourOfActivity.hours + newMinuteOfActivity.minutes
 
+        var newDateOfLog:String = dateOfLog ?: "16.16.1616"
+        var newTimeOfLog:String = timeOfLog ?: formattedHour
+        var newDuration:String = duration ?: "00:00:00"
+        var newDistance:Double = distance ?: 0.0
+        lateinit var newStatsTitle:String
+        lateinit var newStats:String
+
+
+        var newDistanceMetricTitle:String = if(logType == "Run" || logType == "Bike") {
+            "km"
         } else {
-            timeOfActivity = hourOfAcivity!!.hours + minuteOfActivity!!.minutes
+            "meters"
         }
-        val idTrainingLogRow:Long = Random.nextLong()
-        var logTypeTitle:String = ""
-        val timeTitle:String = "Time"
 
-        val activityDuration: kotlin.time.Duration = hoursOfActivity.hours + minutesOfActivity.minutes + secondsOfActivity.seconds
-        var thirdColumnTitle:String = "km"
-
-
-        if(enumAktivity == EnumAktivity.RUN) {
-            logTypeTitle = "Run"
-        } else if (enumAktivity == EnumAktivity.BIKE) {
-            logTypeTitle = "Bike"
-        } else if (enumAktivity == EnumAktivity.SWIM) {
-            logTypeTitle = "Swim"
-            thirdColumnTitle = "meters"
+        if (logType == "Run" || logType == "Swim") {
+            newStatsTitle = "min/km"
+            newStats = "trebaVyoct"
+        }  else {
+            newStatsTitle = "km/h"
+            newStats = "trebaVypoct"
         }
+
+
 
         //Adding activity log
         val newTrainingLogRow = TrainingLogRow(
-            idTrainingLogRow,
-            logTypeTitle,
-            newDate!!,
-            timeOfActivity,
-            timeTitle,
-            activityDuration,
-            thirdColumnTitle,
-            thirdColumnStat!!,
-            "test",
-            999.hours
+            Random.nextLong(),
+            logType,
+            newDateOfLog,
+            newTimeOfLog,
+            timeTitle = "Time",
+            newDuration,
+            newDistanceMetricTitle,
+            newDistance,
+            newStatsTitle,
+            newStats
         )
 
         dataSource.addTrainingLog(newTrainingLogRow)

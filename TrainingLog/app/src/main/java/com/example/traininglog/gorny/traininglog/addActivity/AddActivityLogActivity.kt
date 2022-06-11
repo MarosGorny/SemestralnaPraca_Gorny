@@ -13,15 +13,13 @@ import com.example.traininglog.gorny.traininglog.data.EnumAktivity
 import com.example.traininglog.gorny.traininglog.R
 
 const val TRAINING_LOG_DISTANCE = "distance"
+const val LOG_ACTIVITY = "log activity"
 class AddActivityLog: AppCompatActivity() {
 
-    //lateinit var bindig: ActivityMainBinding
-
-    var radioGroup: RadioGroup? = null
 
     lateinit var radioButton: RadioButton
     lateinit var addDistance: EditText
-    lateinit var enumActivity: EnumAktivity
+    lateinit var logType: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,19 +38,20 @@ class AddActivityLog: AppCompatActivity() {
         }
 
         addDistance = findViewById(R.id.distance_input_number)
+        val selectedId = findViewById<RadioGroup>(R.id.activity_options).checkedRadioButtonId
+        logType = when (selectedId) {
+            R.id.option_run -> "Run"
+            R.id.option_bike -> "Bike"
+            else -> "Swim"
+        }
     }
 
 
     /* The onClick action for the done button. Closes the activity and returns the new training name
-    and description as part of the intent. If the name or description are missing, the result is set
+    and description as part of the intent. If the distance is missing, the result is set
     to cancelled. */
     private fun addTrainingLog() {
-        val selectedId = findViewById<RadioGroup>(R.id.activity_options).checkedRadioButtonId
-        enumActivity = when (selectedId) {
-            R.id.option_run -> EnumAktivity.RUN
-            R.id.option_bike -> EnumAktivity.BIKE
-            else -> EnumAktivity.SWIM
-        }
+
 
         val resultIntent = Intent()
         if(addDistance.text.isNullOrEmpty()) {
@@ -60,6 +59,7 @@ class AddActivityLog: AppCompatActivity() {
         } else {
             val distance = addDistance.text.toString()
             resultIntent.putExtra(TRAINING_LOG_DISTANCE,distance)
+            resultIntent.putExtra(LOG_ACTIVITY,logType)
             setResult(Activity.RESULT_OK,resultIntent)
         }
         finish()
