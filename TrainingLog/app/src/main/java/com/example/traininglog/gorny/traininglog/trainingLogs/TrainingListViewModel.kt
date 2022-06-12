@@ -13,6 +13,8 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.math.log
 import kotlin.properties.Delegates
 import kotlin.random.Random
@@ -31,8 +33,8 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
         //If enum or third column stat is null, return
         if(logType == null)
             return
+        //TODO double-distance sa musi zaokruhlit na dve desatinne miesta
         //TODO spravit tak, aby to nahravalo info ktore tam chcem mat
-        //TODO spravit double aby som mohol aj bodkupridat
         var formattedTime:String = ""
         var formattedDate:String = ""
         if (timeOfLog == null) {
@@ -63,7 +65,7 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 
         if (logType == "Run" ) {
             newStatsTitle = "min/km"
-            newStats = "trebaVyoct"
+            newStats = calcucalteRunPace(newDistance,newDuration)
         }  else if (logType == "Swim") {
             newStatsTitle = "min/100m"
             newStats = "trebaVypoct"
@@ -105,4 +107,18 @@ class TrainingListViewModelFactory(private val context: Context) : ViewModelProv
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
+}
+
+fun calcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
+    val seconds = durationOfRun.substring(6,8).toInt()
+    val minutes = durationOfRun.substring(3,5).toInt()
+    val hours = durationOfRun.substring(0,2).toInt()
+
+    val totalSeconds = seconds + minutes*60 + hours*60*60
+    val secPerKm =  totalSeconds/distaneOfRun
+
+    val paceMin = floor ((secPerKm/60)).toInt()
+    val paceSecond = ceil ( ((secPerKm)-paceMin)*60).toInt().toString()
+
+    return "$paceMin:$paceSecond"
 }
