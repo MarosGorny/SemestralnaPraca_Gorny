@@ -26,23 +26,25 @@
             android:text="Run"
             android:textSize="24sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/dateOfWorkout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:gravity="left"
+            android:gravity="center"
+            android:textAlignment="center"
             android:inputType="date"
             android:minHeight="48dp"
             tools:text="8.6.2022" />
 
-        <EditText
+        <TextView
             android:id="@+id/startTimeOfWorkout"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:gravity="left"
+            android:gravity="center"
+            android:textAlignment="center"
             android:inputType="time"
             android:minHeight="48dp"
             tools:text="15:33" />

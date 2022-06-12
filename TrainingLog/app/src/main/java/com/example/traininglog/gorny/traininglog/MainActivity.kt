@@ -84,7 +84,10 @@ class MainActivity : AppCompatActivity() {
                 val logDistance = data.getStringExtra(TRAINING_LOG_DISTANCE)
 
                 //TU MUSIM POVYBERAT VECI Z toho co stlacim
-                trainingLogListViewModel.insertTrainingLog(logType,null,null,null,5.4 )
+                //TODO Tu musim povyberat veci co stlacim, logType funguje
+                trainingLogListViewModel.insertTrainingLog(logType,null,null,null,
+                    logDistance?.toDouble()
+                )
             }
         }
     }

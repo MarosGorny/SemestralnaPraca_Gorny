@@ -31,22 +31,29 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
         //If enum or third column stat is null, return
         if(logType == null)
             return
-
-        var formattedHour:String = ""
+        //TODO spravit tak, aby to nahravalo info ktore tam chcem mat
+        //TODO spravit double aby som mohol aj bodkupridat
+        var formattedTime:String = ""
+        var formattedDate:String = ""
         if (timeOfLog == null) {
             val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("HH")
-            formattedHour = current.format(formatter)
+            val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
+            val formatterDate = DateTimeFormatter.ofPattern("dd.MM.YY")
+            formattedTime = current.format(formatterTime)
+            formattedDate = current.format(formatterDate)
         }
 
 
-        var newDateOfLog:String = dateOfLog ?: "16.16.1616"
-        var newTimeOfLog:String = timeOfLog ?: formattedHour
+        var newDateOfLog:String = dateOfLog ?: formattedDate
+        var newTimeOfLog:String = timeOfLog ?: formattedTime
         var newDuration:String = duration ?: "00:00:00"
         var newDistance:Double = distance ?: 0.0
         lateinit var newStatsTitle:String
         lateinit var newStats:String
 
+        val hours: Int = newDuration.substring(0,2).toInt()
+        val minute: Int = newDuration.substring(3,5).toInt()
+        val seconds: Int = newDuration.substring(6,8).toInt()
 
         var newDistanceMetricTitle:String = if(logType == "Run" || logType == "Bike") {
             "km"
@@ -54,12 +61,15 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
             "meters"
         }
 
-        if (logType == "Run" || logType == "Swim") {
+        if (logType == "Run" ) {
             newStatsTitle = "min/km"
             newStats = "trebaVyoct"
-        }  else {
-            newStatsTitle = "km/h"
+        }  else if (logType == "Swim") {
+            newStatsTitle = "min/100m"
             newStats = "trebaVypoct"
+        } else {
+            newStatsTitle = "km/h"
+            newStats = ""
         }
 
 

@@ -46,16 +46,16 @@ class TrainingLogsRowsAdapter(private val onClick: (TrainingLogRow) -> Unit) :
             currentTrainingLogRow = trainingLogRow
 
             logType.text = trainingLogRow.logTypeTitle
-            timeTitle.text = "Time"
-            distanceTitle.text = "t23"
-            statsTitle.text = "min/km"
+            timeTitle.text = trainingLogRow.timeTitle
+            distanceTitle.text = trainingLogRow.distanceMetricTitle
+            statsTitle.text = trainingLogRow.fourthColumnTitle
 
-            dateOfLog.text = "12.12.2024"
-            timeOfLog.text = "15:23"
+            dateOfLog.text = trainingLogRow.dateOfLog
+            timeOfLog.text = trainingLogRow.timeOfLog
 
-            durationOfWorkout.text = "00:23:14"
-            distanceOfWorkout.text = 24.5.toString()
-            statsOfWorkout.text = "6:12"
+            durationOfWorkout.text = trainingLogRow.durationOfLog
+            distanceOfWorkout.text = trainingLogRow.distance.toString()
+            statsOfWorkout.text = trainingLogRow.fourthColumnMinPKm
         }
 
     }

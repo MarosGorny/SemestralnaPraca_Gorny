@@ -26,11 +26,11 @@ class AddActivityLog: AppCompatActivity() {
         setContentView(R.layout.add_training_log_layout)
 
         findViewById<Button>(R.id.dateButton).setOnClickListener {
-
+            //TODO spravit aby som mohol vyklikat datum
         }
 
         findViewById<Button>(R.id.timeButton).setOnClickListener {
-
+            //TODO spravit aby som si mohol vyklikat cas
         }
 
         findViewById<Button>(R.id.button_done).setOnClickListener {
