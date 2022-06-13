@@ -18,13 +18,19 @@ import com.example.traininglog.gorny.traininglog.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val TRAINING_LOG_DISTANCE = "distance"
+const val TRAINING_LOG_DISTANCE = "log distance"
+const val TRAINING_LOG_DURATION = "log duration"
+const val TRAINING_LOG_TIME = "log time"
+const val TRAINING_LOG_DATE = "log date"
 const val LOG_ACTIVITY = "log activity"
+
 class AddActivityLog: AppCompatActivity() {
 
 
-    lateinit var radioButton: RadioButton
     lateinit var addDistance: EditText
+    lateinit var addDuration: EditText
+    lateinit var addDate: Button
+    lateinit var addTime: Button
     lateinit var logType: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +38,6 @@ class AddActivityLog: AppCompatActivity() {
         setContentView(R.layout.add_training_log_layout)
 
         findViewById<Button>(R.id.dateButton).setOnClickListener {
-            //TODO spravit aby som mohol vyklikat datum
             val cal = Calendar.getInstance()
             val dateSetListener = DatePickerDialog.OnDateSetListener { datePicker,year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, year)
@@ -44,7 +49,6 @@ class AddActivityLog: AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.timeButton).setOnClickListener {
-            //TODO spravit aby som si mohol vyklikat cas
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
@@ -63,10 +67,15 @@ class AddActivityLog: AppCompatActivity() {
                 else -> "Swim"
             }
 
+            addDistance = findViewById(R.id.distance_input_number)
+            addDuration = findViewById(R.id.duration_input_time)
+            addDate = findViewById(R.id.dateButton)
+            addTime = findViewById(R.id.timeButton)
+
             addTrainingLog()
         }
 
-        addDistance = findViewById(R.id.distance_input_number)
+
 
     }
 
@@ -82,8 +91,16 @@ class AddActivityLog: AppCompatActivity() {
             setResult(Activity.RESULT_CANCELED,resultIntent)
         } else {
             val distance = addDistance.text.toString()
-            resultIntent.putExtra(TRAINING_LOG_DISTANCE,distance)
+            val duration = addDuration.text
+            val time = addTime.text
+            val date = addDate.text
+
             resultIntent.putExtra(LOG_ACTIVITY,logType)
+            resultIntent.putExtra(TRAINING_LOG_DATE,date)
+            resultIntent.putExtra(TRAINING_LOG_TIME,time)
+            resultIntent.putExtra(TRAINING_LOG_DISTANCE,distance)
+            resultIntent.putExtra(TRAINING_LOG_DURATION,duration)
+
             setResult(Activity.RESULT_OK,resultIntent)
         }
         finish()

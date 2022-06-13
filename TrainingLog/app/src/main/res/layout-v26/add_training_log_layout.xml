@@ -169,7 +169,7 @@
             android:textAppearance="?attr/textAppearanceHeadline4" />
 
         <EditText
-            android:id="@+id/editTextTime"
+            android:id="@+id/duration_input_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:digits="0123456789:"

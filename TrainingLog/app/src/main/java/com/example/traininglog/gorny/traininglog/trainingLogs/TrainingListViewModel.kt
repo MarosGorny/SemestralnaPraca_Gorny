@@ -48,6 +48,7 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 
         var newDateOfLog:String = dateOfLog ?: formattedDate
         var newTimeOfLog:String = timeOfLog ?: formattedTime
+        //TODO nenacitava zadanu duration
         var newDuration:String = duration ?: "00:00:00"
         var newDistance:Double = distance ?: 0.0
         lateinit var newStatsTitle:String
@@ -120,5 +121,5 @@ fun calcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
     val paceMin = floor ((secPerKm/60)).toInt()
     val paceSecond = ceil ( ((secPerKm)-paceMin)*60).toInt().toString()
 
-    return "$paceMin:$paceSecond"
+    return "$paceMin:$paceSecond min/km"
 }

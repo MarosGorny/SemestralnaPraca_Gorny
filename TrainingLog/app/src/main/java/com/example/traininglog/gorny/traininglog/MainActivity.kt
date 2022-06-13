@@ -10,15 +10,13 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.traininglog.gorny.traininglog.addActivity.*
 import com.example.traininglog.gorny.traininglog.data.EnumAktivity
 import com.example.traininglog.gorny.traininglog.data.TrainingLogRow
 import com.example.traininglog.gorny.traininglog.trainingLogs.HeaderAdapter
 import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingListViewModel
 import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingListViewModelFactory
 import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingLogsRowsAdapter
-import com.example.traininglog.gorny.traininglog.addActivity.AddActivityLog
-import com.example.traininglog.gorny.traininglog.addActivity.LOG_ACTIVITY
-import com.example.traininglog.gorny.traininglog.addActivity.TRAINING_LOG_DISTANCE
 import com.example.traininglog.gorny.traininglog.trainingLogDetail.TrainingLogDetailActivity
 import java.util.*
 const val TRAINING_LOG_ID = "trainingLog id"
@@ -81,11 +79,13 @@ class MainActivity : AppCompatActivity() {
             intentData?.let { data ->
 
                 val logType = data.getStringExtra(LOG_ACTIVITY)
+                val logDate = data.getStringExtra(TRAINING_LOG_DATE)
+                val logTime = data.getStringExtra(TRAINING_LOG_TIME)
                 val logDistance = data.getStringExtra(TRAINING_LOG_DISTANCE)
+                val logDuration = data.getStringExtra(TRAINING_LOG_DURATION)
 
-                //TU MUSIM POVYBERAT VECI Z toho co stlacim
-                //TODO Tu musim povyberat veci co stlacim, logType funguje
-                trainingLogListViewModel.insertTrainingLog(logType,null,null,null,
+                //TODO Tu musim este doplnit datum a cas
+                trainingLogListViewModel.insertTrainingLog(logType,null  ,null, logDuration,
                     logDistance?.toDouble()
                 )
             }
