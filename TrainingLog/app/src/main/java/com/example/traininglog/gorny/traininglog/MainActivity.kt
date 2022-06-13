@@ -6,21 +6,19 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.traininglog.gorny.traininglog.achievementActivity.AchievementActivity
+import com.example.traininglog.gorny.traininglog.achievement.AchievementActivity
 import com.example.traininglog.gorny.traininglog.addActivity.*
-import com.example.traininglog.gorny.traininglog.data.EnumAktivity
 import com.example.traininglog.gorny.traininglog.data.TrainingLogRow
 import com.example.traininglog.gorny.traininglog.trainingLogs.HeaderAdapter
 import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingListViewModel
 import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingListViewModelFactory
 import com.example.traininglog.gorny.traininglog.trainingLogs.TrainingLogsRowsAdapter
 import com.example.traininglog.gorny.traininglog.trainingLogDetail.TrainingLogDetailActivity
-import java.util.*
+
 const val TRAINING_LOG_ID = "trainingLog id"
 
 @Suppress("DEPRECATION")
@@ -55,6 +53,11 @@ class MainActivity : AppCompatActivity() {
         val fabAdd: View = findViewById(R.id.floatingButtonAdd)
         fabAdd.setOnClickListener {
             floatingButtonAddOnClick()
+        }
+
+        val fabAchievement: View = findViewById(R.id.floatingButtonAchievement)
+        fabAchievement.setOnClickListener {
+            floatingButtonAchievementOnClick()
         }
 
     }
@@ -95,7 +98,6 @@ class MainActivity : AppCompatActivity() {
                 val logDistance = data.getStringExtra(TRAINING_LOG_DISTANCE)
                 val logDuration = data.getStringExtra(TRAINING_LOG_DURATION)
 
-                //TODO Tu musim este doplnit datum a cas
                 trainingLogListViewModel.insertTrainingLog(logType,logDate  ,logTime, logDuration,
                     logDistance?.toDouble()
                 )

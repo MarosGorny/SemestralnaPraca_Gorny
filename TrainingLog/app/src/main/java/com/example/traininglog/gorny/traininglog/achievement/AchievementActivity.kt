@@ -1,4 +1,4 @@
-package com.example.traininglog.gorny.traininglog.achievementActivity
+package com.example.traininglog.gorny.traininglog.achievement
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
