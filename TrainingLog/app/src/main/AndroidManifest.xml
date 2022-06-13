@@ -28,6 +28,7 @@
         </activity>
         <activity android:name=".addActivity.AddActivityLog"></activity>
         <activity android:name=".trainingLogDetail.TrainingLogDetailActivity"></activity>
+        <activity android:name=".achievementActivity.AchievementActivity"></activity>
     </application>
 
 </manifest>

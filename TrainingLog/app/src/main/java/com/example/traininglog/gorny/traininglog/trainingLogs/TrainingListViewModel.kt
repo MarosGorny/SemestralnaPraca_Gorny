@@ -30,25 +30,28 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
     fun insertTrainingLog(logType: String?, dateOfLog: String?,
                           timeOfLog: String?, duration: String?,
                           distance: Double?) {
-        //If enum or third column stat is null, return
         if(logType == null)
             return
         //TODO double-distance sa musi zaokruhlit na dve desatinne miesta
-        //TODO spravit tak, aby to nahravalo info ktore tam chcem mat
         var formattedTime:String = ""
         var formattedDate:String = ""
-        if (timeOfLog == null) {
-            val current = LocalDateTime.now()
+        val current = LocalDateTime.now()
+        if (timeOfLog == "null") {
             val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
-            val formatterDate = DateTimeFormatter.ofPattern("dd.MM.YY")
             formattedTime = current.format(formatterTime)
+        }  else {
+            formattedTime = timeOfLog!!
+        }
+        if (dateOfLog == "null") {
+            val formatterDate = DateTimeFormatter.ofPattern("dd.MM.YY")
             formattedDate = current.format(formatterDate)
+        } else {
+            formattedDate = dateOfLog!!
         }
 
 
-        var newDateOfLog:String = dateOfLog ?: formattedDate
-        var newTimeOfLog:String = timeOfLog ?: formattedTime
-        //TODO nenacitava zadanu duration
+        var newDateOfLog:String = formattedDate
+        var newTimeOfLog:String = formattedTime
         var newDuration:String = duration ?: "00:00:00"
         var newDistance:Double = distance ?: 0.0
         lateinit var newStatsTitle:String
@@ -58,6 +61,8 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
         val minute: Int = newDuration.substring(3,5).toInt()
         val seconds: Int = newDuration.substring(6,8).toInt()
 
+
+        //TODO prepocita na bike a na swim
         var newDistanceMetricTitle:String = if(logType == "Run" || logType == "Bike") {
             "km"
         } else {
@@ -120,7 +125,7 @@ fun calcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
 
     val paceMin = floor ((secPerKm/60)).toInt()
     //TODO Treba zaokruhlit na hor na dve desatinne miesta - paceSecond
-    val paceSecond = ceil ( ((secPerKm)-paceMin)*60).toInt().toString()
+    val paceSecond = ceil ( ((secPerKm/60)-paceMin)*60).toInt().toString().take(2)
 
     return "$paceMin:$paceSecond"
 }

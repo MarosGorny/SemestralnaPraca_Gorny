@@ -6,10 +6,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.traininglog.gorny.traininglog.achievementActivity.AchievementActivity
 import com.example.traininglog.gorny.traininglog.addActivity.*
 import com.example.traininglog.gorny.traininglog.data.EnumAktivity
 import com.example.traininglog.gorny.traininglog.data.TrainingLogRow
@@ -50,12 +52,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        val fab: View = findViewById(R.id.floatingButtonAdd)
-        fab.setOnClickListener {
+        val fabAdd: View = findViewById(R.id.floatingButtonAdd)
+        fabAdd.setOnClickListener {
             floatingButtonAddOnClick()
         }
 
     }
+
+
 
     /* Opens TrainingLogDetailActivity when TrainingList item is clicked. */
     private fun adapterOnClick(trainingLogRow: TrainingLogRow) {
@@ -66,8 +70,15 @@ class MainActivity : AppCompatActivity() {
 
     /* Adds trainingLog to trainingLogList when FAB is clicked. */
     private fun floatingButtonAddOnClick() {
+        //intent is to request another activity to achieve a task.
         val intent = Intent(this, AddActivityLog::class.java)
         startActivityForResult(intent, newTrainingLogActivityRequestCode)
+    }
+
+    private fun floatingButtonAchievementOnClick() {
+        //intent is to request another activity to achieve a task.
+        val intent = Intent(this, AchievementActivity::class.java)
+        startActivity(intent)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -85,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                 val logDuration = data.getStringExtra(TRAINING_LOG_DURATION)
 
                 //TODO Tu musim este doplnit datum a cas
-                trainingLogListViewModel.insertTrainingLog(logType,null  ,null, logDuration,
+                trainingLogListViewModel.insertTrainingLog(logType,logDate  ,logTime, logDuration,
                     logDistance?.toDouble()
                 )
             }

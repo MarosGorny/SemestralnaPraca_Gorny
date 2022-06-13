@@ -33,11 +33,15 @@ class AddActivityLog: AppCompatActivity() {
     lateinit var addTime: Button
     lateinit var logType: String
 
+    var dateButtonClicked = false
+    var timeButtonClicked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_training_log_layout)
 
         findViewById<Button>(R.id.dateButton).setOnClickListener {
+            dateButtonClicked=true
             val cal = Calendar.getInstance()
             val dateSetListener = DatePickerDialog.OnDateSetListener { datePicker,year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, year)
@@ -49,6 +53,7 @@ class AddActivityLog: AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.timeButton).setOnClickListener {
+            timeButtonClicked=true
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
@@ -73,9 +78,8 @@ class AddActivityLog: AppCompatActivity() {
             addTime = findViewById(R.id.timeButton)
 
             addTrainingLog()
+
         }
-
-
 
     }
 
@@ -90,10 +94,17 @@ class AddActivityLog: AppCompatActivity() {
         if(addDistance.text.isNullOrEmpty()) {
             setResult(Activity.RESULT_CANCELED,resultIntent)
         } else {
-            val distance = addDistance.text.toString()
+            var date:String = if (dateButtonClicked)  {
+                addDate.text.toString()
+            } else null.toString()
+
+            var time:String = if (timeButtonClicked) {
+                addTime.text.toString()
+            } else null.toString()
+
+
             val duration = addDuration.text.toString()
-            val time = addTime.text
-            val date = addDate.text
+            val distance = addDistance.text.toString()
 
             resultIntent.putExtra(LOG_ACTIVITY,logType)
             resultIntent.putExtra(TRAINING_LOG_DATE,date)
