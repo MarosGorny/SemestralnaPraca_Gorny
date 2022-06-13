@@ -119,7 +119,8 @@ fun calcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
     val secPerKm =  totalSeconds/distaneOfRun
 
     val paceMin = floor ((secPerKm/60)).toInt()
+    //TODO Treba zaokruhlit na hor na dve desatinne miesta - paceSecond
     val paceSecond = ceil ( ((secPerKm)-paceMin)*60).toInt().toString()
 
-    return "$paceMin:$paceSecond min/km"
+    return "$paceMin:$paceSecond"
 }

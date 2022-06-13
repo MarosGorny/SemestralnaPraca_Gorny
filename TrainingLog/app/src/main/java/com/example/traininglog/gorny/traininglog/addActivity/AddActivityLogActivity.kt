@@ -91,7 +91,7 @@ class AddActivityLog: AppCompatActivity() {
             setResult(Activity.RESULT_CANCELED,resultIntent)
         } else {
             val distance = addDistance.text.toString()
-            val duration = addDuration.text
+            val duration = addDuration.text.toString()
             val time = addTime.text
             val date = addDate.text
 
