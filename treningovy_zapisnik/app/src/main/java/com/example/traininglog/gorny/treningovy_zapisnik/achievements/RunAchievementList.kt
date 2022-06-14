@@ -1,19 +1,17 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.achievements
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.runAchievementList
-import com.example.traininglog.gorny.treningovy_zapisnik.data.trainingLogsList
 
 class RunAchievementList : Fragment() {
 
@@ -25,21 +23,21 @@ class RunAchievementList : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_run_achievement, container, false)
 
-        val viewAdapter = RunAchievementAdapter(Array(10) { "Person ${it + 1}" })
-
+        val viewAdapter = RunAchievementAdapter(runAchievementList())
+        Log.i("RUN" ,"CREATE VIEW")
         view.findViewById<RecyclerView>(R.id.achievement_list).run {
-
+            Log.i("RUN" ,"RUN")
             setHasFixedSize(true)
 
             adapter=viewAdapter
         }
-
+        Log.i("RUN" ,"END CREATE VIEW")
         return view
     }
 
 }
 //class RunAchievementAdapter(private val myDataset: Array<AchievementRow>)
-class RunAchievementAdapter(private val myDataset: Array<String>) :
+class RunAchievementAdapter(private val myDataset: Array<AchievementRow>) :
     RecyclerView.Adapter<RunAchievementAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -56,7 +54,7 @@ class RunAchievementAdapter(private val myDataset: Array<String>) :
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.achievement_item, parent, false)
 
-
+        Log.i("RUN" ,"ONCREATE VIEW HOLDER")
         return ViewHolder(itemView)
     }
 
@@ -64,10 +62,10 @@ class RunAchievementAdapter(private val myDataset: Array<String>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.item.findViewById<TextView>(R.id.achievement_description).text = myDataset[position]
+        holder.item.findViewById<TextView>(R.id.achievement_description).text = myDataset[position].description
 
         holder.item.findViewById<ImageView>(R.id.achievement_image)
-            .setImageResource(listOfAvatars[position % listOfAvatars.size])
+            .setImageResource(myDataset[position].imageOfType)
 
         /* Ak by som chcel kliknut a ist napriklad na info toho itemu
         Treba potom este dole odkomentovat
@@ -81,6 +79,7 @@ class RunAchievementAdapter(private val myDataset: Array<String>) :
         }
 
          */
+        Log.i("RUN" ,"CREATE VIEW BIND HOLDER")
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -93,8 +92,3 @@ class RunAchievementAdapter(private val myDataset: Array<String>) :
  */
 }
 
-private val listOfAvatars = listOf(
-    R.drawable.run,
-    R.drawable.bike,
-    R.drawable.swim,
-)
