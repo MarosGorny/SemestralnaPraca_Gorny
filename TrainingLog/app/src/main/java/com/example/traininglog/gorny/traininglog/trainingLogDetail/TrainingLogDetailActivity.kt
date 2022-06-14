@@ -15,7 +15,7 @@ class TrainingLogDetailActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.traininglog_detail_activity)
+        setContentView(R.layout.fragment_training_log_detail)
 
         var currentTrainingLogId: Long? = null
 

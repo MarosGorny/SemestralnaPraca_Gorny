@@ -102,7 +102,7 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 
 }
 
-class TrainingListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class TrainingListViewModelFactory(private val context: TrainingLogsFragment) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TrainingListViewModel::class.java)) {

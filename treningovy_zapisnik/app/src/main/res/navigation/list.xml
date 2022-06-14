@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+    app:startDestination="@id/trainingLogList">
+
+    <fragment
+        android:id="@+id/trainingLogList"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingLogList"
+        android:label="TrainingList"
+        tools:layout="@layout/fragment_traininglog_list" >
+        <action
+            android:id="@+id/action_mainFragment_to_trainingLogItem"
+            app:destination="@id/trainingLogItem" />
+        <action
+            android:id="@+id/action_mainFragment_to_addTrainingLog"
+            app:destination="@id/addTrainingLog" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTrainingLog"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.AddTrainingLog"
+        android:label="AddTrainingLog"
+        tools:layout="@layout/fragment_add_training_log" />
+    <fragment
+        android:id="@+id/trainingLogItem"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingLogDetail"
+        android:label="TrainingLogItem"
+        tools:layout="@layout/fragment_training_log_detail" />
+</navigation>
