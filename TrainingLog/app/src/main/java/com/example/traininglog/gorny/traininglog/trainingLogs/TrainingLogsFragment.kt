@@ -34,7 +34,6 @@ class TrainingLogsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreate(savedInstanceState)
 
         val view = inflater.inflate(R.layout.fragment_traininglog_list, container, false)
 

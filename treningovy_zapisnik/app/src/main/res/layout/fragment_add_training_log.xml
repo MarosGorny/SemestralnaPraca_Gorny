@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".trainingList.AddTrainingLog">
+    tools:context=".trainingList.trainingLogAdd.AddTrainingLog">
 
     <TextView
         android:id="@+id/add_activity_title"

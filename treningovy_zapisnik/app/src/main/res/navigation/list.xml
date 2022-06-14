@@ -19,12 +19,21 @@
     </fragment>
     <fragment
         android:id="@+id/addTrainingLog"
-        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.AddTrainingLog"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogAdd.AddTrainingLog"
         android:label="AddTrainingLog"
-        tools:layout="@layout/fragment_add_training_log" />
+        tools:layout="@layout/fragment_add_training_log" >
+        <action
+            android:id="@+id/action_addTrainingLog_to_trainingLogList"
+            app:destination="@id/trainingLogList" />
+    </fragment>
     <fragment
         android:id="@+id/trainingLogItem"
-        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingLogDetail"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetail"
         android:label="TrainingLogItem"
-        tools:layout="@layout/fragment_training_log_detail" />
+        tools:layout="@layout/fragment_training_log_detail" >
+
+        <action
+            android:id="@+id/action_trainingLogItem_to_trainingLogList"
+            app:destination="@id/trainingLogList" />
+    </fragment>
 </navigation>

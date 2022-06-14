@@ -1,4 +1,4 @@
-package com.example.traininglog.gorny.treningovy_zapisnik.trainingList
+package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

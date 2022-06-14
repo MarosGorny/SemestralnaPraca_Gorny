@@ -1,13 +1,12 @@
-package com.example.traininglog.gorny.traininglog.trainingLogs
+package com.example.traininglog.gorny.treningovy_zapisnik.trainingList
 
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.traininglog.gorny.traininglog.data.DataSource
-import com.example.traininglog.gorny.traininglog.data.EnumAktivity
-import com.example.traininglog.gorny.traininglog.data.TrainingLogRow
+import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
+import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
