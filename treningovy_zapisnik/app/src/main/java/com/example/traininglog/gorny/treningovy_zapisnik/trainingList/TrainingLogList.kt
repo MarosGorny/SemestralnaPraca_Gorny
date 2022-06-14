@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,7 +26,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TrainingLogList : Fragment() {
 
-    private val newTrainingLogActivityRequestCode = 1
     private val trainingLogListViewModel by viewModels<TrainingListViewModel> {
         TrainingListViewModelFactory(requireContext())
     }
@@ -63,7 +63,10 @@ class TrainingLogList : Fragment() {
 
     /* Opens TrainingLogDetailActivity when TrainingList item is clicked. */
     private fun adapterOnClick(trainingLogRow: TrainingLogRow) {
-        findNavController().navigate(R.id.action_mainFragment_to_trainingLogItem)
+
+        /*Insert trainingLogRow id to bundle and pass data to destination*/
+        val bundle = bundleOf("TRAINING_LOG_ID" to trainingLogRow.id)
+        findNavController().navigate(R.id.action_mainFragment_to_trainingLogItem, bundle)
     }
 
     /* Adds trainingLog to trainingLogList when FAB is clicked. */

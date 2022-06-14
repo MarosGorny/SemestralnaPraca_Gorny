@@ -39,6 +39,10 @@ class AddTrainingLog : Fragment() {
     var dateButtonClicked = false
     var timeButtonClicked = false
 
+    private val viewModel: TrainingListViewModel by activityViewModels<TrainingListViewModel> {
+        TrainingListViewModelFactory(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,9 +82,7 @@ class AddTrainingLog : Fragment() {
     }
 
 
-    private val viewModel: TrainingListViewModel by activityViewModels<TrainingListViewModel> {
-        TrainingListViewModelFactory(requireContext())
-    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
