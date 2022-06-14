@@ -1,4 +1,4 @@
-package com.example.traininglog.gorny.treningovy_zapisnik.trainingList
+package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
 import android.content.Context
 import android.os.Build
@@ -7,19 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.math.ceil
 import kotlin.math.floor
-import kotlin.math.log
-import kotlin.properties.Delegates
 import kotlin.random.Random
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 

@@ -11,8 +11,8 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.traininglog.gorny.treningovy_zapisnik.R
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingListViewModel
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingListViewModelFactory
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
 
 class TrainingLogDetail : Fragment() {
 

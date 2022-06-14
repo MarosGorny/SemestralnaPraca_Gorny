@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingListViewModel
 
 class TrainingLogDetailViewModel(private val dataSource: DataSource) : ViewModel() {
 

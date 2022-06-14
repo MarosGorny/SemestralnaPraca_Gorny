@@ -6,4 +6,10 @@
         android:contentDescription="List"
         android:title="Leaderboard" />
 
+    <item
+        android:id="@+id/achievement"
+        android:icon="@drawable/ic_feedback"
+        android:contentDescription="Achievements"
+        android:title="Achievements" />
+
 </menu>

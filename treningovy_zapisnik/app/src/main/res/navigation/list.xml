@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/trainingLogList"
-        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingLogList"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingLogList"
         android:label="TrainingList"
         tools:layout="@layout/fragment_traininglog_list" >
         <action

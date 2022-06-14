@@ -1,6 +1,5 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogAdd
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -17,8 +16,8 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.traininglog.gorny.treningovy_zapisnik.R
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingListViewModel
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.TrainingListViewModelFactory
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -3,6 +3,7 @@ package com.example.traininglog.gorny.treningovy_zapisnik.data
 import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.traininglog.gorny.treningovy_zapisnik.achievements.RunAchievementList
 
 class DataSource(resources: Resources) {
     private val initialTrainingLogList = trainingLogsList(resources)
@@ -46,6 +47,7 @@ class DataSource(resources: Resources) {
     fun getTrainingLogList(): LiveData<List<TrainingLogRow>> {
         return trainingLogsLiveData
     }
+
 
     companion object {
         private var INSTANCE: DataSource? = null

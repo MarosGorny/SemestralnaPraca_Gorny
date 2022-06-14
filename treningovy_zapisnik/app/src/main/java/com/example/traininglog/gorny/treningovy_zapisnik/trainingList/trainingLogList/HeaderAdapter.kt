@@ -1,4 +1,4 @@
-package com.example.traininglog.gorny.treningovy_zapisnik.trainingList
+package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
 import android.view.LayoutInflater
 import android.view.View
