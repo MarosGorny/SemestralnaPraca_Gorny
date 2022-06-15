@@ -10,12 +10,13 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
 
 class TrainingLogDetail : Fragment() {
-
+    private val navigationArgs: TrainingLogDetailArgs by navArgs()
 
 
     private val trainingLogListViewModel: TrainingListViewModel by activityViewModels<TrainingListViewModel> {

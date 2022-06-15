@@ -7,52 +7,67 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
+import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTraininglogListBinding
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+
+/**
+ * Main fragment displaying details for all items in the database.
+ */
 class TrainingLogList : Fragment() {
 
-    private val trainingLogListViewModel by viewModels<TrainingListViewModel> {
-        TrainingListViewModelFactory(requireContext())
+    private val viewModel: LogViewModel by activityViewModels {
+        LogViewModelFactory(
+            (activity?.application as LogListApplication).database.trainingLogRowDao()
+        )
     }
+
+    private var _binding: FragmentTraininglogListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_traininglog_list, container, false)
+        _binding = FragmentTraininglogListBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         /* Instantiates headerAdapter and trainingLogsRowsAdapter. Both adapters are added to concatAdapter.
-    which displays the contents sequentially */
+        which displays the contents sequentially */
         val headerAdapter = HeaderAdapter()
         val trainingLogsRowsAdapter = TrainingLogsRowsAdapter { trainingLogRow -> adapterOnClick(trainingLogRow) }
         val concatAdapter = ConcatAdapter(headerAdapter, trainingLogsRowsAdapter)
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.trainingLog_list)
-        recyclerView.adapter = concatAdapter
+        binding.trainingLogList.layoutManager = LinearLayoutManager (this.context)
+        binding.trainingLogList.adapter = concatAdapter
 
-        trainingLogListViewModel.trainingLogsLiveData.observe(viewLifecycleOwner, {
-            it?.let {
-                trainingLogsRowsAdapter.submitList(it as MutableList<TrainingLogRow>)
-                headerAdapter.updateTrainingLogCount(it.size)
+        // Attach an observer on the allItems list to update the UI automatically when the data
+        // changes
+        viewModel.allTrainingLogs.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                trainingLogsRowsAdapter.submitList(it)
             }
-        })
+        }
 
-        view.findViewById<FloatingActionButton>(R.id.floatingButtonAdd).setOnClickListener {
+        binding.floatingButtonAdd.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_addTrainingLog)
         }
 
-        return view
-    }
 
+    }
 
     /* Opens TrainingLogDetailActivity when TrainingList item is clicked. */
     private fun adapterOnClick(trainingLogRow: TrainingLogRow) {
@@ -62,10 +77,6 @@ class TrainingLogList : Fragment() {
         findNavController().navigate(R.id.action_mainFragment_to_trainingLogItem, bundle)
     }
 
-    /* Adds trainingLog to trainingLogList when FAB is clicked. */
-    private fun floatingButtonAddOnClick() {
-
-    }
 
 }
 
