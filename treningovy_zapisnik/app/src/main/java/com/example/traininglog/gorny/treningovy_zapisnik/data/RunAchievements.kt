@@ -3,9 +3,8 @@ package com.example.traininglog.gorny.treningovy_zapisnik.data
 import android.content.res.Resources
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 
-fun runAchievementList(): Array<AchievementRow> {
-    return arrayOf(
-
+fun runAchievementList(resources: Resources): List<AchievementRow> {
+    return listOf(
             AchievementRow(
             id = 1,
             achievementType = "Run",
@@ -26,6 +25,7 @@ fun runAchievementList(): Array<AchievementRow> {
                 imageOfType = R.drawable.bike,
                 description = "Bike total 100 km",
                 completed = false
-            )
+            ),
     )
+
 }

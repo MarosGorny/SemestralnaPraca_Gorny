@@ -3,11 +3,15 @@ package com.example.traininglog.gorny.treningovy_zapisnik.data
 import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.traininglog.gorny.treningovy_zapisnik.achievements.RunAchievementList
 
 class DataSource(resources: Resources) {
     private val initialTrainingLogList = trainingLogsList(resources)
     private val trainingLogsLiveData = MutableLiveData(initialTrainingLogList)
+
+    private val initialAchievementList = runAchievementList(resources)
+    private val runAchievementsLiveData = MutableLiveData(initialAchievementList)
+
+
 
     /* Adds training log to liveData and posts value. */
     fun addTrainingLog(trainingLog : TrainingLogRow) {
@@ -44,8 +48,26 @@ class DataSource(resources: Resources) {
         return null
     }
 
+    fun getTotalDistanceByType(logType:String):Double {
+        var totalDistance:Double = 0.0
+        val trainingList = trainingLogsLiveData.value
+        if(trainingList != null) {
+            trainingList.toMutableList()
+            for (item in trainingList) {
+                if (item.logTypeTitle == logType) {
+                    totalDistance += item.distance
+                }
+            }
+        }
+        return totalDistance
+    }
+
     fun getTrainingLogList(): LiveData<List<TrainingLogRow>> {
         return trainingLogsLiveData
+    }
+
+    fun getRunAchievementList(): LiveData <List<AchievementRow>> {
+        return runAchievementsLiveData
     }
 
 
@@ -61,3 +83,4 @@ class DataSource(resources: Resources) {
         }
     }
 }
+

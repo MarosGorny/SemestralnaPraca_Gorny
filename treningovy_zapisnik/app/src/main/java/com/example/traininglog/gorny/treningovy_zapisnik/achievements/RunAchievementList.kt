@@ -8,12 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementRow
+import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.runAchievementList
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RunAchievementList : Fragment() {
+
+    private val runAchievementViewModel by viewModels<RunAchievementListViewModel> {
+        RunAchievementListViewModelFactory(requireContext())
+    }
 
 
     override fun onCreateView(
@@ -23,72 +36,86 @@ class RunAchievementList : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_run_achievement, container, false)
 
-        val viewAdapter = RunAchievementAdapter(runAchievementList())
-        Log.i("RUN" ,"CREATE VIEW")
-        view.findViewById<RecyclerView>(R.id.achievement_list).run {
-            Log.i("RUN" ,"RUN")
-            setHasFixedSize(true)
+        val runAchievementsAdapter = RunAchievementAdapter { runAchievementList -> adapterOnClick(runAchievementList)}
 
-            adapter=viewAdapter
-        }
-        Log.i("RUN" ,"END CREATE VIEW")
+        val recyclerView: RecyclerView = view.findViewById(R.id.achievement_list)
+        recyclerView.adapter = runAchievementsAdapter
+
+        runAchievementViewModel.runAchievemetsLiveData.observe(viewLifecycleOwner, {
+            it?.let {
+                runAchievementsAdapter.submitList(it as MutableList<AchievementRow>)
+            }
+        })
+
+        //view.findViewById<FloatingActionButton>(R.id.floatingButtonAdd).setOnClickListener {
+        //    findNavController().navigate(R.id.action_mainFragment_to_addTrainingLog)
+        //}
+
         return view
+    }
+
+    /* Opens XXXXXXXXXXXXXXX when AchievementRow item is clicked. */
+    private fun adapterOnClick(runAchievement: AchievementRow) {
+
+        /*Insert trainingLogRow id to bundle and pass data to destination*/
+        //val bundle = bundleOf("TRAINING_LOG_ID" to runAchievement.id)
+        //findNavController().navigate(R.id.action_mainFragment_to_trainingLogItem, bundle)
     }
 
 }
 //class RunAchievementAdapter(private val myDataset: Array<AchievementRow>)
-class RunAchievementAdapter(private val myDataset: Array<AchievementRow>) :
-    RecyclerView.Adapter<RunAchievementAdapter.ViewHolder>() {
+class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
+    ListAdapter<AchievementRow,RunAchievementAdapter.RunAchievementViewHolder>(
+        RunAchievementDiffCallback
+    ) {
+    class RunAchievementViewHolder(itemView: View, val onClick: (AchievementRow) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
+        private val description:TextView = itemView.findViewById(R.id.achievement_description)
+        private val imageOftype:ImageView = itemView.findViewById(R.id.achievement_image)
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder.
-    // Each data item is just a string in this case that is shown in a TextView.
-    class ViewHolder(val item: View) : RecyclerView.ViewHolder(item)
+        private var currentAchievemntRov: AchievementRow? =null
 
-
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): ViewHolder {
-        // create a new view
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.achievement_item, parent, false)
-
-        Log.i("RUN" ,"ONCREATE VIEW HOLDER")
-        return ViewHolder(itemView)
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.item.findViewById<TextView>(R.id.achievement_description).text = myDataset[position].description
-
-        holder.item.findViewById<ImageView>(R.id.achievement_image)
-            .setImageResource(myDataset[position].imageOfType)
-
-        /* Ak by som chcel kliknut a ist napriklad na info toho itemu
-        Treba potom este dole odkomentovat
-        holder.item.setOnClickListener {
-            val bundle = bundleOf(USERNAME_KEY to myDataset[position])
-
-
-            holder.item.findNavController().navigate(
-                R.id.action_leaderboard_to_userProfile,
-                bundle)
+        init {
+            itemView.setOnClickListener {
+                currentAchievemntRov?.let {
+                    onClick(it)
+                }
+            }
         }
 
-         */
-        Log.i("RUN" ,"CREATE VIEW BIND HOLDER")
+        /*Bind achievements stats*/
+        fun bind(runAchievement: AchievementRow) {
+            currentAchievemntRov = runAchievement
+
+            description.text = runAchievement.description
+            imageOftype.setImageResource(runAchievement.imageOfType)
+        }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = myDataset.size
-/*
-    companion object {
-        const val USERNAME_KEY = "userName"
+        /* Creates and inflates view and return RunAchievementViewHolder */
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): RunAchievementViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.achievement_item,parent,false)
+            return RunAchievementViewHolder(view,onClick)
+        }
+
+        /* Gets current achievement and uses it to bind view. */
+        override fun onBindViewHolder(holder: RunAchievementViewHolder, position: Int) {
+            val runAchievement = getItem(position)
+            holder.bind(runAchievement)
+        }
+
+}
+
+object RunAchievementDiffCallback: DiffUtil.ItemCallback<AchievementRow>() {
+    override fun areItemsTheSame(oldItem: AchievementRow, newItem: AchievementRow): Boolean {
+        return oldItem == newItem
     }
 
- */
+    override fun areContentsTheSame(oldItem: AchievementRow, newItem: AchievementRow): Boolean {
+        return oldItem.id == newItem.id
+    }
 }
 

@@ -131,6 +131,7 @@ class AddTrainingLog : Fragment() {
             val duration = addDuration.text.toString()
             val distance = addDistance.text.toString()
 
+            //TODO Nejako spravit tak, aby to tu kontrolovalo, ci som splnil achievement
             viewModel.insertTrainingLog(logType,date,time,duration,distance.toDouble())
             findNavController().navigate(R.id.action_addTrainingLog_to_trainingLogList)
         }

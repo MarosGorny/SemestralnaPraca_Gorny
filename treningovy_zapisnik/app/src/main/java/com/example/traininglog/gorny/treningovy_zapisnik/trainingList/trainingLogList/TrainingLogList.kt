@@ -99,7 +99,7 @@ class TrainingLogsRowsAdapter(private val onClick: (TrainingLogRow) -> Unit) :
             }
         }
 
-        /* Bind trainingLog TCstats. */
+        /* Bind trainingLog stats. */
         fun bind(trainingLogRow: TrainingLogRow) {
             currentTrainingLogRow = trainingLogRow
 
