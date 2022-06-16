@@ -79,7 +79,7 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
             logType,
             newDateOfLog,
             newTimeOfLog,
-            timeTitle = "Time",
+            timeTitle = "Duration",
             newDuration,
             newDistanceMetricTitle,
             newDistance,

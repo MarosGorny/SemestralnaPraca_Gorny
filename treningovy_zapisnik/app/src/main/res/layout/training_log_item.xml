@@ -1,155 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:background="@color/black"
-    android:padding="8dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="100dp"
+    android:layout_gravity="center|top"
+    android:background="@drawable/back"
+
+    android:padding="2dp"
+
+    >
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/generalInfoTab"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/back"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            >
 
             <TextView
                 android:id="@+id/workoutType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Run"
-                android:textSize="24sp" />
+                android:layout_weight="2"
+                android:text="Swim"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/dateOfWorkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:inputType="date"
-                android:minHeight="48dp"
-                android:textAlignment="center"
-                tools:text="8.6.2022" />
+                android:layout_weight="1"
+                android:minHeight="@dimen/item_info_half"
+                android:text="TextView"
+                android:textSize="16sp"
+                android:gravity="center|bottom"/>
 
             <TextView
                 android:id="@+id/startTimeOfWorkout"
-
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:gravity="center"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textAlignment="center"
-                tools:text="15:33" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="@dimen/item_info_half"
+                android:text="TextView"
+                android:textSize="16sp"
+                android:gravity="center|top"/>
 
         </LinearLayout>
 
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/black">
+
+        </View>
+
         <LinearLayout
             android:id="@+id/timeTab"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/back"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/timeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Time"
-                android:textSize="24sp" />
+                android:layout_weight="1"
+                android:text="Duration"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/timeSpendWorkout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:gravity="center"
-                android:inputType="time"
-                android:textAlignment="center"
-                tools:text="2:01:56" />
-
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="@dimen/item_info_full"
+                android:text="TextView"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="16sp"/>
         </LinearLayout>
-
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
         <LinearLayout
             android:id="@+id/stat1_tab"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/back"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/distanceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="km"
-                android:textSize="24sp" />
+                android:layout_weight="1"
+                android:text="Distance"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/distanceStats"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:text="23.42"
-                android:textAlignment="center" />
-
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="@dimen/item_info_full"
+                android:text="TextView"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="16sp"/>
         </LinearLayout>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
 
         <LinearLayout
             android:id="@+id/stat2_tab"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/back"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/statsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Duration"
+                android:textSize="20sp"
+                android:textColor="@color/black"
                 android:gravity="center"
-                android:text="min/km"
-                android:textSize="24sp" />
+                />
 
             <TextView
                 android:id="@+id/stats"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:inputType="time"
-                android:textAlignment="center"
-                tools:text="6:00" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="@dimen/item_info_full"
+                android:text="TextView"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="16sp"
+                />
         </LinearLayout>
     </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

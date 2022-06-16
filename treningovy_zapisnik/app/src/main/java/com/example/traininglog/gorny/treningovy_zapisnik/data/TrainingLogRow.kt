@@ -30,14 +30,14 @@ data class TrainingLogRow(
     val durationOfLog:String,
 
     @ColumnInfo(name = "distance_title")
-    val distanceMetricTitle:String = "unkdnownfffffffff",
+    val distanceMetricTitle:String = "Distance",
 
     @ColumnInfo(name = "distance_of_workout")
     val distance:Double,
 
     @ColumnInfo(name = "stats_title")
-    val fourthColumnTitle:String = "unknown",
+    val fourthColumnTitle:String = "min/km",
 
     @ColumnInfo(name = "stats_of_workout")
-    val fourthColumnMinPKm:String = "unknown"
+    val fourthColumnMinPKm:String = "3:40"
     )
