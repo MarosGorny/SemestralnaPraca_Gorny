@@ -75,12 +75,17 @@ class AddTrainingLog : Fragment() {
     private fun bind(trainingLogRow: TrainingLogRow) {
 
         binding.apply {
-            typeActivityTitle.setText(trainingLogRow.logTypeTitle,TextView.BufferType.SPANNABLE)
-            when (trainingLogRow.logTypeTitle) {
-                "Run" -> activityOptions.check(R.id.option_run)
-                "Bike" -> activityOptions.check(R.id.option_bike)
-                "Swim" -> activityOptions.check(R.id.option_swim)
-            }
+
+            /*          TOTO TU TEORETICKY ASI NEMUSI BYT
+            if (binding.optionBike.isChecked)
+                typeActivityTitle.setText("Bike",TextView.BufferType.SPANNABLE)
+            else if (binding.optionRun.isChecked)
+                typeActivityTitle.setText("Run",TextView.BufferType.SPANNABLE)
+            else if (binding.optionSwim.isChecked)
+                typeActivityTitle.setText("Swim",TextView.BufferType.SPANNABLE)
+
+             */
+
             dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
             timeButton.setText(trainingLogRow.timeOfLog,TextView.BufferType.SPANNABLE)
             distanceInputNumber.setText(trainingLogRow.distance.toString(),TextView.BufferType.SPANNABLE)
@@ -181,9 +186,31 @@ class AddTrainingLog : Fragment() {
             }
         }
 
+        changeTitleTypeByRadioButton()
         binding.timeButton.setOnClickListener{ setTime() }
         binding.dateButton.setOnClickListener{ setDate() }
 
+    }
+
+    private fun changeTitleTypeByRadioButton() {
+        if (binding.optionBike.isChecked)
+            binding.typeActivityTitle.text = "Bike"
+        else if (binding.optionRun.isChecked)
+            binding.typeActivityTitle.text = "Run"
+        else if (binding.optionSwim.isChecked)
+            binding.typeActivityTitle.text = "Swim"
+
+        binding.optionRun.setOnClickListener() {
+            binding.typeActivityTitle.text = "Run"
+        }
+
+        binding.optionBike.setOnClickListener() {
+            binding.typeActivityTitle.text = "Bike"
+        }
+
+        binding.optionSwim.setOnClickListener() {
+            binding.typeActivityTitle.text = "Swim"
+        }
     }
 
     /**
