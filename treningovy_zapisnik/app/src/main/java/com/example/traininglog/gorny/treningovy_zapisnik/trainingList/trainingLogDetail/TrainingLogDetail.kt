@@ -1,5 +1,6 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail
 
+import android.content.ClipData
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,66 +13,106 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.R
+import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
+import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTrainingLogDetailBinding
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModelFactory
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+/**
+ * [ItemDetailFragment] displays the details of the selected item.
+ */
 class TrainingLogDetail : Fragment() {
     private val navigationArgs: TrainingLogDetailArgs by navArgs()
+    lateinit var trainingLogRow: TrainingLogRow
 
-
-    private val trainingLogListViewModel: TrainingListViewModel by activityViewModels<TrainingListViewModel> {
-        TrainingListViewModelFactory(requireContext())
+    private val viewModel : LogViewModel by activityViewModels {
+        LogViewModelFactory(
+            (activity?.application as LogListApplication).database.trainingLogRowDao()
+        )
     }
 
-
-
-    private val logDetailViewModel: TrainingLogDetailViewModel by activityViewModels<TrainingLogDetailViewModel> {
-        TrainingLogDetailViewModelFactory(requireContext())
-    }
+    private var _binding: FragmentTrainingLogDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_training_log_detail, container, false)
+        _binding = FragmentTrainingLogDetailBinding.inflate(inflater,container,false)
+        return binding.root
+    }
 
+    /**
+     * Binds views with the passed in item data.
+     */
+    private fun bind(trainingLogRow: TrainingLogRow) {
+        binding.apply {
+            titleDetail.text = trainingLogRow.logTypeTitle
+            distanceDetail.text = trainingLogRow.distance.toString()
+            timeDetail.text = trainingLogRow.durationOfLog
 
-        return view
+            removeButton.setOnClickListener{showConfirmationDialog() }
+            editTrainigLog.setOnClickListener { editTrainigLog() }
+        }
+    }
+
+    /**
+     * Navigate to the Edit item screen.
+     */
+    private fun editTrainigLog() {
+        val action = TrainingLogDetailDirections.actionTrainingLogItemToAddTrainingLog(
+            "Edit trainig log",
+            trainingLogRow.id
+        )
+        this.findNavController().navigate(action)
+    }
+
+    /**
+     * Displays an alert dialog to get the user's confirmation before deleting the item.
+     */
+    private fun showConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(android.R.string.dialog_alert_title))
+            .setMessage("Are you sure?")
+            .setCancelable(false)
+            .setNegativeButton("No") { _, _ -> }
+            .setPositiveButton("Yes") { _, _ ->
+                deleteTrainingLog()
+            }
+            .show()
+    }
+
+    /**
+     * Deletes the current item and navigates to the list fragment.
+     */
+    private fun deleteTrainingLog() {
+        viewModel.deleteItem(trainingLogRow)
+        findNavController().navigateUp()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var currentTrainingLogId: Long? = null
-
-        /* Connect variables to UI elements. */
-        val typeActivity: TextView = view.findViewById(R.id.title_detail)
-        val timeActivity: TextView = view.findViewById(R.id.time_detail)
-        val distanceActivity: TextView = view.findViewById(R.id.distance_detail)
-        val removeTrainingButton: Button = view.findViewById(R.id.removeButton)
-        Log.i("TrainingLogDetail","onviewcreated")
-
-        /*Retrieve Bundle*/
-        currentTrainingLogId = arguments?.getLong("TRAINING_LOG_ID")
-
-
-        /*If currentTrainingLogId is not null, get corresponding trainingLogDetail and set
-            title, time and distance*/
-        currentTrainingLogId?.let {
-            Log.i("TrainingLogDetail","LAMBDA")
-            val currentTrainingLog = logDetailViewModel.getTrainingLogForId(it)
-            typeActivity.text = currentTrainingLog?.logTypeTitle
-            timeActivity.text = currentTrainingLog?.durationOfLog
-            distanceActivity.text = currentTrainingLog?.distance.toString()
-
-            removeTrainingButton.setOnClickListener {
-                Log.i("TrainingLogDetail","Listener")
-                if (currentTrainingLog != null) {
-                    logDetailViewModel.removeTrainingLog(currentTrainingLog)
-                    findNavController().navigate(R.id.action_trainingLogItem_to_trainingLogList)
-                }
-            }
+        val id = navigationArgs.logId
+        // Retrieve the item details using the itemId.
+        // Attach an observer on the data (instead of polling for changes) and only update the
+        // the UI when the data actually changes.
+        viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedTrainingLog ->
+            trainingLogRow = selectedTrainingLog
+            bind(trainingLogRow)
         }
+
+    }
+
+    /**
+     * Called when fragment is destroyed.
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

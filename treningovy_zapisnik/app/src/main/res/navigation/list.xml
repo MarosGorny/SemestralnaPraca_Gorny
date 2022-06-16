@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    app:startDestination="@id/trainingLogList">
+    app:startDestination="@id/trainingLogListFragment">
 
     <fragment
-        android:id="@+id/trainingLogList"
+        android:id="@+id/trainingLogListFragment"
         android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingLogList"
-        android:label="TrainingList"
+        android:label="Workout lits"
         tools:layout="@layout/fragment_traininglog_list" >
         <action
             android:id="@+id/action_mainFragment_to_trainingLogItem"
-            app:destination="@id/trainingLogItem" />
+            app:destination="@id/trainingLogItemDetailFragment" />
         <action
             android:id="@+id/action_mainFragment_to_addTrainingLog"
             app:destination="@id/addTrainingLog" />
@@ -24,19 +24,29 @@
         tools:layout="@layout/fragment_add_training_log" >
         <action
             android:id="@+id/action_addTrainingLog_to_trainingLogList"
-            app:destination="@id/trainingLogList" />
-    </fragment>
-    <fragment
-        android:id="@+id/trainingLogItem"
-        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetail"
-        android:label="TrainingLogItem"
-        tools:layout="@layout/fragment_training_log_detail" >
+            app:destination="@id/trainingLogListFragment"
+            app:popUpTo="@id/trainingLogListFragment"
+            app:popUpToInclusive="true"/>
         <argument
-            android:name="training_log_id"
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="log_id"
             app:argType="long"
             android:defaultValue="-1L" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/trainingLogItemDetailFragment"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetail"
+        android:label="Training log detail"
+        tools:layout="@layout/fragment_training_log_detail" >
         <action
-            android:id="@+id/action_trainingLogItem_to_trainingLogList"
-            app:destination="@id/trainingLogList" />
+            android:id="@+id/action_trainingLogItem_to_addTrainingLog"
+            app:destination="@id/addTrainingLog" />
+        <argument
+            android:name="log_id"
+            app:argType="long"
+            />
     </fragment>
 </navigation>

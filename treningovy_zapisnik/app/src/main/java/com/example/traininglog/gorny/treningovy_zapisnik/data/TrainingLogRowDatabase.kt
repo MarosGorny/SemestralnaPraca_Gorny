@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-
+/**
+ * Database class with a singleton INSTANCE object.
+ */
 @Database(entities = [TrainingLogRow::class], version = 1, exportSchema = false)
 abstract class TrainingLogRowDatabase: RoomDatabase() {
 

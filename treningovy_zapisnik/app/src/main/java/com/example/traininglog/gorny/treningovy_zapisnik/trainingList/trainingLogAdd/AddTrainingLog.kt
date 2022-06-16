@@ -2,6 +2,8 @@ package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingL
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +11,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,7 +27,9 @@ import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLo
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * Fragment to add or update an item in the Inventory database.
+ */
 class AddTrainingLog : Fragment() {
 
 
@@ -68,33 +70,97 @@ class AddTrainingLog : Fragment() {
         )
     }
 
+    /**
+     * Binds views with the passed in [item] information.
+     */
+    private fun bind(trainingLogRow: TrainingLogRow) {
+
+        binding.apply {
+            typeActivityTitle.setText(trainingLogRow.logTypeTitle,TextView.BufferType.SPANNABLE)
+            when (trainingLogRow.logTypeTitle) {
+                "Run" -> activityOptions.check(R.id.option_run)
+                "Bike" -> activityOptions.check(R.id.option_bike)
+                "Swim" -> activityOptions.check(R.id.option_swim)
+            }
+            dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
+            timeButton.setText(trainingLogRow.timeOfLog,TextView.BufferType.SPANNABLE)
+            distanceInputNumber.setText(trainingLogRow.distance.toString(),TextView.BufferType.SPANNABLE)
+            durationInputTime.setText(trainingLogRow.durationOfLog,TextView.BufferType.SPANNABLE)
 
 
+            buttonDone.setOnClickListener{updateTrainingLogRow()}
+        }
+    }
+
+    /**
+     * Inserts the new Item into database and navigates up to list fragment.
+     */
+    private fun addNewTrainingLogRow() {
+        if (isEntryValid()) {
+            viewModel.addNewTrainingLogRow(
+                binding.typeActivityTitle.text.toString(),
+                binding.dateButton.text.toString(),
+                binding.timeButton.text.toString(),
+                binding.durationInputTime.text.toString(),
+                binding.distanceInputNumber.text.toString().toDouble()
+            )
+
+            val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
+            findNavController().navigate(action)
+        }
+    }
+
+    /**
+     * Updates an existing Item in the database and navigates up to list fragment.
+     */
+    private fun updateTrainingLogRow() {
+        if (isEntryValid()) {
+            viewModel.updateTrainingLogRow(                this.navigationArgs.logId,
+                this.binding.typeActivityTitle.text.toString(),
+                this.binding.dateButton.text.toString(),
+                this.binding.timeButton.text.toString(),
+            this.binding.durationInputTime.text.toString(),
+            this.binding.distanceActivityTitle.text.toString(),
+            this.binding.distanceInputNumber.text.toString().toDouble(),
+            "Treba nastait",
+            "Treba nastavit")
+        }
+    }
+
+
+    /**
+     * Called when the view is created.
+     * The itemId Navigation argument determines the edit item  or add new item.
+     * If the itemId is positive, this method retrieves the information from the database and
+     * allows the user to update it.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_done).setOnClickListener {
-
-
-
-
-            addTrainingLog()
-
+        val id = navigationArgs.logId
+        if (id > 0) {
+            viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {selectedTrainingLog ->
+                trainingLogRow = selectedTrainingLog
+                bind(trainingLogRow)
         }
-
-
+        } else {
+            binding.buttonDone.setOnClickListener {
+                addNewTrainingLogRow()
+            }
+        }
     }
 
-    /* The onClick action for the done button. Closes the activity and returns the new training name
-           and description as part of the intent. If the distance is missing, the result is set
-           to cancelled. */
-    private fun addTrainingLog() {
-        Log.i("","1")
-
-        val resultIntent = Intent()
-
-            findNavController().navigate(R.id.action_addTrainingLog_to_trainingLogList)
-        }
+    /**
+     * Called before fragment is destroyed.
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Hide keyboard.
+        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as
+                InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
+        _binding = null
+    }
 
 
 

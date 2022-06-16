@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+    app:startDestination="@id/trainingLogList">
+
+    <fragment
+        android:id="@+id/trainingLogList"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingLogList"
+        android:label="TrainingList"
+        tools:layout="@layout/fragment_traininglog_list" >
+
+        <action
+            android:id="@+id/action_mainFragment_to_addTrainingLog"
+            app:destination="@id/addTrainingLog" />
+        <action
+            android:id="@+id/action_trainingLogList_to_trainingLogItem"
+            app:destination="@id/trainingLogItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTrainingLog"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogAdd.AddTrainingLog"
+        android:label="{title}"
+        tools:layout="@layout/fragment_add_training_log" >
+        <action
+            android:id="@+id/action_addTrainingLog_to_trainingLogList"
+            app:destination="@id/trainingLogList" />
+        <argument
+            android:name="log_id"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <argument
+            android:name="log_type"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingLogItem"
+        android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetail"
+        android:label="TrainingLogItem"
+        tools:layout="@layout/fragment_training_log_detail" >
+        <argument
+            android:name="training_log_id"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_trainingLogItem_to_addTrainingLog"
+            app:destination="@id/addTrainingLog"
+            app:popUpTo="@id/trainingLogList"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+</navigation>

@@ -12,11 +12,11 @@ import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.TrainingLogItemBinding
 
-
+/**
+ * [ListAdapter] implementation for the recyclerview.
+ */
 class LogListAdapter(private val onItemClicked: (TrainingLogRow) -> Unit) :
-    ListAdapter<TrainingLogRow, LogListAdapter.LogViewHolder>(
-        DiffCallback
-    ) {
+    ListAdapter<TrainingLogRow, LogListAdapter.LogViewHolder>(DiffCallback) {
 
     /* Creates and inflates view and return LogViewHolder */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
