@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_time">Select Time</string>
+    <string name="time">Time</string>
+    <string name="distance_of_your_workout">Distance of your workout</string>
+</resources>

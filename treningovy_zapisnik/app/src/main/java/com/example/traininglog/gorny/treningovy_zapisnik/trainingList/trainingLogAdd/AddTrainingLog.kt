@@ -173,8 +173,6 @@ class AddTrainingLog : Fragment() {
             }
         }
 
-        //binding.numberPicker.setOnClickListener(view.setOnClickListener { fun onClick(view:View) {} })
-
         binding.timeButton.setOnClickListener{ setTime() }
         binding.dateButton.setOnClickListener{ setDate() }
 
