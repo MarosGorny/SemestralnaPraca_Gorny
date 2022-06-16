@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -127,6 +128,28 @@ class AddTrainingLog : Fragment() {
         }
     }
 
+    private fun setTime() {
+        val cal = Calendar.getInstance()
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            binding.timeButton.text = SimpleDateFormat("HH:mm").format(cal.time)
+        }
+        TimePickerDialog(requireContext(), timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+    }
+
+
+    private fun setDate() {
+        val cal = Calendar.getInstance()
+        val dateSetListener = DatePickerDialog.OnDateSetListener { datePicker,year, monthOfYear, dayOfMonth ->
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, monthOfYear)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            binding.dateButton.text = SimpleDateFormat("dd.MM.yyyy").format(cal.time)
+        }
+        DatePickerDialog(requireContext(),dateSetListener,cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
+    }
+
 
     /**
      * Called when the view is created.
@@ -148,6 +171,9 @@ class AddTrainingLog : Fragment() {
                 addNewTrainingLogRow()
             }
         }
+        binding.timeButton.setOnClickListener{ setTime() }
+        binding.dateButton.setOnClickListener{ setDate() }
+
     }
 
     /**
