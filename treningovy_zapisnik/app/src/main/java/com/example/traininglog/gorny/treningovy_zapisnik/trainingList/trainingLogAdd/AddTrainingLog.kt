@@ -2,12 +2,8 @@ package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingL
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.ClipData
 import android.content.Context
-import android.content.Intent
-import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +16,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentAddTrainingLogBinding
+import com.example.traininglog.gorny.treningovy_zapisnik.parseDurationNumbersToString
+import com.example.traininglog.gorny.treningovy_zapisnik.parseDurationStringToHashMap
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetailArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
@@ -86,7 +84,11 @@ class AddTrainingLog : Fragment() {
             dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
             timeButton.setText(trainingLogRow.timeOfLog,TextView.BufferType.SPANNABLE)
             distanceInputNumber.setText(trainingLogRow.distance.toString(),TextView.BufferType.SPANNABLE)
-            durationInputTime.setText(trainingLogRow.durationOfLog,TextView.BufferType.SPANNABLE)
+
+            val hashMap: HashMap<String,Int> = parseDurationStringToHashMap(trainingLogRow.durationOfLog.toString())
+            numberPickerHour.value = hashMap["Hour"]!!
+            numberPickerMinutes.value =hashMap["Minute"]!!
+            numberPickerSeconds.value = hashMap["Second"]!!
 
 
             buttonDone.setOnClickListener{updateTrainingLogRow()}
@@ -102,7 +104,10 @@ class AddTrainingLog : Fragment() {
                 binding.typeActivityTitle.text.toString(),
                 binding.dateButton.text.toString(),
                 binding.timeButton.text.toString(),
-                binding.durationInputTime.text.toString(),
+                parseDurationNumbersToString(
+                    binding.numberPickerHour.value,
+                    binding.numberPickerMinutes.value,
+                    binding.numberPickerSeconds.value),
                 binding.distanceInputNumber.text.toString().toDouble()
             )
 
@@ -120,7 +125,10 @@ class AddTrainingLog : Fragment() {
                 this.binding.typeActivityTitle.text.toString(),
                 this.binding.dateButton.text.toString(),
                 this.binding.timeButton.text.toString(),
-            this.binding.durationInputTime.text.toString(),
+                parseDurationNumbersToString(
+                    this.binding.numberPickerHour.value,
+                    this.binding.numberPickerMinutes.value,
+                    this.binding.numberPickerSeconds.value),
             this.binding.distanceActivityTitle.text.toString(),
             this.binding.distanceInputNumber.text.toString().toDouble(),
             "Treba nastait",
