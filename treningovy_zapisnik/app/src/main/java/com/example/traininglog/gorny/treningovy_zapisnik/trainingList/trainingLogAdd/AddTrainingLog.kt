@@ -139,6 +139,7 @@ class AddTrainingLog : Fragment() {
     }
 
 
+
     private fun setDate() {
         val cal = Calendar.getInstance()
         val dateSetListener = DatePickerDialog.OnDateSetListener { datePicker,year, monthOfYear, dayOfMonth ->
@@ -171,6 +172,9 @@ class AddTrainingLog : Fragment() {
                 addNewTrainingLogRow()
             }
         }
+
+        //binding.numberPicker.setOnClickListener(view.setOnClickListener { fun onClick(view:View) {} })
+
         binding.timeButton.setOnClickListener{ setTime() }
         binding.dateButton.setOnClickListener{ setDate() }
 
