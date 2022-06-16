@@ -11,7 +11,7 @@ import java.util.*
  */
 @Entity
 data class TrainingLogRow(
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
     val id:Long =0L,
 
     @ColumnInfo(name = "log_type_title")

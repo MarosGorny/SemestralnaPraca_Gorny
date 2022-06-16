@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [TrainingLogRow::class], version = 1, exportSchema = false)
+@Database(entities = [TrainingLogRow::class], version = 2, exportSchema = false)
 abstract class TrainingLogRowDatabase: RoomDatabase() {
 
     abstract fun trainingLogRowDao(): TrainingLogRowDao
@@ -28,8 +28,8 @@ abstract class TrainingLogRowDatabase: RoomDatabase() {
                 )
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
-                    //.fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    //.allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 // return instance
