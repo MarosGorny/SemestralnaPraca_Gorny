@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,14 @@ import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLo
 
 import java.text.SimpleDateFormat
 import java.util.*
+
+
+const val TYPE_OF_LOG = "typeOfLog"
+const val DATE_OF_LOG = "dateOfLog"
+const val TIME_OF_LOG = "timeOfLog"
+const val HOUR_OF_DURATION = "hourOfDuration"
+const val MINUTE_OF_DURATION = "minuteOfDuration"
+const val SECOND_OF_DURATION = "secondOfDuration"
 
 /**
  * Fragment to add or update an item in the Inventory database.
@@ -56,6 +65,24 @@ class AddTrainingLog : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentAddTrainingLogBinding.inflate(inflater,container,false)
+        Log.i("onCreateView","")
+        if (savedInstanceState != null) {
+            Log.i("onCreateViewIn","")
+            Log.i("TEXT-IN",binding.typeActivityTitle.text.toString())
+            when(savedInstanceState.getString(TYPE_OF_LOG)) {
+                "Run" -> binding.activityOptions.check(R.id.option_run)
+                "Bike" -> binding.activityOptions.check(R.id.option_bike)
+                "Swim" -> binding.activityOptions.check(R.id.option_swim)
+            }
+
+            binding.dateButton.text = savedInstanceState.getString(DATE_OF_LOG)
+            binding.timeButton.text = savedInstanceState.getString(TIME_OF_LOG)
+            binding.numberPickerHour.value = savedInstanceState.getInt(HOUR_OF_DURATION)
+            binding.numberPickerMinutes.value = savedInstanceState.getInt(MINUTE_OF_DURATION)
+            binding.numberPickerSeconds.value = savedInstanceState.getInt(SECOND_OF_DURATION)
+
+        }
+
         return binding.root
 
     }
@@ -75,16 +102,6 @@ class AddTrainingLog : Fragment() {
     private fun bind(trainingLogRow: TrainingLogRow) {
 
         binding.apply {
-
-            /*          TOTO TU TEORETICKY ASI NEMUSI BYT
-            if (binding.optionBike.isChecked)
-                typeActivityTitle.setText("Bike",TextView.BufferType.SPANNABLE)
-            else if (binding.optionRun.isChecked)
-                typeActivityTitle.setText("Run",TextView.BufferType.SPANNABLE)
-            else if (binding.optionSwim.isChecked)
-                typeActivityTitle.setText("Swim",TextView.BufferType.SPANNABLE)
-
-             */
 
             dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
             timeButton.setText(trainingLogRow.timeOfLog,TextView.BufferType.SPANNABLE)
@@ -126,7 +143,8 @@ class AddTrainingLog : Fragment() {
      */
     private fun updateTrainingLogRow() {
         if (isEntryValid()) {
-            viewModel.updateTrainingLogRow(                this.navigationArgs.logId,
+            viewModel.updateTrainingLogRow(
+                this.navigationArgs.logId,
                 this.binding.typeActivityTitle.text.toString(),
                 this.binding.dateButton.text.toString(),
                 this.binding.timeButton.text.toString(),
@@ -151,8 +169,6 @@ class AddTrainingLog : Fragment() {
         TimePickerDialog(requireContext(), timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
-
-
     private fun setDate() {
         val cal = Calendar.getInstance()
         val dateSetListener = DatePickerDialog.OnDateSetListener { datePicker,year, monthOfYear, dayOfMonth ->
@@ -164,7 +180,6 @@ class AddTrainingLog : Fragment() {
         DatePickerDialog(requireContext(),dateSetListener,cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
-
     /**
      * Called when the view is created.
      * The itemId Navigation argument determines the edit item  or add new item.
@@ -172,17 +187,21 @@ class AddTrainingLog : Fragment() {
      * allows the user to update it.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.i("onViewCreated","")
+        Log.i("onViewCreated",binding.typeActivityTitle.text.toString())
         super.onViewCreated(view, savedInstanceState)
 
         val id = navigationArgs.logId
         if (id > 0) {
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {selectedTrainingLog ->
                 trainingLogRow = selectedTrainingLog
+                Log.i("onViewCreatedObserver",trainingLogRow.logTypeTitle)
                 bind(trainingLogRow)
         }
         } else {
             binding.buttonDone.setOnClickListener {
                 addNewTrainingLogRow()
+                Log.i("onViewCreatedObserELSE",trainingLogRow.logTypeTitle)
             }
         }
 
@@ -217,6 +236,7 @@ class AddTrainingLog : Fragment() {
      * Called before fragment is destroyed.
      */
     override fun onDestroyView() {
+        Log.i("onDestroyView","")
         super.onDestroyView()
         // Hide keyboard.
         val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as
@@ -225,6 +245,16 @@ class AddTrainingLog : Fragment() {
         _binding = null
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.i("onSaveInstanceState","")
+        super.onSaveInstanceState(outState)
+        outState.putString(TYPE_OF_LOG,binding.typeActivityTitle.text.toString())
+        outState.putString(DATE_OF_LOG,binding.dateButton.text.toString())
+        outState.putString(TIME_OF_LOG,binding.timeButton.text.toString())
+        outState.putInt(HOUR_OF_DURATION,binding.numberPickerHour.value)
+        outState.putInt(MINUTE_OF_DURATION,binding.numberPickerMinutes.value)
+        outState.putInt(SECOND_OF_DURATION,binding.numberPickerSeconds.value)
 
-
+        Log.i("TEXT-OUT",binding.typeActivityTitle.text.toString())
+    }
 }
