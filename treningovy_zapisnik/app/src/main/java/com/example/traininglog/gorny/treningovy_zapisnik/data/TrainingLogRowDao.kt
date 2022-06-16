@@ -21,9 +21,9 @@ interface TrainingLogRowDao {
     suspend fun insert(log: TrainingLogRow)
 
     @Update
-    fun update(log: TrainingLogRow)
+    suspend fun update(log: TrainingLogRow)
 
     @Delete
-    fun delete(log:TrainingLogRow)
+    suspend fun delete(log:TrainingLogRow)
 
 }

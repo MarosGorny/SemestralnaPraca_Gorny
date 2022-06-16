@@ -30,7 +30,7 @@ data class TrainingLogRow(
     val durationOfLog:String,
 
     @ColumnInfo(name = "distance_title")
-    val distanceMetricTitle:String = "unknown",
+    val distanceMetricTitle:String = "unkdnownfffffffff",
 
     @ColumnInfo(name = "distance_of_workout")
     val distance:Double,

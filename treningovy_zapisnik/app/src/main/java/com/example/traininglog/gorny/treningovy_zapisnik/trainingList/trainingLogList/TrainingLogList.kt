@@ -62,6 +62,7 @@ class TrainingLogList : Fragment() {
         viewModel.allTrainingLogs.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 trainingLogsRowsAdapter.submitList(it)
+                headerAdapter.updateTrainingLogCount(it.size)
             }
         }
 
