@@ -4,6 +4,8 @@ import android.content.ClipData
 import androidx.lifecycle.*
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
+import com.example.traininglog.gorny.treningovy_zapisnik.R
+import com.example.traininglog.gorny.treningovy_zapisnik.calcucalteRunPace
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
 import kotlinx.coroutines.launch
@@ -109,12 +111,31 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
      * This will be used to add a new entry to the TrainingLogRow database.
      */
     private fun getNewTrainingLogEntry(logType: String, date: String, time: String,duration: String,distance:Double): TrainingLogRow {
+        var fourthColumnTitle:String = "empty"
+        var fourthColumnStats:String  = "empty"
+
+        when(logType) {
+            "Run" -> {
+                fourthColumnTitle = "min/km"
+                fourthColumnStats = calcucalteRunPace(distance,duration)
+            }
+            "Bike" -> {
+                fourthColumnTitle = "km/h"
+            }
+            "Swim" -> {
+                fourthColumnTitle = "min/100m"
+            }
+        }
+
+
         return TrainingLogRow(
             logTypeTitle = logType,
             dateOfLog = date,
             timeOfLog = time,
             durationOfLog = duration,
-            distance = distance
+            distance = distance,
+            fourthColumnTitle = fourthColumnTitle,
+            fourthColumnMinPKm = fourthColumnStats
         )
     }
 

@@ -81,6 +81,7 @@ class AddTrainingLog : Fragment() {
             binding.numberPickerMinutes.value = savedInstanceState.getInt(MINUTE_OF_DURATION)
             binding.numberPickerSeconds.value = savedInstanceState.getInt(SECOND_OF_DURATION)
 
+
         }
 
         return binding.root
@@ -97,21 +98,26 @@ class AddTrainingLog : Fragment() {
     }
 
     /**
-     * Binds views with the passed in [item] information.
+     * Binds views with the passed in TrainingLog information.
      */
     private fun bind(trainingLogRow: TrainingLogRow) {
 
         binding.apply {
 
-            dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
+            when(trainingLogRow.logTypeTitle) {
+                "Run" -> activityOptions.check(R.id.option_run)
+                "Bike" -> activityOptions.check(R.id.option_bike)
+                "Swim" -> activityOptions.check(R.id.option_swim)
+            }
+
             timeButton.setText(trainingLogRow.timeOfLog,TextView.BufferType.SPANNABLE)
+            dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
             distanceInputNumber.setText(trainingLogRow.distance.toString(),TextView.BufferType.SPANNABLE)
 
             val hashMap: HashMap<String,Int> = parseDurationStringToHashMap(trainingLogRow.durationOfLog.toString())
             numberPickerHour.value = hashMap["Hour"]!!
             numberPickerMinutes.value =hashMap["Minute"]!!
             numberPickerSeconds.value = hashMap["Second"]!!
-
 
             buttonDone.setOnClickListener{updateTrainingLogRow()}
         }
@@ -135,6 +141,8 @@ class AddTrainingLog : Fragment() {
 
             val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
             findNavController().navigate(action)
+        } else {
+            Toast.makeText(requireContext(),"Distance is required!",Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -201,7 +209,6 @@ class AddTrainingLog : Fragment() {
         } else {
             binding.buttonDone.setOnClickListener {
                 addNewTrainingLogRow()
-                Log.i("onViewCreatedObserELSE",trainingLogRow.logTypeTitle)
             }
         }
 
@@ -212,6 +219,7 @@ class AddTrainingLog : Fragment() {
     }
 
     private fun changeTitleTypeByRadioButton() {
+        //Sometimes can happen that it is changed in advance
         if (binding.optionBike.isChecked)
             binding.typeActivityTitle.text = "Bike"
         else if (binding.optionRun.isChecked)

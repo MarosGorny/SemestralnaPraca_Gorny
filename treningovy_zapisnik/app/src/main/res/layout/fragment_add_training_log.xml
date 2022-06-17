@@ -167,8 +167,8 @@
             android:gravity="center|bottom"
             android:hint="distance of your workout"
             android:inputType="numberDecimal"
-            android:textSize="16sp" />
-
+            android:textSize="16sp"
+            />
 
     </LinearLayout>
 

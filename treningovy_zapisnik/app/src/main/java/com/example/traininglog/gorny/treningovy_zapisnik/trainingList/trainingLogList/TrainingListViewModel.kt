@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.traininglog.gorny.treningovy_zapisnik.calcucalteRunPace
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import java.time.LocalDateTime
@@ -106,7 +107,7 @@ class TrainingListViewModelFactory(private val context: Context) : ViewModelProv
     }
 }
 
-fun calcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
+fun ddcalcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
     val seconds = durationOfRun.substring(6,8).toInt()
     val minutes = durationOfRun.substring(3,5).toInt()
     val hours = durationOfRun.substring(0,2).toInt()
