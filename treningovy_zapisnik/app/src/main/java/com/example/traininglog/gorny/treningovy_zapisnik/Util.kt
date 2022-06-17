@@ -1,5 +1,9 @@
 package com.example.traininglog.gorny.treningovy_zapisnik
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -40,3 +44,22 @@ fun calcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
 
     return "$paceMin:$paceSecond"
 }
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun getCurrentDate():String {
+    var formattedTime:String = ""
+    val current = LocalDateTime.now()
+    val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
+    formattedTime = current.format(formatterTime)
+    return formattedTime
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun getCurrentTime():String {
+    var formattedDate:String = ""
+    val current = LocalDateTime.now()
+    val formatterDate = DateTimeFormatter.ofPattern("dd.MM.YY")
+    formattedDate = current.format(formatterDate)
+    return formattedDate
+}
+

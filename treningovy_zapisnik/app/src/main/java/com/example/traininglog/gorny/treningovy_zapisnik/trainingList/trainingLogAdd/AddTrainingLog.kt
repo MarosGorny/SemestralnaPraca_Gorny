@@ -3,6 +3,7 @@ package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingL
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -126,6 +128,7 @@ class AddTrainingLog : Fragment() {
     /**
      * Inserts the new Item into database and navigates up to list fragment.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addNewTrainingLogRow() {
         if (isEntryValid()) {
             viewModel.addNewTrainingLogRow(

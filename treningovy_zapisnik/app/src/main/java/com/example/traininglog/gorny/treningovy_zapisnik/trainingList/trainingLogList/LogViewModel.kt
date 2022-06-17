@@ -1,6 +1,8 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
 import android.content.ClipData
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
@@ -8,6 +10,8 @@ import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.calcucalteRunPace
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
+import com.example.traininglog.gorny.treningovy_zapisnik.getCurrentDate
+import com.example.traininglog.gorny.treningovy_zapisnik.getCurrentTime
 import kotlinx.coroutines.launch
 
 
@@ -59,6 +63,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
     /**
      * Inserts the new TrainingLogRow into database.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addNewTrainingLogRow(
                                      logTypeTitle:String,
                                      dateOfLog:String,
@@ -110,9 +115,16 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
      * Returns an instance of the TrainingLogRow entity class with the item info entered by the user.
      * This will be used to add a new entry to the TrainingLogRow database.
      */
-    private fun getNewTrainingLogEntry(logType: String, date: String, time: String,duration: String,distance:Double): TrainingLogRow {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getNewTrainingLogEntry(logType: String, date: String, time: String, duration: String, distance:Double): TrainingLogRow {
         var fourthColumnTitle:String = "empty"
         var fourthColumnStats:String  = "empty"
+        var newDate:String = date
+        var newTime:String = time
+        if (date.uppercase() == "SELECT DATE")
+            newDate = getCurrentDate()
+        if(time.uppercase() == "SELECT TIME")
+            newTime = getCurrentTime()
 
         when(logType) {
             "Run" -> {
@@ -130,8 +142,8 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
 
         return TrainingLogRow(
             logTypeTitle = logType,
-            dateOfLog = date,
-            timeOfLog = time,
+            dateOfLog = newDate,
+            timeOfLog = newTime,
             durationOfLog = duration,
             distance = distance,
             fourthColumnTitle = fourthColumnTitle,
