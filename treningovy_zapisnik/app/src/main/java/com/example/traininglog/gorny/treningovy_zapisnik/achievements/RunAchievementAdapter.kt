@@ -1,9 +1,11 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.achievements
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,8 +23,11 @@ class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private val description: TextView = itemView.findViewById(R.id.achievement_description)
         private val imageOftype: ImageView = itemView.findViewById(R.id.achievement_image)
+        val linearLayout: LinearLayout = itemView.findViewById(R.id.achievement_linear_layout)
+
 
         private var currentAchievementRow: AchievementRow? =null
+
 
         init {
             itemView.setOnClickListener {
@@ -35,6 +40,7 @@ class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
         /*Bind achievements stats*/
         fun bind(runAchievement: AchievementRow) {
             currentAchievementRow = runAchievement
+
 
             description.text = runAchievement.description
             imageOftype.setImageResource(runAchievement.imageOfType)
@@ -53,13 +59,14 @@ class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
     /* Gets current achievement and uses it to bind view. */
     override fun onBindViewHolder(holder: RunAchievementViewHolder, position: Int) {
         val runAchievement = getItem(position)
+        if(runAchievement.current >= runAchievement.max)
+            holder.linearLayout.setBackgroundColor(Color.GREEN)
+        else
+            holder.linearLayout.setBackgroundColor(Color.WHITE)
+
         holder.bind(runAchievement)
     }
 
-    /* Returns number of items, but there is just only, hence return one */
-    override fun getItemCount(): Int {
-        return 1
-    }
 
     fun updateDistanceOfRunning(updatedDistanceOfRunning: Double) {
         totalDistanceRunning = updatedDistanceOfRunning

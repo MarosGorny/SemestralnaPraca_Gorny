@@ -19,9 +19,15 @@ class DataSource(resources: Resources) {
         return _distanceOfRunning
     }
 
+    fun getDistanceOfBike(): LiveData<Double> {
+        return _distanceOfBike
+    }
+
     fun addDistance(logType: String, distance:Double) {
         when(logType) {
             "Run" -> _distanceOfRunning.value = _distanceOfRunning.value?.plus(distance)
+            "Bike" -> _distanceOfBike.value = _distanceOfBike.value?.plus(distance)
+            "Swim" -> _distanceOfSwim.value = _distanceOfSwim.value?.plus(distance)
         }
     }
 
@@ -39,8 +45,6 @@ class DataSource(resources: Resources) {
             trainingLogsLiveData.postValue(updatedList)
         }
     }
-
-
 
     /*Removes training log from liveData and post value. */
     fun removeTrainingLog(trainingLog: TrainingLogRow) {
@@ -63,18 +67,13 @@ class DataSource(resources: Resources) {
         return null
     }
 
-    fun getTotalDistanceByType(logType:String):Double {
-        var totalDistance:Double = 0.0
-        val trainingList = trainingLogsLiveData.value
-        if(trainingList != null) {
-            trainingList.toMutableList()
-            for (item in trainingList) {
-                if (item.logTypeTitle == logType) {
-                    totalDistance += item.distance
-                }
-            }
+    fun getAchievementById(id: Int): AchievementRow? {
+
+        runAchievementsLiveData.value?.let {  achievementLogs ->
+            //Returns the first element matching the given predicate, or null if element was not found.
+            return achievementLogs.firstOrNull{it.id == id}
         }
-        return totalDistance
+        return null
     }
 
     fun getTrainingLogList(): LiveData<List<TrainingLogRow>> {

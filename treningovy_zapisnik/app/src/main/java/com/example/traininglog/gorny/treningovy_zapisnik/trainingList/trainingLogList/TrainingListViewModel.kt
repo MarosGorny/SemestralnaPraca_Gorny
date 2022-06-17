@@ -107,17 +107,3 @@ class TrainingListViewModelFactory(private val context: Context) : ViewModelProv
     }
 }
 
-fun ddcalcucalteRunPace(distaneOfRun:Double, durationOfRun: String): String {
-    val seconds = durationOfRun.substring(6,8).toInt()
-    val minutes = durationOfRun.substring(3,5).toInt()
-    val hours = durationOfRun.substring(0,2).toInt()
-
-    val totalSeconds = seconds + minutes*60 + hours*60*60
-    val secPerKm =  totalSeconds/distaneOfRun
-
-    val paceMin = floor ((secPerKm/60)).toInt()
-    //TODO Treba zaokruhlit na hor na dve desatinne miesta - paceSecond
-    val paceSecond = ceil ( ((secPerKm/60)-paceMin)*60).toInt().toString().take(2)
-
-    return "$paceMin:$paceSecond"
-}
