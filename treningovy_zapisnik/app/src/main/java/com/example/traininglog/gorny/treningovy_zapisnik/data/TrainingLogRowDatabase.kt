@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [TrainingLogRow::class], version = 2, exportSchema = false)
+@Database(entities = [TrainingLogRow::class], version = 3, exportSchema = false)
 abstract class TrainingLogRowDatabase: RoomDatabase() {
 
     abstract fun trainingLogRowDao(): TrainingLogRowDao

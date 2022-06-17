@@ -11,6 +11,19 @@ class DataSource(resources: Resources) {
     private val initialAchievementList = runAchievementList(resources)
     private val runAchievementsLiveData = MutableLiveData(initialAchievementList)
 
+    private val _distanceOfRunning = MutableLiveData<Double>()
+    private var _distanceOfBike = MutableLiveData<Double>()
+    private var _distanceOfSwim = MutableLiveData<Double>()
+
+    fun getDistanceOfRunning(): LiveData<Double> {
+        return _distanceOfRunning
+    }
+
+    fun addDistance(logType: String, distance:Double) {
+        when(logType) {
+            "Run" -> _distanceOfRunning.value = _distanceOfRunning.value?.plus(distance)
+        }
+    }
 
 
     /* Adds training log to liveData and posts value. */
@@ -26,6 +39,8 @@ class DataSource(resources: Resources) {
             trainingLogsLiveData.postValue(updatedList)
         }
     }
+
+
 
     /*Removes training log from liveData and post value. */
     fun removeTrainingLog(trainingLog: TrainingLogRow) {

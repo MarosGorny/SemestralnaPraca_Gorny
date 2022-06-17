@@ -47,7 +47,8 @@ class AddTrainingLog : Fragment() {
     // to share the ViewModel across fragments.
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
-            (activity?.application as LogListApplication).database.trainingLogRowDao()
+            (activity?.application as LogListApplication).database.trainingLogRowDao(),
+            requireContext()
         )
     }
 
@@ -197,6 +198,7 @@ class AddTrainingLog : Fragment() {
      * If the itemId is positive, this method retrieves the information from the database and
      * allows the user to update it.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.i("onViewCreated","")
         Log.i("onViewCreated",binding.typeActivityTitle.text.toString())

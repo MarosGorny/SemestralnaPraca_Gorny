@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.traininglog.gorny.treningovy_zapisnik.R
+import com.example.traininglog.gorny.treningovy_zapisnik.achievements.RunAchievementAdapter
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTraininglogListBinding
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
@@ -25,7 +27,8 @@ class TrainingLogList : Fragment() {
 
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
-            (activity?.application as LogListApplication).database.trainingLogRowDao()
+            (activity?.application as LogListApplication).database.trainingLogRowDao(),
+            requireContext()
         )
     }
 
@@ -63,8 +66,10 @@ class TrainingLogList : Fragment() {
             items.let {
                 trainingLogsRowsAdapter.submitList(it)
                 headerAdapter.updateTrainingLogCount(it.size)
+
             }
         }
+
 
         binding.floatingButtonAdd.setOnClickListener {
             val action = TrainingLogListDirections.actionMainFragmentToAddTrainingLog("Add training log")

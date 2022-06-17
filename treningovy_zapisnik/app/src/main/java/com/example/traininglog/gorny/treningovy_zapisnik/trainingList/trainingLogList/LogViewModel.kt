@@ -1,9 +1,11 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.traininglog.gorny.treningovy_zapisnik.*
+import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
 import kotlinx.coroutines.launch
@@ -12,17 +14,21 @@ import kotlinx.coroutines.launch
 /**
  * View Model to keep a reference to the Inventory repository and an up-to-date list of all items.
  */
-class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel() {
+class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSource: DataSource) : ViewModel() {
 
+    val trainingLogsLiveData = dataSource.getTrainingLogList()
+    val runningDistanceLiveData = dataSource.getDistanceOfRunning()
 
     // Cache all items form the database using LiveData.
     val allTrainingLogs: LiveData<List<TrainingLogRow>> = trainingLogRowDao.getItems().asLiveData()
+
 
     /**
      * Returns true if distance is empty, false otherwise.
      */
     fun isDistanceEmpty(trainingLogRow: TrainingLogRow): Boolean {
         return trainingLogRow.distance.isNaN()
+
     }
 
 
@@ -77,6 +83,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
         viewModelScope.launch {
             trainingLogRowDao.insert(trainingLogRow)
         }
+        dataSource.addDistance(trainingLogRow.logTypeTitle,trainingLogRow.distance)
     }
 
     /**
@@ -93,6 +100,11 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
      */
     fun retrieveItem(id: Long): LiveData<TrainingLogRow> {
         return trainingLogRowDao.getItem(id).asLiveData()
+    }
+
+    fun getDistance(logType: String): LiveData<Double> {
+
+            return trainingLogRowDao.getDistance("Run").asLiveData()
     }
 
     /**
@@ -119,7 +131,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
         var newTime:String = time
         if (date.uppercase() == "SELECT DATE")
             newDate = getCurrentDate()
-        if(time.uppercase() == "SELECT TIME")
+        if (time.uppercase() == "SELECT TIME")
             newTime = getCurrentTime()
 
         when(logType) {
@@ -182,11 +194,14 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
 /**
  * Factory class to instantiate the ViewModel instance.
  */
-class LogViewModelFactory(private val trainingLogRowDao: TrainingLogRowDao) : ViewModelProvider.Factory {
+class LogViewModelFactory(private val trainingLogRowDao: TrainingLogRowDao,private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LogViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return LogViewModel(trainingLogRowDao) as T
+            return LogViewModel(
+                trainingLogRowDao,
+                dataSource = DataSource.getDataSource(context.resources)
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

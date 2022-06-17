@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,14 +20,30 @@ import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.runAchievementList
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
+import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModelFactory
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RunAchievementList : Fragment() {
 
+    private var _totalDistance: Double = 0.0
+
     private val runAchievementViewModel by viewModels<RunAchievementListViewModel> {
-        RunAchievementListViewModelFactory(requireContext())
+        RunAchievementListViewModelFactory(
+            (activity?.application as LogListApplication).database.trainingLogRowDao(),
+            requireContext())
+    }
+
+    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
+    // to share the ViewModel across fragments.
+    private val viewModel: LogViewModel by activityViewModels {
+        LogViewModelFactory(
+            (activity?.application as LogListApplication).database.trainingLogRowDao(),
+            requireContext()
+        )
     }
 
 
@@ -40,18 +58,40 @@ class RunAchievementList : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.achievement_list)
         recyclerView.adapter = runAchievementsAdapter
+        Log.i("DISTANCE","OncReateView")
+        var something:String = ""
 
-        runAchievementViewModel.runAchievemetsLiveData.observe(viewLifecycleOwner, {
+        runAchievementViewModel.runTotalDistanceLiveData.observe(viewLifecycleOwner) { totalDistance ->
+            something = totalDistance.toString()
+            Log.i("DISTANCE", "insideeeeeee")
+            Log.i("DISTANCE", viewModel.getDistance("Run").toString())
+        }
+
+        runAchievementViewModel.runAchievemetsLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 runAchievementsAdapter.submitList(it as MutableList<AchievementRow>)
+                Log.i("DISTANCE1",viewModel.getDistance("Run").toString())
             }
-        })
+        }
+
+        //FIXME HERE IT IS WORKING
+        viewModel.getDistance("Run").observe(this.viewLifecycleOwner) {totalDistance ->
+            _totalDistance = totalDistance
+            Log.i("DISTANCE1",_totalDistance.toString())
+        }
+
+
 
         //view.findViewById<FloatingActionButton>(R.id.floatingButtonAdd).setOnClickListener {
         //    findNavController().navigate(R.id.action_mainFragment_to_addTrainingLog)
         //}
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //viewModel.getDistance("Run")
     }
 
     /* Opens XXXXXXXXXXXXXXX when AchievementRow item is clicked. */
@@ -63,59 +103,5 @@ class RunAchievementList : Fragment() {
     }
 
 }
-//class RunAchievementAdapter(private val myDataset: Array<AchievementRow>)
-class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
-    ListAdapter<AchievementRow,RunAchievementAdapter.RunAchievementViewHolder>(
-        RunAchievementDiffCallback
-    ) {
-    class RunAchievementViewHolder(itemView: View, val onClick: (AchievementRow) -> Unit) :
-        RecyclerView.ViewHolder(itemView) {
-        private val description:TextView = itemView.findViewById(R.id.achievement_description)
-        private val imageOftype:ImageView = itemView.findViewById(R.id.achievement_image)
 
-        private var currentAchievemntRov: AchievementRow? =null
-
-        init {
-            itemView.setOnClickListener {
-                currentAchievemntRov?.let {
-                    onClick(it)
-                }
-            }
-        }
-
-        /*Bind achievements stats*/
-        fun bind(runAchievement: AchievementRow) {
-            currentAchievemntRov = runAchievement
-
-            description.text = runAchievement.description
-            imageOftype.setImageResource(runAchievement.imageOfType)
-        }
-    }
-
-        /* Creates and inflates view and return RunAchievementViewHolder */
-        override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
-        ): RunAchievementViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.achievement_item,parent,false)
-            return RunAchievementViewHolder(view,onClick)
-        }
-
-        /* Gets current achievement and uses it to bind view. */
-        override fun onBindViewHolder(holder: RunAchievementViewHolder, position: Int) {
-            val runAchievement = getItem(position)
-            holder.bind(runAchievement)
-        }
-
-}
-
-object RunAchievementDiffCallback: DiffUtil.ItemCallback<AchievementRow>() {
-    override fun areItemsTheSame(oldItem: AchievementRow, newItem: AchievementRow): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: AchievementRow, newItem: AchievementRow): Boolean {
-        return oldItem.id == newItem.id
-    }
-}
 
