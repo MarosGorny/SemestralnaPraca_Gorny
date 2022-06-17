@@ -1,17 +1,11 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
-import android.content.ClipData
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import com.example.traininglog.gorny.treningovy_zapisnik.R
-import com.example.traininglog.gorny.treningovy_zapisnik.calcucalteRunPace
+import com.example.traininglog.gorny.treningovy_zapisnik.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
-import com.example.traininglog.gorny.treningovy_zapisnik.getCurrentDate
-import com.example.traininglog.gorny.treningovy_zapisnik.getCurrentTime
 import kotlinx.coroutines.launch
 
 
@@ -105,9 +99,11 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
      * Returns true if the Distance EditText is not empty
      */
     fun isEntryValid(distance: String): Boolean {
-        if (distance.isBlank()) {
+        if (distance.isBlank() ) {
             return false
         }
+        if(distance.toDouble() == 0.0)
+            return false
         return true
     }
 
@@ -129,13 +125,15 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
         when(logType) {
             "Run" -> {
                 fourthColumnTitle = "min/km"
-                fourthColumnStats = calcucalteRunPace(distance,duration)
+                fourthColumnStats = calculateRunPace(distance,duration)
             }
             "Bike" -> {
                 fourthColumnTitle = "km/h"
+                fourthColumnStats = calculateKilometerPerHour(distance,duration)
             }
             "Swim" -> {
                 fourthColumnTitle = "min/100m"
+                fourthColumnStats = calculateSwimPace100m(distance,duration)
             }
         }
 

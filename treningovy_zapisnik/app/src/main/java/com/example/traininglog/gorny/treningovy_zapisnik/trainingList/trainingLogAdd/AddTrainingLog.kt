@@ -204,6 +204,7 @@ class AddTrainingLog : Fragment() {
 
         val id = navigationArgs.logId
         if (id > 0) {
+            //TODO tu sa meni radio button na Run, z nejakeho dovodu, alebo teda na default TYPE
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {selectedTrainingLog ->
                 trainingLogRow = selectedTrainingLog
                 Log.i("onViewCreatedObserver",trainingLogRow.logTypeTitle)

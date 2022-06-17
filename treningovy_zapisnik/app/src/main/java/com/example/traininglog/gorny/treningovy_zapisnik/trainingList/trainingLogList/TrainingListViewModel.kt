@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.traininglog.gorny.treningovy_zapisnik.calcucalteRunPace
+import com.example.traininglog.gorny.treningovy_zapisnik.calculateRunPace
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import java.time.LocalDateTime
@@ -63,7 +63,7 @@ class TrainingListViewModel(val dataSource: DataSource) : ViewModel() {
 
         if (logType == "Run" ) {
             newStatsTitle = "min/km"
-            newStats = calcucalteRunPace(newDistance,newDuration)
+            newStats = calculateRunPace(newDistance,newDuration)
         }  else if (logType == "Swim") {
             newStatsTitle = "min/100m"
             newStats = "trebaVypoct"
