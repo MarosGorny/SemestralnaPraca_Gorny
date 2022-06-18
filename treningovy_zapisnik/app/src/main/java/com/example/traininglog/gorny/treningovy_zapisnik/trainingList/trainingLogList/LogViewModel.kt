@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.traininglog.gorny.treningovy_zapisnik.*
+import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementDao
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 /**
  * View Model to keep a reference to the Inventory repository and an up-to-date list of all items.
  */
-class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel() {
+class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val achievementDao: AchievementDao) : ViewModel() {
 
 
     // Cache all items form the database using LiveData.
@@ -80,10 +81,14 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
      * Launching a new coroutine to insert a trainingLogRow in a non-blocking way
      */
     private fun insertItem(trainingLogRow: TrainingLogRow) {
+        val logType:String = trainingLogRow.logTypeTitle
+        val distance:Double = trainingLogRow.distance
         viewModelScope.launch {
             trainingLogRowDao.insert(trainingLogRow)
+            achievementDao.updateCurrent("Duration",logType,distance)
+            achievementDao.updateCompletedStatus()
         }
-        //dataSource.addDistance(trainingLogRow.logTypeTitle,trainingLogRow.distance)
+
     }
 
     /**
@@ -204,12 +209,13 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel
 /**
  * Factory class to instantiate the ViewModel instance.
  */
-class LogViewModelFactory(private val trainingLogRowDao: TrainingLogRowDao) : ViewModelProvider.Factory {
+class LogViewModelFactory(private val trainingLogRowDao: TrainingLogRowDao, private val achievementDao: AchievementDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LogViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return LogViewModel(
                 trainingLogRowDao,
+                achievementDao
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

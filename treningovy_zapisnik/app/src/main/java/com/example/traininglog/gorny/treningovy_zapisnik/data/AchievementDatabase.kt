@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [AchievementRow::class], version = 3, exportSchema = false)
+@Database(entities = [AchievementRow::class], version = 4, exportSchema = false)
 abstract class AchievementDatabase: RoomDatabase() {
 
     abstract fun achievementDao(): AchievementDao

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AchievementDao {
 
-    @Query("SELECT * from achievements ORDER BY current ASC")
+    @Query("SELECT * from achievements ORDER BY current DESC")
     fun getItems(): Flow<List<AchievementRow>>
 
     @Query("SELECT * from achievements WHERE id = :id")
@@ -20,12 +20,12 @@ interface AchievementDao {
             "SET current = current + :addedValue " +
             "WHERE achType = :achType " +
             "AND  logType = :logType")
-    fun updateCurrent(achType: String,logType:String, addedValue:Double )
+    suspend fun updateCurrent(achType: String,logType:String, addedValue:Double )
 
     @Query("UPDATE achievements " +
             "SET completed = CASE " +
             "WHEN current >= max THEN 1 ELSE 0 END")
-    fun updateCompletedStatus()
+    suspend fun updateCompletedStatus()
 
 
     // Specify the conflict strategy as IGNORE, when the user tries to add an

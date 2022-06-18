@@ -22,7 +22,8 @@ class TrainingLogList : Fragment() {
 
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
-            (activity?.application as LogListApplication).database.trainingLogRowDao()
+            (activity?.application as LogListApplication).database.trainingLogRowDao(),
+            (activity?.application as LogListApplication).databaseAchievements.achievementDao(),
         )
     }
 
