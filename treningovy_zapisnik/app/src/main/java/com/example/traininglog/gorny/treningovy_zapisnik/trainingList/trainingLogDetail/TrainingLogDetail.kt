@@ -18,8 +18,6 @@ import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTra
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModelFactory
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**

@@ -78,7 +78,7 @@ fun calculateKilometerPerHour(kilometers:Double, durationOfBike:String): String 
 fun getCurrentDate():String {
     var formattedTime:String = ""
     val current = LocalDateTime.now()
-    val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
+    val formatterTime = DateTimeFormatter.ofPattern("dd.MM.y")
     formattedTime = current.format(formatterTime)
     return formattedTime
 }
@@ -87,8 +87,9 @@ fun getCurrentDate():String {
 fun getCurrentTime():String {
     var formattedDate:String = ""
     val current = LocalDateTime.now()
-    val formatterDate = DateTimeFormatter.ofPattern("dd.MM.YY")
+    val formatterDate = DateTimeFormatter.ofPattern("HH:mm")
     formattedDate = current.format(formatterDate)
     return formattedDate
 }
+
 

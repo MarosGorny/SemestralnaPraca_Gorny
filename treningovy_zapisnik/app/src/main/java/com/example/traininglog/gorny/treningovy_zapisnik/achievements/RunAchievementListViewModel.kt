@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingListViewModel
 import kotlinx.coroutines.launch
 
 class RunAchievementListViewModel(val dataSource: DataSource) : ViewModel() {

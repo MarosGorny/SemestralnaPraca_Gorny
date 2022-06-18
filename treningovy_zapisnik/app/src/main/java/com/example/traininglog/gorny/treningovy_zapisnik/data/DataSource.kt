@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class DataSource(resources: Resources) {
-    private val initialTrainingLogList = trainingLogsList(resources)
-    private val trainingLogsLiveData = MutableLiveData(initialTrainingLogList)
+   // private val initialTrainingLogList = trainingLogsList(resources)
+    //private val trainingLogsLiveData = MutableLiveData(initialTrainingLogList)
 
     private val initialAchievementList = runAchievementList(resources)
     private val runAchievementsLiveData = MutableLiveData(initialAchievementList)
@@ -31,7 +31,7 @@ class DataSource(resources: Resources) {
         }
     }
 
-
+/*
     /* Adds training log to liveData and posts value. */
     fun addTrainingLog(trainingLog : TrainingLogRow) {
         val currentList = trainingLogsLiveData.value
@@ -52,9 +52,14 @@ class DataSource(resources: Resources) {
         if(currentList != null) {
             val updatedList = currentList.toMutableList()
             updatedList.remove(trainingLog)
+
             //Posts a task to a main thread to set the given value.
             trainingLogsLiveData.postValue(updatedList)
         }
+    }
+
+    fun updateAchievementCurrent(logType: String,distance: Double) {
+
     }
 
     /* Returns training log given an ID. */
@@ -79,10 +84,12 @@ class DataSource(resources: Resources) {
     fun getTrainingLogList(): LiveData<List<TrainingLogRow>> {
         return trainingLogsLiveData
     }
-
+ */
     fun getRunAchievementList(): LiveData <List<AchievementRow>> {
         return runAchievementsLiveData
     }
+
+
 
 
     companion object {

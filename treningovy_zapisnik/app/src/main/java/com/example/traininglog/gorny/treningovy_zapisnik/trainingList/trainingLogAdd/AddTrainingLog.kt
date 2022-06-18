@@ -117,7 +117,7 @@ class AddTrainingLog : Fragment() {
             dateButton.setText(trainingLogRow.dateOfLog,TextView.BufferType.SPANNABLE)
             distanceInputNumber.setText(trainingLogRow.distance.toString(),TextView.BufferType.SPANNABLE)
 
-            val hashMap: HashMap<String,Int> = parseDurationStringToHashMap(trainingLogRow.durationOfLog.toString())
+            val hashMap: HashMap<String,Int> = parseDurationStringToHashMap(trainingLogRow.durationOfLog)
             numberPickerHour.value = hashMap["Hour"]!!
             numberPickerMinutes.value =hashMap["Minute"]!!
             numberPickerSeconds.value = hashMap["Second"]!!
@@ -215,6 +215,7 @@ class AddTrainingLog : Fragment() {
         } else {
             binding.buttonDone.setOnClickListener {
                 addNewTrainingLogRow()
+
             }
         }
 

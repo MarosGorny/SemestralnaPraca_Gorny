@@ -56,7 +56,10 @@ class RunAchievementList : Fragment() {
 
         //Dostan distance z databazy
         logViewModel.getDistance("Run").observe(this.viewLifecycleOwner) { totalDistance ->
-            runAchievementsAdapter.updateDistanceOfRunning(totalDistance)
+
+            //FIXME ked je zoznam prazdny hodi error
+            if(totalDistance != null)
+                runAchievementsAdapter.updateDistanceOfRunning(totalDistance)
             Log.i("RunAchievementList.kt",totalDistance.toString())
         }
 

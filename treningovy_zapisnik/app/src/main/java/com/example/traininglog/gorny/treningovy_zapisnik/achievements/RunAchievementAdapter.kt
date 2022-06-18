@@ -23,7 +23,7 @@ class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private val description: TextView = itemView.findViewById(R.id.achievement_description)
         private val imageOftype: ImageView = itemView.findViewById(R.id.achievement_image)
-        private val current: TextView = itemView.findViewById(R.id.achievement_current)
+        val current: TextView = itemView.findViewById(R.id.achievement_current)
         private val maxTextView: TextView = itemView.findViewById(R.id.achievement_max)
         val linearLayout: LinearLayout = itemView.findViewById(R.id.achievement_linear_layout)
 
@@ -43,7 +43,6 @@ class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
         fun bind(runAchievement: AchievementRow) {
             currentAchievementRow = runAchievement
 
-            current.text = runAchievement.current.toString()
             maxTextView.text = runAchievement.max.toString()
             description.text = runAchievement.description
             imageOftype.setImageResource(runAchievement.imageOfType)
@@ -62,6 +61,8 @@ class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
     /* Gets current achievement and uses it to bind view. */
     override fun onBindViewHolder(holder: RunAchievementViewHolder, position: Int) {
         val runAchievement = getItem(position)
+
+
         if(runAchievement.current >= runAchievement.max)
             holder.linearLayout.setBackgroundColor(Color.GREEN)
         else

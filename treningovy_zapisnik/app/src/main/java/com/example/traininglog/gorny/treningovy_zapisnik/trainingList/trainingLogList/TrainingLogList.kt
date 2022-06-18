@@ -1,5 +1,6 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import com.example.traininglog.gorny.treningovy_zapisnik.achievements.RunAchieve
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTraininglogListBinding
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
-
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 /**
@@ -76,7 +77,30 @@ class TrainingLogList : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.floatingButtondeleted.setOnClickListener {
+            showConfirmationDialog()
+        }
 
+
+    }
+
+    /**
+     * Deletes the current item and navigates to the list fragment.
+     */
+    private fun deleteAllTrainingLogs() {
+        viewModel.deleteAllItems()
+    }
+
+    private fun showConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Deleting all training logs")
+            .setMessage("Are you sure that you want delete ALL training logs?")
+            .setCancelable(false)
+            .setNegativeButton("No") { _, _ -> }
+            .setPositiveButton("Yes") { _, _ ->
+                deleteAllTrainingLogs()
+            }
+            .show()
     }
 
 

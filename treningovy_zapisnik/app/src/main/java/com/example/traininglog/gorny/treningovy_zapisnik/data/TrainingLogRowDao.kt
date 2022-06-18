@@ -29,4 +29,7 @@ interface TrainingLogRowDao {
     @Delete
     suspend fun delete(log:TrainingLogRow)
 
+    @Query("Delete FROM trainingLogRow")
+    suspend fun deleteAllItems()
+
 }

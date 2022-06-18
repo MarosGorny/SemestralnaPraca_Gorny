@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
  */
 class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSource: DataSource) : ViewModel() {
 
-    val trainingLogsLiveData = dataSource.getTrainingLogList()
     val runningDistanceLiveData = dataSource.getDistanceOfRunning()
 
     // Cache all items form the database using LiveData.
@@ -28,7 +27,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSour
      */
     fun isDistanceEmpty(trainingLogRow: TrainingLogRow): Boolean {
         return trainingLogRow.distance.isNaN()
-
     }
 
 
@@ -74,6 +72,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSour
         val newTrainingLogRow = getNewTrainingLogEntry(logTypeTitle,dateOfLog,timeOfLog,durationOfLog,
             distance)
         insertItem(newTrainingLogRow)
+        dataSource.addDistance(newTrainingLogRow.logTypeTitle,distance)
     }
 
     /**
@@ -94,6 +93,16 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSour
             trainingLogRowDao.delete(trainingLogRow)
         }
     }
+
+    /**
+     * Launching a new coroutine to delete all trainingLogsRows in a non-blocking way
+     */
+    fun deleteAllItems() {
+        viewModelScope.launch {
+            trainingLogRowDao.deleteAllItems()
+        }
+    }
+
 
     /**
      * Retrieve a trainingLogRow from the repository.

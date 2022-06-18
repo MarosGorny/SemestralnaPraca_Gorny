@@ -8,9 +8,9 @@ data class AchievementRow(
     val achievementType:String,
     val imageOfType: Int,
     val description: String,
-    val current: Double,
+    var current: Double,
     val max: Double,
-    val completed: Boolean
+    var completed: Boolean
     )
 
 
