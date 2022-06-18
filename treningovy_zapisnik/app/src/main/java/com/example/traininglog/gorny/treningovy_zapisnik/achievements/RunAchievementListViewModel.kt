@@ -9,9 +9,6 @@ import kotlinx.coroutines.launch
 
 class RunAchievementListViewModel(val dataSource: DataSource) : ViewModel() {
 
-    val runAchievemetsLiveData = dataSource.getRunAchievementList()
-    var runTotalDistanceLiveData = dataSource.getDistanceOfRunning()
-
 
 
 }

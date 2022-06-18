@@ -8,7 +8,7 @@ fun runAchievementList(resources: Resources): List<AchievementRow> {
             AchievementRow(
                 id = 1,
                 logType =  "Run",
-                achievementType = "Distance",
+                achType = "Distance",
                 imageOfType = R.drawable.run,
                 description = "Run total 10 km",
                 current = 20.0,
@@ -18,7 +18,7 @@ fun runAchievementList(resources: Resources): List<AchievementRow> {
             AchievementRow(
                 id = 2,
                 logType = "Swim",
-                achievementType = "Distance",
+                achType = "Distance",
                 imageOfType = R.drawable.swim,
                 description = "Swim total 1 km",
                 current = 0.0,
@@ -28,7 +28,7 @@ fun runAchievementList(resources: Resources): List<AchievementRow> {
             AchievementRow(
                 id = 3,
                 logType = "Bike",
-                achievementType = "Distance",
+                achType = "Distance",
                 imageOfType = R.drawable.bike,
                 description = "Bike total 100 km",
                 current = 0.0,

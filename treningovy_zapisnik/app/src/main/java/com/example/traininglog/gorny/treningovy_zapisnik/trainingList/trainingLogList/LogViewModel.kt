@@ -17,9 +17,8 @@ import kotlinx.coroutines.launch
 /**
  * View Model to keep a reference to the Inventory repository and an up-to-date list of all items.
  */
-class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSource: DataSource) : ViewModel() {
+class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao) : ViewModel() {
 
-    val runningDistanceLiveData = dataSource.getDistanceOfRunning()
 
     // Cache all items form the database using LiveData.
     val allTrainingLogs: LiveData<List<TrainingLogRow>> = trainingLogRowDao.getItems().asLiveData()
@@ -74,7 +73,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSour
         val newTrainingLogRow = getNewTrainingLogEntry(logTypeTitle,dateOfLog,timeOfLog,durationOfLog,
             distance)
         insertItem(newTrainingLogRow)
-        dataSource.addDistance(newTrainingLogRow.logTypeTitle,distance)
+        //dataSource.addDistance(newTrainingLogRow.logTypeTitle,distance)
     }
 
     /**
@@ -84,7 +83,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSour
         viewModelScope.launch {
             trainingLogRowDao.insert(trainingLogRow)
         }
-        dataSource.addDistance(trainingLogRow.logTypeTitle,trainingLogRow.distance)
+      //  dataSource.addDistance(trainingLogRow.logTypeTitle,trainingLogRow.distance)
     }
 
     /**
@@ -210,8 +209,7 @@ class LogViewModelFactory(private val trainingLogRowDao: TrainingLogRowDao,priva
         if (modelClass.isAssignableFrom(LogViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return LogViewModel(
-                trainingLogRowDao,
-                dataSource = DataSource.getDataSource(context.resources)
+                trainingLogRowDao
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
