@@ -8,7 +8,7 @@ class DataSource(resources: Resources) {
    // private val initialTrainingLogList = trainingLogsList(resources)
     //private val trainingLogsLiveData = MutableLiveData(initialTrainingLogList)
 
-    private val initialAchievementList = runAchievementList(resources)
+    private val initialAchievementList = runAchievementList()
     private val runAchievementsLiveData = MutableLiveData(initialAchievementList)
 
     private val _distanceOfRunning = MutableLiveData<Double>()

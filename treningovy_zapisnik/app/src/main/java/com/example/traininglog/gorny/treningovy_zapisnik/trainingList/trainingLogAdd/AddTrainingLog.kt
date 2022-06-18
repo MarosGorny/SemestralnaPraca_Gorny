@@ -47,8 +47,7 @@ class AddTrainingLog : Fragment() {
     // to share the ViewModel across fragments.
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
-            (activity?.application as LogListApplication).database.trainingLogRowDao(),
-            requireContext()
+            (activity?.application as LogListApplication).database.trainingLogRowDao()
         )
     }
 

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [AchievementRow::class], version = 1, exportSchema = false)
+@Database(entities = [AchievementRow::class], version = 2, exportSchema = false)
 abstract class AchievementDatabase: RoomDatabase() {
 
     abstract fun achievementDao(): AchievementDao
@@ -29,6 +29,7 @@ abstract class AchievementDatabase: RoomDatabase() {
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
+                    .createFromAsset("database/achievements.db")
                     //.allowMainThreadQueries()
                     .build()
                 INSTANCE = instance

@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AchievementDao {
 
-    @Query("SELECT * from achievementrow ORDER BY max DESC")
+    @Query("SELECT * from achievements ORDER BY max DESC")
     fun getItems(): Flow<List<AchievementRow>>
 
-    @Query("SELECT * from achievementrow WHERE id = :id")
+    @Query("SELECT * from achievements WHERE id = :id")
     fun getItem(id: Int): Flow<AchievementRow>
 
-    @Query("SELECT * from achievementrow where current >= max")
+    @Query("SELECT * from achievements where current >= max")
     fun getCompleted(): Flow<List<AchievementRow>>
 
-    @Query("UPDATE achievementrow " +
+    @Query("UPDATE achievements " +
             "SET current = current + :addedValue " +
             "WHERE achType = :achType " +
             "AND  logType = :logType")

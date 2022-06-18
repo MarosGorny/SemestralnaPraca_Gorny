@@ -3,7 +3,7 @@ package com.example.traininglog.gorny.treningovy_zapisnik.data
 import android.content.res.Resources
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 
-fun runAchievementList(resources: Resources): List<AchievementRow> {
+fun runAchievementList(): List<AchievementRow> {
     return listOf(
             AchievementRow(
                 id = 1,

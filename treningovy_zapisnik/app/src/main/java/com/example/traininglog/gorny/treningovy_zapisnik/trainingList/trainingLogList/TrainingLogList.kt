@@ -22,8 +22,7 @@ class TrainingLogList : Fragment() {
 
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
-            (activity?.application as LogListApplication).database.trainingLogRowDao(),
-            requireContext()
+            (activity?.application as LogListApplication).database.trainingLogRowDao()
         )
     }
 
@@ -35,6 +34,7 @@ class TrainingLogList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        /*
         Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
             Log.e(
                 "Error" + Thread.currentThread().stackTrace[2],
@@ -43,6 +43,8 @@ class TrainingLogList : Fragment() {
 
             Toast.makeText(requireContext(),"Error" + Thread.currentThread().stackTrace[2],Toast.LENGTH_LONG).show()
         }
+
+         */
 
         // Inflate the layout for this fragment
         _binding = FragmentTraininglogListBinding.inflate(inflater,container,false)

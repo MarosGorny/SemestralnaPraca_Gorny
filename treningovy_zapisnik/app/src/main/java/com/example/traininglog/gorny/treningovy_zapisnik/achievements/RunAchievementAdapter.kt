@@ -12,72 +12,59 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementRow
+import com.example.traininglog.gorny.treningovy_zapisnik.databinding.AchievementItemBinding
+import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentRunAchievementBinding
 
-class RunAchievementAdapter(private val onClick: (AchievementRow) -> Unit) :
+class RunAchievementAdapter() :
+    //If on click, add this to parameter -> private val onClick: (AchievementRow) -> Unit
     ListAdapter<AchievementRow, RunAchievementAdapter.RunAchievementViewHolder>(
         RunAchievementDiffCallback
     ) {
-    private var totalDistanceRunning: Double = 0.0
-
-    class RunAchievementViewHolder(itemView: View, val onClick: (AchievementRow) -> Unit) :
-        RecyclerView.ViewHolder(itemView) {
-        private val description: TextView = itemView.findViewById(R.id.achievement_description)
-        private val imageOftype: ImageView = itemView.findViewById(R.id.achievement_image)
-        val current: TextView = itemView.findViewById(R.id.achievement_current)
-        private val maxTextView: TextView = itemView.findViewById(R.id.achievement_max)
-        val linearLayout: LinearLayout = itemView.findViewById(R.id.achievement_linear_layout)
-
-
-        private var currentAchievementRow: AchievementRow? =null
-
-
-        init {
-            itemView.setOnClickListener {
-                currentAchievementRow?.let {
-                    onClick(it)
-                }
-            }
-        }
-
-        /*Bind achievements stats*/
-        fun bind(runAchievement: AchievementRow) {
-            currentAchievementRow = runAchievement
-
-            maxTextView.text = runAchievement.max.toString()
-            description.text = runAchievement.description
-            imageOftype.setImageResource(runAchievement.imageOfType)
-        }
-    }
 
     /* Creates and inflates view and return RunAchievementViewHolder */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): RunAchievementViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.achievement_item,parent,false)
-        return RunAchievementViewHolder(view,onClick)
+        return RunAchievementViewHolder(
+            AchievementItemBinding.inflate(
+                LayoutInflater.from(parent.context)
+            )
+        )
     }
 
     /* Gets current achievement and uses it to bind view. */
     override fun onBindViewHolder(holder: RunAchievementViewHolder, position: Int) {
         val runAchievement = getItem(position)
 
-
-        if(runAchievement.current >= runAchievement.max)
-            holder.linearLayout.setBackgroundColor(Color.GREEN)
-        else
-            holder.linearLayout.setBackgroundColor(Color.WHITE)
+        /* To future, if I want to do something on click
+        holder.itemView.setOnClickListener {
+            onClick(runAchievement)
+        }
+         */
 
         holder.bind(runAchievement)
     }
 
 
-    fun updateDistanceOfRunning(updatedDistanceOfRunning: Double) {
-        totalDistanceRunning = updatedDistanceOfRunning
-        //Notifies the attached observers that the underlying data has been changed and any View reflecting the data set should refresh itself.
-        notifyDataSetChanged()
-    }
 
+    class RunAchievementViewHolder(private var binding: AchievementItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        /*Bind achievements stats*/
+        fun bind(achievementRow: AchievementRow) {
+            if (achievementRow.completed)
+                binding.achievementLinearLayout.setBackgroundColor(Color.GREEN)
+            else
+                binding.achievementLinearLayout.setBackgroundColor(Color.GRAY)
+
+            binding.achievementMax.text = achievementRow.max.toString()
+            binding.achievementDescription.text = achievementRow.description
+            binding.achievementImage.setImageResource(achievementRow.imageOfType)
+            binding.achievementCurrent.text = achievementRow.current.toString()
+
+            }
+    }
 }
 
 object RunAchievementDiffCallback: DiffUtil.ItemCallback<AchievementRow>() {
