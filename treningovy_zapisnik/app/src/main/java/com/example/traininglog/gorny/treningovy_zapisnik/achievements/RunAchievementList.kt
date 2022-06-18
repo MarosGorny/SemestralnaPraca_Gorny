@@ -36,7 +36,7 @@ class RunAchievementList : Fragment() {
 
         // Inflate the layout for this fragment
         _binding = FragmentRunAchievementBinding.inflate(inflater,container,false)
-        runAchievementViewModel.addAchievement()
+        //runAchievementViewModel.addAchievement()
         return binding.root
 
     }
