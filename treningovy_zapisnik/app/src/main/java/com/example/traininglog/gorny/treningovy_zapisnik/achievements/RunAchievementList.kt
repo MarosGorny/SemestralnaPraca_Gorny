@@ -48,11 +48,7 @@ class RunAchievementList : Fragment() {
         recyclerView.adapter = runAchievementsAdapter
 
         //Nastav list aby zobrazovalo
-        runAchievementViewModel.runAchievemetsLiveData.observe(viewLifecycleOwner) {
-            it?.let {
-                runAchievementsAdapter.submitList(it as MutableList<AchievementRow>)
-            }
-        }
+
 
         //Dostan distance z databazy
         logViewModel.getDistance("Run").observe(this.viewLifecycleOwner) { totalDistance ->
