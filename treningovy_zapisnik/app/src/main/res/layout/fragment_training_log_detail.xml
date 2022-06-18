@@ -1,49 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".trainingList.trainingLogDetail.TrainingLogDetail">
 
     <TextView
-        android:id="@+id/title_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Running"
-        android:textAppearance="?attr/textAppearanceHeadline1"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/time_detail"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:text="00:54:23"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.101"
+        android:id="@+id/distance_title_detail"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_detail" />
 
     <TextView
-        android:id="@+id/distance_detail"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:text="5 km"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.101"
+        android:id="@+id/duration_title_detail"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/distance_title_detail" />
+
+    <TextView
+        android:id="@+id/pace_title_detail"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/removeButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/duration_title_detail"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/distance_detail"
+        android:layout_width="112dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="64dp"
+        android:text="5 km"
+        app:layout_constraintStart_toEndOf="@+id/distance_title_detail"
+        app:layout_constraintTop_toBottomOf="@+id/title_detail" />
+
+    <TextView
+        android:id="@+id/pace_detail"
+        android:layout_width="112dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:text="00:54:23"
+        app:layout_constraintStart_toEndOf="@+id/pace_title_detail"
         app:layout_constraintTop_toBottomOf="@+id/time_detail" />
+
+    <TextView
+        android:id="@+id/time_detail"
+        android:layout_width="112dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:text="00:54:23"
+        app:layout_constraintStart_toEndOf="@+id/duration_title_detail"
+        app:layout_constraintTop_toBottomOf="@+id/distance_detail" />
+
+    <TextView
+        android:id="@+id/distance_postfix_detail"
+        android:layout_width="92dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="96dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/distance_detail"
+        app:layout_constraintTop_toBottomOf="@+id/title_detail" />
+
+    <TextView
+        android:id="@+id/duration_postfix_detail"
+        android:layout_width="92dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="44dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toEndOf="@+id/time_detail"
+        app:layout_constraintTop_toBottomOf="@+id/distance_postfix_detail" />
+
+    <TextView
+        android:id="@+id/pace_postfix_detail"
+        android:layout_width="92dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="52dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/pace_detail"
+        app:layout_constraintTop_toBottomOf="@+id/duration_postfix_detail" />
+
+    <TextView
+        android:id="@+id/title_detail"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:text="Running"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/removeButton"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="116dp"
         android:text="Remove this log"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,12 +130,11 @@
         android:id="@+id/edit_trainig_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="30dp"
         android:contentDescription="Edit training log"
         android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@android:color/white" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
