@@ -1,12 +1,13 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.data
 
+import android.icu.text.UnicodeSet.CASE
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AchievementDao {
 
-    @Query("SELECT * from achievements ORDER BY max DESC")
+    @Query("SELECT * from achievements ORDER BY current ASC")
     fun getItems(): Flow<List<AchievementRow>>
 
     @Query("SELECT * from achievements WHERE id = :id")
@@ -20,6 +21,11 @@ interface AchievementDao {
             "WHERE achType = :achType " +
             "AND  logType = :logType")
     fun updateCurrent(achType: String,logType:String, addedValue:Double )
+
+    @Query("UPDATE achievements " +
+            "SET completed = CASE " +
+            "WHEN current >= max THEN 1 ELSE 0 END")
+    fun updateCompletedStatus()
 
 
     // Specify the conflict strategy as IGNORE, when the user tries to add an

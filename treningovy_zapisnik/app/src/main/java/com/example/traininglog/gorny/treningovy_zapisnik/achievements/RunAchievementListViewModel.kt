@@ -23,6 +23,12 @@ class RunAchievementListViewModel(private val achievementDao: AchievementDao) : 
         updateAchievementRow(updatedAchRow)
     }
 
+    fun addDistance(achievementType: String, logType: String, distanceToAdd:Double) {
+        viewModelScope.launch {
+            achievementDao.updateCurrent(achievementType,logType, distanceToAdd)
+        }
+    }
+
     fun updateAchievementRow(achievementRow: AchievementRow) {
         viewModelScope.launch {
             achievementDao.update(achievementRow)
@@ -58,11 +64,6 @@ class RunAchievementListViewModel(private val achievementDao: AchievementDao) : 
         return achievementDao.getItem(id).asLiveData()
     }
 
-    fun addAchievement() {
-
-        val achievement = runAchievementList()[0]
-        insertItem(achievement)
-    }
 
     private fun insertItem(achievementRow: AchievementRow) {
         viewModelScope.launch {

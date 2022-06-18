@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TrainingLogRowDao {
 
-    @Query("SELECT * from trainingLogRow ORDER BY date_of_log ASC")
+    @Query("SELECT * from trainingLogRow ORDER BY date_of_log ASC, time_of_log,log_type_title")
     fun getItems(): Flow<List<TrainingLogRow>>
 
     @Query("SELECT * from trainingLogRow WHERE id = :id")
