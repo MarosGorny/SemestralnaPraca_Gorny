@@ -204,6 +204,7 @@ class AddTrainingLog : Fragment() {
         Log.i("onViewCreated",binding.typeActivityTitle.text.toString())
         super.onViewCreated(view, savedInstanceState)
 
+        Log.i("addAchiDistance", viewModel.getDistance("Run").value.toString())
         val id = navigationArgs.logId
         if (id > 0) {
             //TODO tu sa meni radio button na Run, z nejakeho dovodu, alebo teda na default TYPE

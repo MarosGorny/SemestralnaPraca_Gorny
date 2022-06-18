@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTraininglogListBinding
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlin.math.log
 
 
 /**
@@ -74,9 +76,32 @@ class TrainingLogList : Fragment() {
             items.let {
                 trainingLogsRowsAdapter.submitList(it)
                 headerAdapter.updateTrainingLogCount(it.size)
-
             }
         }
+
+        val listOf = listOf("Run","Swim","Bike")
+        for (logType in listOf) {
+            viewModel.getDistance(logType).observe(this.viewLifecycleOwner) { totalDistance ->
+                setAchievementDistanceByType(logType,totalDistance?: 0.0)
+            }
+        }
+
+/*
+        viewModel.getDistance("Run").observe(this.viewLifecycleOwner) { totalDistance ->
+            setAchievementDistanceByType("Run",totalDistance?: 0.0)
+        }
+
+        viewModel.getDistance("Bike").observe(this.viewLifecycleOwner) { totalDistance ->
+            setAchievementDistanceByType("Bike",totalDistance?: 0.0)
+        }
+
+        viewModel.getDistance("Swim").observe(this.viewLifecycleOwner) { totalDistance ->
+            setAchievementDistanceByType("Swim",totalDistance?: 0.0)
+        }
+
+
+ */
+
 
 
         binding.floatingButtonAdd.setOnClickListener {
@@ -89,6 +114,22 @@ class TrainingLogList : Fragment() {
         }
 
 
+
+    }
+
+    private fun setAchievementDistanceForAllTypes() {
+
+        val run:Double = viewModel.getDistance("Run").value ?: 0.0
+        //val bike:Double =viewModel.getDistance("Bike").value!!
+        //val swim:Double = viewModel.getDistance("Swim").value!!
+
+        setAchievementDistanceByType("Run",run)
+        //setAchievementDistanceByType("Bike",bike)
+        //setAchievementDistanceByType("Swim",swim)
+    }
+
+    private fun setAchievementDistanceByType(logType: String, newDistance:Double) {
+        viewModel.setAchievementDistance(logType,newDistance)
     }
 
     /**

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AchievementDao {
 
-    @Query("SELECT * from achievements ORDER BY current DESC")
+    @Query("SELECT * from achievements ORDER BY completed DESC,current DESC ,max DESC")
     fun getItems(): Flow<List<AchievementRow>>
 
     @Query("SELECT * from achievements WHERE id = :id")
@@ -26,6 +26,11 @@ interface AchievementDao {
             "SET completed = CASE " +
             "WHEN current >= max THEN 1 ELSE 0 END")
     suspend fun updateCompletedStatus()
+
+    @Query("UPDATE achievements " +
+            "SET current = :newDistance " +
+            "WHERE logType =:logType ")
+    suspend fun setDistanceOfType(logType: String, newDistance:Double)
 
 
     // Specify the conflict strategy as IGNORE, when the user tries to add an

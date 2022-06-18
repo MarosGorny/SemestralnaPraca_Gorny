@@ -118,8 +118,14 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     fun getDistance(logType: String): LiveData<Double> {
+            return trainingLogRowDao.getDistance(logType).asLiveData()
+    }
 
-            return trainingLogRowDao.getDistance("Run").asLiveData()
+    fun setAchievementDistance(logType: String, newDistance:Double) {
+        viewModelScope.launch {
+            achievementDao.setDistanceOfType(logType,newDistance)
+            achievementDao.updateCompletedStatus()
+        }
     }
 
     /**
@@ -204,6 +210,8 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
             fourthColumnTitle = trainingLogFourthColumnTitle,
             fourthColumnMinPKm = trainingLogFourthColumnMinPKm)
     }
+
+
 }
 
 /**
