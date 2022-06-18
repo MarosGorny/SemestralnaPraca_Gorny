@@ -6,6 +6,7 @@
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable-v24/ic_home.xml" value="0.2125" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable/back.xml" value="0.147" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable/ic_edit.xml" value="0.182" />
+        <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout-land/fragment_add_training_log.xml" value="0.4" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout/achievement_item.xml" value="0.4" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout/fragment_add_training_log.xml" value="0.1" />
@@ -27,7 +28,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.16" />
+        <option name="scale" value="0.176" />
       </ProjectState>
     </option>
   </component>

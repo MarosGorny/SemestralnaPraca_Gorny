@@ -23,7 +23,6 @@ data class TrainingLogRow(
     @ColumnInfo(name = "time_of_log")
     val timeOfLog:String,
 
-    @ColumnInfo(name = "time_title")
     val timeTitle:String = "Time",
 
     @ColumnInfo(name = "duration_of_workout")

@@ -8,6 +8,9 @@ import com.example.traininglog.gorny.treningovy_zapisnik.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 
@@ -20,7 +23,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao,val dataSour
 
     // Cache all items form the database using LiveData.
     val allTrainingLogs: LiveData<List<TrainingLogRow>> = trainingLogRowDao.getItems().asLiveData()
-
 
     /**
      * Returns true if distance is empty, false otherwise.

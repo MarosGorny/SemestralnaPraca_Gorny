@@ -1,21 +1,15 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.os.bundleOf
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import com.example.traininglog.gorny.treningovy_zapisnik.R
-import com.example.traininglog.gorny.treningovy_zapisnik.achievements.RunAchievementAdapter
-import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTraininglogListBinding
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -40,6 +34,16 @@ class TrainingLogList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
+            Log.e(
+                "Error" + Thread.currentThread().stackTrace[2],
+                paramThrowable.localizedMessage
+            )
+
+            Toast.makeText(requireContext(),"Error" + Thread.currentThread().stackTrace[2],Toast.LENGTH_LONG).show()
+        }
+
         // Inflate the layout for this fragment
         _binding = FragmentTraininglogListBinding.inflate(inflater,container,false)
         return binding.root
