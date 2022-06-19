@@ -29,7 +29,6 @@ import kotlin.math.log
  */
 class TrainingLogList : Fragment() {
 
-
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
             (activity?.application as LogListApplication).database.trainingLogRowDao(),
@@ -88,18 +87,11 @@ class TrainingLogList : Fragment() {
         }
 
         val listOf = listOf("Run","Swim","Bike")
-
-
-
         for (logType in listOf) {
             viewModel.getDistance(logType).observe(this.viewLifecycleOwner) { totalDistance ->
                 setAchievementDistanceByType(logType,totalDistance?: 0.0)
             }
         }
-
-
-
-
 
         binding.floatingButtonAdd.setOnClickListener {
             val action = TrainingLogListDirections.actionMainFragmentToAddTrainingLog("Add training log")
@@ -110,17 +102,6 @@ class TrainingLogList : Fragment() {
             showConfirmationDialog()
         }
 
-    }
-
-    private fun setAchievementDistanceForAllTypes() {
-
-        val run:Double = viewModel.getDistance("Run").value ?: 0.0
-        //val bike:Double =viewModel.getDistance("Bike").value!!
-        //val swim:Double = viewModel.getDistance("Swim").value!!
-
-        setAchievementDistanceByType("Run",run)
-        //setAchievementDistanceByType("Bike",bike)
-        //setAchievementDistanceByType("Swim",swim)
     }
 
     private fun setAchievementDistanceByType(logType: String, newDistance:Double) {
@@ -136,8 +117,8 @@ class TrainingLogList : Fragment() {
 
     private fun showConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Deleting all training logs")
-            .setMessage("Are you sure that you want delete ALL training logs?")
+            .setTitle("Deleting all training workouts")
+            .setMessage("Are you sure that you want delete ALL training workouts?")
             .setCancelable(false)
             .setNegativeButton("No") { _, _ -> }
             .setPositiveButton("Yes") { _, _ ->

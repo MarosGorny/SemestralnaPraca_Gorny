@@ -25,5 +25,8 @@
     <string name="edit_training_workout">Edit training workout</string>
     <string name="tempo">Tempo:</string>
     <string name="delete_workout">delete workout</string>
+    <string name="list">List</string>
+    <string name="workouts">Workouts</string>
+    <string name="achievements">Achievements</string>
 
 </resources>

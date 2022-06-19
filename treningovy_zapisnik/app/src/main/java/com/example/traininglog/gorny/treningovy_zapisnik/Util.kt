@@ -1,12 +1,18 @@
 package com.example.traininglog.gorny.treningovy_zapisnik
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
+
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.ceil
 import kotlin.math.floor
+
+const val HOUR:String = "Hour"
+const val MINUTE:String = "Minute"
+const val SECOND:String = "Second"
+
+const val BIKE:String = "Bike"
+const val RUN:String = "Run"
+const val SWIM:String = "Swim"
 
 fun parseDurationNumbersToString(hours:Int,minutes:Int,seconds:Int):String {
     val numbers = listOf(hours,minutes,seconds)
@@ -16,25 +22,24 @@ fun parseDurationNumbersToString(hours:Int,minutes:Int,seconds:Int):String {
 fun parseDurationStringToHashMap(duration  : String) : HashMap<String,Int> {
     val list: List<String> = duration.split(":").toList()
 
-    val hashMap: HashMap<String,Int> = HashMap<String,Int>()
+    val hashMap: HashMap<String,Int> = HashMap()
     if(list.size == 3) {
-        hashMap["Hour"] = list[0].toInt()
-        hashMap["Minute"] = list[1].toInt()
-        hashMap["Second"] = list[2].toInt()
+        hashMap[HOUR] = list[0].toInt()
+        hashMap[MINUTE] = list[1].toInt()
+        hashMap[SECOND] = list[2].toInt()
     } else {
-        hashMap["Hour"] = 0
-        hashMap["Minute"] = 0
-        hashMap["Second"] = 0
+        hashMap[HOUR] = 0
+        hashMap[MINUTE] = 0
+        hashMap[MINUTE] = 0
     }
-
 
     return hashMap
 }
 
 fun calculateRunPace(distanceOfRun:Double, durationOfRun: String): String {
-    val hours:Int = parseDurationStringToHashMap(durationOfRun)["Hour"]!!
-    val minutes:Int = parseDurationStringToHashMap(durationOfRun)["Minute"]!!
-    val seconds:Int = parseDurationStringToHashMap(durationOfRun)["Second"]!!
+    val hours:Int = parseDurationStringToHashMap(durationOfRun)[HOUR]!!
+    val minutes:Int = parseDurationStringToHashMap(durationOfRun)[MINUTE]!!
+    val seconds:Int = parseDurationStringToHashMap(durationOfRun)[SECOND]!!
 
     val totalSeconds = seconds + minutes*60 + hours*60*60
     val secPerKm =  totalSeconds/distanceOfRun
@@ -46,9 +51,9 @@ fun calculateRunPace(distanceOfRun:Double, durationOfRun: String): String {
 }
 
 fun calculateSwimPace100m(distanceOfSwimInMeters:Double, durationOfSwim: String) :String{
-    val hours:Int = parseDurationStringToHashMap(durationOfSwim)["Hour"]!!
-    val minutes:Int = parseDurationStringToHashMap(durationOfSwim)["Minute"]!!
-    val seconds:Int = parseDurationStringToHashMap(durationOfSwim)["Second"]!!
+    val hours:Int = parseDurationStringToHashMap(durationOfSwim)[HOUR]!!
+    val minutes:Int = parseDurationStringToHashMap(durationOfSwim)[MINUTE]!!
+    val seconds:Int = parseDurationStringToHashMap(durationOfSwim)[SECOND]!!
 
     val totalSeconds = seconds + minutes*60 + hours*60*60
     val secPerMeter =  totalSeconds/distanceOfSwimInMeters
@@ -58,9 +63,9 @@ fun calculateSwimPace100m(distanceOfSwimInMeters:Double, durationOfSwim: String)
 }
 
 fun calculateKilometerPerHour(kilometers:Double, durationOfBike:String): String {
-    val hours:Int = parseDurationStringToHashMap(durationOfBike)["Hour"]!!
-    val minutes:Int = parseDurationStringToHashMap(durationOfBike)["Minute"]!!
-    val seconds:Int = parseDurationStringToHashMap(durationOfBike)["Second"]!!
+    val hours:Int = parseDurationStringToHashMap(durationOfBike)[HOUR]!!
+    val minutes:Int = parseDurationStringToHashMap(durationOfBike)[MINUTE]!!
+    val seconds:Int = parseDurationStringToHashMap(durationOfBike)[SECOND]!!
 
     val totalSeconds = seconds + minutes*60 + hours*60*60
     if (totalSeconds == 0)
@@ -74,38 +79,32 @@ fun calculateKilometerPerHour(kilometers:Double, durationOfBike:String): String 
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun getCurrentDate():String {
-    var formattedTime:String = ""
+fun getCurrentDate(): String {
     val current = LocalDateTime.now()
     val formatterTime = DateTimeFormatter.ofPattern("dd.MM.y")
-    formattedTime = current.format(formatterTime)
-    return formattedTime
+    return current.format(formatterTime)
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun getCurrentTime():String {
-    var formattedDate:String = ""
+fun getCurrentTime(): String {
     val current = LocalDateTime.now()
     val formatterDate = DateTimeFormatter.ofPattern("HH:mm")
-    formattedDate = current.format(formatterDate)
-    return formattedDate
+    return current.format(formatterDate)
 }
 
 fun getTempoPostFix(logType:String):String  {
     when(logType) {
-        "Run" -> return "min/km"
-        "Bike" -> return "km/h"
-        "Swim" -> return "min/100m"
+        RUN -> return "min/km"
+        BIKE -> return "km/h"
+        SWIM -> return "min/100m"
     }
     return "ERROR"
 }
 
 fun getPaceOfType(logType: String,distance:Double,duration:String):String {
     when(logType) {
-        "Run" -> return calculateRunPace(distance,duration)
-        "Bike" -> return calculateKilometerPerHour(distance,duration)
-        "Swim" -> return calculateSwimPace100m(distance,duration)
+        RUN -> return calculateRunPace(distance,duration)
+        BIKE -> return calculateKilometerPerHour(distance,duration)
+        SWIM -> return calculateSwimPace100m(distance,duration)
     }
     return "ERROR"
 }

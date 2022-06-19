@@ -5,7 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +17,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -33,6 +30,7 @@ import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLo
 
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.log
 
 
 const val TYPE_OF_LOG = "typeOfLog"
@@ -47,9 +45,10 @@ const val SECOND_OF_DURATION = "secondOfDuration"
  */
 class AddTrainingLog : Fragment() {
 
-    private val CHANNEL_ID = "chanel_id_66"
-    private val NOTIFICATION_ID = 66
-    private var achievementCompleted = 0
+    private val channelID = "channel_id_66"
+    private val runNotificationID = 1
+    private val bikeNotificationID = 2
+    private val swimNotificationID = 3
 
     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     // to share the ViewModel across fragments.
@@ -81,9 +80,9 @@ class AddTrainingLog : Fragment() {
             Log.i("onCreateViewIn","")
             Log.i("TEXT-IN",binding.typeActivityTitle.text.toString())
             when(savedInstanceState.getString(TYPE_OF_LOG)) {
-                "Run" -> binding.activityOptions.check(R.id.option_run)
-                "Bike" -> binding.activityOptions.check(R.id.option_bike)
-                "Swim" -> binding.activityOptions.check(R.id.option_swim)
+                RUN -> binding.activityOptions.check(R.id.option_run)
+                BIKE -> binding.activityOptions.check(R.id.option_bike)
+                SWIM -> binding.activityOptions.check(R.id.option_swim)
             }
 
             binding.dateButton.text = savedInstanceState.getString(DATE_OF_LOG)
@@ -96,7 +95,6 @@ class AddTrainingLog : Fragment() {
         }
         createNotificationChannel()
         return binding.root
-
     }
 
     /**
@@ -116,9 +114,9 @@ class AddTrainingLog : Fragment() {
         binding.apply {
 
             when(trainingLogRow.logTypeTitle) {
-                "Run" -> activityOptions.check(R.id.option_run)
-                "Bike" -> activityOptions.check(R.id.option_bike)
-                "Swim" -> activityOptions.check(R.id.option_swim)
+                RUN -> activityOptions.check(R.id.option_run)
+                BIKE -> activityOptions.check(R.id.option_bike)
+                SWIM -> activityOptions.check(R.id.option_swim)
             }
 
             timeButton.setText(trainingLogRow.timeOfLog,TextView.BufferType.SPANNABLE)
@@ -126,9 +124,9 @@ class AddTrainingLog : Fragment() {
             distanceInputNumber.setText(trainingLogRow.distance.toString(),TextView.BufferType.SPANNABLE)
 
             val hashMap: HashMap<String,Int> = parseDurationStringToHashMap(trainingLogRow.durationOfLog)
-            numberPickerHour.value = hashMap["Hour"]!!
-            numberPickerMinutes.value =hashMap["Minute"]!!
-            numberPickerSeconds.value = hashMap["Second"]!!
+            numberPickerHour.value = hashMap[HOUR]!!
+            numberPickerMinutes.value =hashMap[MINUTE]!!
+            numberPickerSeconds.value = hashMap[SECOND]!!
 
             buttonDone.setOnClickListener{updateTrainingLogRow()}
         }
@@ -137,7 +135,6 @@ class AddTrainingLog : Fragment() {
     /**
      * Inserts the new Item into database and navigates up to list fragment.
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun addNewTrainingLogRow() {
         if (isEntryValid()) {
             viewModel.addNewTrainingLogRow(
@@ -150,9 +147,8 @@ class AddTrainingLog : Fragment() {
                     binding.numberPickerSeconds.value),
                 binding.distanceInputNumber.text.toString().toDouble()
             )
-            if(binding.distanceInputNumber.text.toString().toDouble() >= 42.2) {
-                sendNotification()
-            }
+
+            sendNotification(binding.typeActivityTitle.text.toString(),binding.distanceInputNumber.text.toString().toDouble())
             val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
             findNavController().navigate(action)
         } else {
@@ -183,9 +179,7 @@ class AddTrainingLog : Fragment() {
                 getPaceOfType(logType,distance,duration)
             )
 
-            if(distance >= 42.2) {
-                sendNotification()
-            }
+            sendNotification(logType,distance)
             val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
             findNavController().navigate(action)
         } else {
@@ -305,7 +299,7 @@ class AddTrainingLog : Fragment() {
             val name = "Notification title"
             val descriptionText = "Notification Description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+            val channel = NotificationChannel(channelID,name,importance).apply {
                 description = descriptionText
             }
             val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -313,14 +307,65 @@ class AddTrainingLog : Fragment() {
         }
     }
 
-    private fun sendNotification() {
-        val builder = NotificationCompat.Builder(requireContext(),CHANNEL_ID)
-            .setSmallIcon(R.drawable.bike)
-            .setContentTitle("Marathon distance done!")
-            .setContentText("Keep going and be like Emil Zatopek!")
+
+    private fun sendNotification(logType: String,distance:Double) {
+        Log.i("SEND notification","Outer")
+        when(logType) {
+            RUN -> {
+                if(distance >= 42.2)
+                    Log.i("SEND notification","INNER")
+                    sendNotificationByType(logType)
+            }
+            BIKE -> {
+                if (distance >= 180.0) {
+                    sendNotificationByType(logType)
+                }
+            }
+            SWIM -> {
+                if( distance >= 10000.0) {
+                    sendNotificationByType(logType)
+                }
+            }
+        }
+    }
+
+    private fun sendNotificationByType(logType:String) {
+        var title:String = "ERROR"
+        var description:String = "ERROR"
+        var notificationID:Int = 2
+        var icon:Int = R.drawable.bike
+        Log.i("SEND notificationbytype","outer")
+        when(logType) {
+            RUN -> {
+                title = "Marathon is quite easy right?"
+                description = "Keep going and be like Emil Zatopek!"
+                icon = R.drawable.run
+                notificationID = runNotificationID
+                Log.i("SEND notificationbytype","inner")
+            }
+            BIKE -> {
+                title = "Tour de France is ready for you!"
+                description = "Keep going and be like Peter Sagan!"
+                icon = R.drawable.bike
+                notificationID = bikeNotificationID
+            }
+            SWIM -> {
+                title = "You and the water = ONE ELEMENT"
+                description = "Keep going and be like Jan Novak!"
+                icon = R.drawable.swim
+                notificationID = swimNotificationID
+            }
+        }
+
+
+        val builder = NotificationCompat.Builder(requireContext(),channelID)
+            .setSmallIcon(icon)
+            .setContentTitle(title)
+            .setContentText(description)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
         with(NotificationManagerCompat.from(requireContext())) {
-            notify(NOTIFICATION_ID,builder.build())
+            notify(notificationID,builder.build())
         }
     }
 

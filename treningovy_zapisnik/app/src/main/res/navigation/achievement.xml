@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/runAchievementList"
         android:name="com.example.traininglog.gorny.treningovy_zapisnik.achievements.RunAchievementList"
-        android:label="Run achievements"
+        android:label="Achievements"
         tools:layout="@layout/fragment_run_achievement" />
 </navigation>

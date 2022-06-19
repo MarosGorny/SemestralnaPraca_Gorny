@@ -39,20 +39,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center|bottom"
                 android:minHeight="@dimen/item_info_half"
                 android:textSize="16sp"
-                android:gravity="center|bottom"
-                tools:text = "13.3.2022"/>
+                tools:ignore="TextContrastCheck,TextContrastCheck"
+                tools:text="13.3.2022" />
 
             <TextView
                 android:id="@+id/startTimeOfWorkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center|top"
                 android:minHeight="@dimen/item_info_half"
                 android:textSize="16sp"
-                android:gravity="center|top"
-                tools:text = "14:44"/>
+                tools:ignore="TextContrastCheck,TextContrastCheck"
+                tools:text="14:44" />
 
         </LinearLayout>
 
@@ -85,10 +87,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:minHeight="@dimen/item_info_full"
                 android:gravity="center_horizontal|center_vertical"
+                android:minHeight="@dimen/item_info_full"
                 android:textSize="16sp"
-                tools:text = "23:23:23"/>
+                tools:ignore="TextContrastCheck"
+                tools:text="23:23:23" />
         </LinearLayout>
         <View
             android:layout_width="2dp"
@@ -116,10 +119,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:minHeight="@dimen/item_info_full"
                 android:gravity="center_horizontal|center_vertical"
+                android:minHeight="@dimen/item_info_full"
                 android:textSize="16sp"
-                tools:text = "24.4"/>
+                tools:ignore="TextContrastCheck,TextContrastCheck"
+                tools:text="24.4" />
         </LinearLayout>
         <View
             android:layout_width="2dp"
@@ -141,7 +145,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:gravity="center"
-                tools:text = "km/h"
+                tools:text = "24:4"
                 />
 
             <TextView
@@ -149,11 +153,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:minHeight="@dimen/item_info_full"
                 android:gravity="center_horizontal|center_vertical"
+                android:minHeight="@dimen/item_info_full"
                 android:textSize="16sp"
-                tools:text = "24:4"
-                />
+                tools:ignore="TextContrastCheck,TextContrastCheck"
+                tools:text="24:4" />
         </LinearLayout>
     </LinearLayout>
 

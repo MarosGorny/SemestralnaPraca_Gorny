@@ -13,6 +13,4 @@ class LogListApplication : Application() {
     // rather than when the application starts
     val database : TrainingLogRowDatabase by lazy { TrainingLogRowDatabase.getDatabase(this) }
     val databaseAchievements : AchievementDatabase by lazy { AchievementDatabase.getDatabase(this) }
-
-
 }

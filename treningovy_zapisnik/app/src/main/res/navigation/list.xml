@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/trainingLogListFragment"
         android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.TrainingLogList"
-        android:label="Workout lits"
+        android:label="Workout list"
         tools:layout="@layout/fragment_traininglog_list" >
         <action
             android:id="@+id/action_mainFragment_to_trainingLogItem"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/addTrainingLog"
         android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogAdd.AddTrainingLog"
-        android:label="AddTrainingLog"
+        android:label="Workout"
         tools:layout="@layout/fragment_add_training_log" >
         <action
             android:id="@+id/action_addTrainingLog_to_trainingLogList"
@@ -39,7 +39,7 @@
     <fragment
         android:id="@+id/trainingLogItemDetailFragment"
         android:name="com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetail"
-        android:label="Training log detail"
+        android:label="Workout detail"
         tools:layout="@layout/fragment_training_log_detail" >
         <action
             android:id="@+id/action_trainingLogItem_to_addTrainingLog"

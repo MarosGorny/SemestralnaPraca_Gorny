@@ -3,13 +3,13 @@
 <item
         android:id="@+id/list"
         android:icon="@drawable/ic_list"
-        android:contentDescription="List"
-        android:title="Leaderboard" />
+        android:contentDescription="@string/list"
+        android:title="@string/workouts" />
 
     <item
         android:id="@+id/achievement"
-        android:icon="@drawable/ic_feedback"
-        android:contentDescription="Achievements"
-        android:title="Achievements" />
+        android:icon="@drawable/achievement"
+        android:contentDescription="@string/achievements"
+        android:title="@string/achievements" />
 
 </menu>

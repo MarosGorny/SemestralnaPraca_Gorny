@@ -18,9 +18,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i(R.drawable.run.toString(),"RUUUN")
-        Log.i(R.drawable.bike.toString(),"BIKE")
-        Log.i(R.drawable.swim.toString(),"SWIM")
+
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host_container
         ) as NavHostFragment
@@ -40,6 +38,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
-
     }
 }

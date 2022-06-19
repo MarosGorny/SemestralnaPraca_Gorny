@@ -25,13 +25,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     // Cache all items form the database using LiveData.
     val allTrainingLogs: LiveData<List<TrainingLogRow>> = trainingLogRowDao.getItems().asLiveData()
 
-    /**
-     * Returns true if distance is empty, false otherwise.
-     */
-    fun isDistanceEmpty(trainingLogRow: TrainingLogRow): Boolean {
-        return trainingLogRow.distance.isNaN()
-    }
-
 
     /**
      * Updates an existing TrainingLogRow in the database.
@@ -64,7 +57,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     /**
      * Inserts the new TrainingLogRow into database.
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     fun addNewTrainingLogRow(
                                      logTypeTitle:String,
                                      dateOfLog:String,
@@ -126,10 +118,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
             return trainingLogRowDao.getDistance(logType).asLiveData()
     }
 
-    fun sumCompletedAchievements(): LiveData<Int> {
-        return achievementDao.sumCompletedAchievement().asLiveData()
-    }
-
     fun setAchievementDistance(logType: String, newDistance:Double) {
         viewModelScope.launch {
             achievementDao.setDistanceOfType(logType,newDistance)
@@ -153,7 +141,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
      * Returns an instance of the TrainingLogRow entity class with the item info entered by the user.
      * This will be used to add a new entry to the TrainingLogRow database.
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getNewTrainingLogEntry(logType: String, date: String, time: String, duration: String, distance:Double): TrainingLogRow {
         var fourthColumnTitle:String = "empty"
         var fourthColumnStats:String  = "empty"
@@ -165,15 +152,15 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
             newTime = getCurrentTime()
 
         when(logType) {
-            "Run" -> {
+            RUN -> {
                 fourthColumnTitle = getTempoPostFix(logType)
                 fourthColumnStats = calculateRunPace(distance,duration)
             }
-            "Bike" -> {
+            BIKE -> {
                 fourthColumnTitle = getTempoPostFix(logType)
                 fourthColumnStats = calculateKilometerPerHour(distance,duration)
             }
-            "Swim" -> {
+            SWIM -> {
                 fourthColumnTitle = getTempoPostFix(logType)
                 fourthColumnStats = calculateSwimPace100m(distance,duration)
             }

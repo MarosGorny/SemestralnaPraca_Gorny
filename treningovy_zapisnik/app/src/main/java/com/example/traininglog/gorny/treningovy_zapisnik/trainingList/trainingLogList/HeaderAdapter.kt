@@ -35,8 +35,8 @@ class HeaderAdapter: RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
         return 1
     }
 
-    fun updateTrainingLogCount(updatedTraingLogCoutn: Int) {
-        trainingLogsCount = updatedTraingLogCoutn
+    fun updateTrainingLogCount(updatedTrainingLogCount: Int) {
+        trainingLogsCount = updatedTrainingLogCount
         //Notifies the attached observers that the underlying data has been changed and any View reflecting the data set should refresh itself.
         notifyDataSetChanged()
     }

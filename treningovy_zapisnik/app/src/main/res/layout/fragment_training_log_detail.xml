@@ -62,8 +62,7 @@
             android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/duration_title_detail"
             app:layout_constraintTop_toBottomOf="@+id/distance_detail"
-            tools:text="23:23:23"
-            />
+            tools:text="23:23:23" />
 
         <TextView
             android:id="@+id/distance_detail"
@@ -128,8 +127,7 @@
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toEndOf="@+id/pace_detail"
             app:layout_constraintTop_toBottomOf="@+id/duration_postfix_detail"
-            tools:text="min/km"
-            />
+            tools:text="min/km" />
 
         <TextView
             android:id="@+id/pace_detail"
@@ -141,8 +139,7 @@
             android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/pace_title_detail"
             app:layout_constraintTop_toBottomOf="@+id/time_detail"
-            tools:text="23:23:23"
-            />
+            tools:text="23:23:23" />
 
         <TextView
             android:id="@+id/pace_title_detail"
