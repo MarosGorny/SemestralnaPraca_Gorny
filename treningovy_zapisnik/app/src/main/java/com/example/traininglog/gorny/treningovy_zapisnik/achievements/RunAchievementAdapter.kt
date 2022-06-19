@@ -2,26 +2,27 @@ package com.example.traininglog.gorny.treningovy_zapisnik.achievements
 
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.AchievementItemBinding
-import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentRunAchievementBinding
 
-class RunAchievementAdapter() :
-    //If on click, add this to parameter -> private val onClick: (AchievementRow) -> Unit
+
+/**
+ * RunAchievementAdapter pre list achievementov
+ */
+class RunAchievementAdapter :
     ListAdapter<AchievementRow, RunAchievementAdapter.RunAchievementViewHolder>(
         RunAchievementDiffCallback
     ) {
 
-    /* Creates and inflates view and return RunAchievementViewHolder */
+    /**
+     * Vytvori a inflante view a nasledne vrati RunAchievementViewHolder
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -33,25 +34,25 @@ class RunAchievementAdapter() :
         )
     }
 
-    /* Gets current achievement and uses it to bind view. */
+    /**
+     * Vyberie aktualny achievement a nabinduje view
+     */
     override fun onBindViewHolder(holder: RunAchievementViewHolder, position: Int) {
         val runAchievement = getItem(position)
-
-        /* To future, if I want to do something on click
-        holder.itemView.setOnClickListener {
-            onClick(runAchievement)
-        }
-         */
 
         holder.bind(runAchievement)
     }
 
 
-
+    /**
+     * RunAchievementViewHolder si pamata view a informacie daneho achievementu z listu
+     */
     class RunAchievementViewHolder(private var binding: AchievementItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        /*Bind achievements stats*/
+        /**
+         * Nabindovanie daneho achievementu a zmena farby podla splnenia
+         */
         fun bind(achievementRow: AchievementRow) {
             if (achievementRow.completed)
                 binding.achievementLinearLayout.setBackgroundColor(Color.GREEN)

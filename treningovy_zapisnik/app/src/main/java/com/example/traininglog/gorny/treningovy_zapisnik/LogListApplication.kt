@@ -1,16 +1,16 @@
-package com.example.traininglog.gorny.treningovy_zapisnik.trainingList
+package com.example.traininglog.gorny.treningovy_zapisnik
 
-import android.app.Activity
+
 import android.app.Application
-import android.os.Bundle
-import android.util.Log
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementDatabase
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDatabase
 
 
+/**
+ * Zakladna trieda na udrziavane stavu aplikacie kde sa vytvoria databazy
+ * databazy sa vytvoria len ked su potrebne a nie ked sa aplikacia spusti
+ */
 class LogListApplication : Application() {
-    // Using by lazy so the database is only created when needed
-    // rather than when the application starts
     val database : TrainingLogRowDatabase by lazy { TrainingLogRowDatabase.getDatabase(this) }
     val databaseAchievements : AchievementDatabase by lazy { AchievementDatabase.getDatabase(this) }
 }

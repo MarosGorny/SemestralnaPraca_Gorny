@@ -1,24 +1,24 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
-import android.content.ClipData
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.TrainingLogItemBinding
 
 /**
- * [ListAdapter] implementation for the recyclerview.
+ * LogListAdapter pre list workoutov
  */
 class LogListAdapter(private val onItemClicked: (TrainingLogRow) -> Unit) :
     ListAdapter<TrainingLogRow, LogListAdapter.LogViewHolder>(DiffCallback) {
 
-    /* Creates and inflates view and return LogViewHolder */
+
+    /**
+     * Vytvori a inflantne view a nasledne vrati LogViewHolder
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
         return LogViewHolder(
             TrainingLogItemBinding.inflate(
@@ -27,7 +27,9 @@ class LogListAdapter(private val onItemClicked: (TrainingLogRow) -> Unit) :
         )
     }
 
-    /* Gets current TrainingLog and uses it to bind view. */
+    /**
+     * Vybere aktualny workout a nabinduje view
+     */
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val trainingLogRow = getItem(position)
         holder.itemView.setOnClickListener {
@@ -37,11 +39,16 @@ class LogListAdapter(private val onItemClicked: (TrainingLogRow) -> Unit) :
     }
 
 
-
+    /**
+     * LogViewHolder si pamata view a informacie daneho itemu z listu
+     */
     class LogViewHolder(private var binding: TrainingLogItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(trainingLogRow: TrainingLogRow) {
+        /**
+         * Nabindovanie daneho workoutu
+         */
+        fun bind(trainingLogRow: TrainingLogRow) {
                 binding.workoutType.text = trainingLogRow.logTypeTitle
                 binding.timeTitle.text = trainingLogRow.timeTitle
                 binding.distanceTitle.text = trainingLogRow.distanceMetricTitle

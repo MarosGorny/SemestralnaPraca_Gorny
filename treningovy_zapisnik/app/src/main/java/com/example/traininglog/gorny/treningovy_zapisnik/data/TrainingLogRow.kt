@@ -4,10 +4,10 @@ package com.example.traininglog.gorny.treningovy_zapisnik.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+
 
 /**
- * Entity data class represents a single row in the database.
+ * Data trieda ktora reprezentuje workout v databaze
  */
 @Entity
 data class TrainingLogRow(

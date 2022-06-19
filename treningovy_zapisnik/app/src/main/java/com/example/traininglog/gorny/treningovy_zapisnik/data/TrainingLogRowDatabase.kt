@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 /**
- * Database class with a singleton INSTANCE object.
+ * Databaza pre workouty
  */
 @Database(entities = [TrainingLogRow::class], version = 6, exportSchema = false)
 abstract class TrainingLogRowDatabase: RoomDatabase() {
@@ -27,7 +27,6 @@ abstract class TrainingLogRowDatabase: RoomDatabase() {
                     "log_database"
                 )
                     // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

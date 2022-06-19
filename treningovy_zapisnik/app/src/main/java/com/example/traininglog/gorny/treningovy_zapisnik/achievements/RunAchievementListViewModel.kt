@@ -2,14 +2,19 @@ package com.example.traininglog.gorny.treningovy_zapisnik.achievements
 
 import androidx.lifecycle.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.*
-import kotlinx.coroutines.launch
 
-class RunAchievementListViewModel(private val achievementDao: AchievementDao) : ViewModel() {
+/**
+ * View Model ktory uchovava odkaz na ulozisko vsetkych achievementov
+ */
+class RunAchievementListViewModel(achievementDao: AchievementDao) : ViewModel() {
 
     //Cache all items from the database using LiveData
     val allAchievements: LiveData<List<AchievementRow>> = achievementDao.getItems().asLiveData()
 
 }
+/**
+ * Factory class pre vytvorenie ViewModel instancie
+ */
 
 class RunAchievementListViewModelFactory(private val achievementDao: AchievementDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

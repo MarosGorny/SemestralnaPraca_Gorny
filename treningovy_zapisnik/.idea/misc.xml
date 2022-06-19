@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable-v24/ic_feedback.xml" value="0.2555" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable-v24/ic_home.xml" value="0.2125" />
+        <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable-v24/ic_list.xml" value="0.2555" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable/back.xml" value="0.147" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable/ic_edit.xml" value="0.182" />
+        <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2555" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout-land/fragment_add_training_log.xml" value="0.32798573975044565" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout-land/fragment_training_log_detail.xml" value="0.4" />
         <entry key="..\:/Skola/2Rocnik4rok/VAMZ/SemestralnaPraca_Gorny/treningovy_zapisnik/app/src/main/res/layout/achievement_item.xml" value="0.4112903225806452" />

@@ -1,10 +1,12 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.data
 
-import android.widget.ImageView
-import android.widget.LinearLayout
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Data trieda ktora reprezentuje achievement v databaze
+ */
 @Entity (tableName = "achievements")
 data class AchievementRow(
 

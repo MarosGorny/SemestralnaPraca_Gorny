@@ -1,27 +1,22 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail
 
-import android.content.ClipData
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTrainingLogDetailBinding
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
+import com.example.traininglog.gorny.treningovy_zapisnik.LogListApplication
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
- * [ItemDetailFragment] displays the details of the selected item.
+ * Ukaze detail vybraneho workoutu
  */
 class TrainingLogDetail : Fragment() {
     private val navigationArgs: TrainingLogDetailArgs by navArgs()
@@ -37,17 +32,19 @@ class TrainingLogDetail : Fragment() {
     private var _binding: FragmentTrainingLogDetailBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * Inflante view pre dany fragment
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentTrainingLogDetailBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     /**
-     * Binds views with the passed in item data.
+     * Nabinduje view s datami ktore ma dany workout
      */
     private fun bind(trainingLogRow: TrainingLogRow) {
         binding.apply {
@@ -78,7 +75,7 @@ class TrainingLogDetail : Fragment() {
     }
 
     /**
-     * Navigate to the Edit item screen.
+     * Presmeruje na fragment kde sa upravuje workout.
      */
     private fun editTrainigLog() {
         val action = TrainingLogDetailDirections.actionTrainingLogItemToAddTrainingLog(
@@ -89,7 +86,7 @@ class TrainingLogDetail : Fragment() {
     }
 
     /**
-     * Displays an alert dialog to get the user's confirmation before deleting the item.
+     * Ukaze okno na potvrdenie/odmietnutie vymazania daneho workoutu
      */
     private fun showConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -104,13 +101,17 @@ class TrainingLogDetail : Fragment() {
     }
 
     /**
-     * Deletes the current item and navigates to the list fragment.
+     * Vymaze dany workout a vrati sa spat na zoznam workoutov
      */
     private fun deleteTrainingLog() {
         viewModel.deleteItem(trainingLogRow)
         findNavController().navigateUp()
     }
 
+    /**
+     * Po vytvoreni fragmentu sa vytiahne z uloziska dany workout
+     * a ked sa zmenia observer aktualizuje hodnoty podla zmenenych dat
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.logId
@@ -125,7 +126,7 @@ class TrainingLogDetail : Fragment() {
     }
 
     /**
-     * Called when fragment is destroyed.
+     * Binding nastavi na null
      */
     override fun onDestroyView() {
         super.onDestroyView()

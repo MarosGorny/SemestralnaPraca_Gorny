@@ -5,7 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.TimePickerDialog
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.activityViewModels
@@ -23,14 +21,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentAddTrainingLogBinding
-import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
+import com.example.traininglog.gorny.treningovy_zapisnik.LogListApplication
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetailArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModelFactory
 
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 
 const val TYPE_OF_LOG = "typeOfLog"
@@ -41,7 +38,7 @@ const val MINUTE_OF_DURATION = "minuteOfDuration"
 const val SECOND_OF_DURATION = "secondOfDuration"
 
 /**
- * Fragment to add or update an item in the Inventory database.
+ * Fragment na pridavanie alebo aktualizovanie workoutov
  */
 class AddTrainingLog : Fragment() {
 
@@ -50,8 +47,7 @@ class AddTrainingLog : Fragment() {
     private val bikeNotificationID = 2
     private val swimNotificationID = 3
 
-    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
-    // to share the ViewModel across fragments.
+    // pomocout by activityViewModels mozem viewModel pouzivat v roznych fragmentoch
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
             (activity?.application as LogListApplication).database.trainingLogRowDao(),
@@ -61,24 +57,21 @@ class AddTrainingLog : Fragment() {
 
     private val navigationArgs: TrainingLogDetailArgs by navArgs()
 
-    lateinit var trainingLogRow: TrainingLogRow
+    private lateinit var trainingLogRow: TrainingLogRow
 
-    // Binding object instance corresponding to the fragment_add_item.xml layout
-    // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
-    // when the view hierarchy is attached to the fragment
     private var _binding: FragmentAddTrainingLogBinding? = null
     private val binding get() = _binding!!
 
+
+    /**
+     * Pri vytvoreni sa naplni layout pre tento fragment
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentAddTrainingLogBinding.inflate(inflater,container,false)
-        Log.i("onCreateView","")
         if (savedInstanceState != null) {
-            Log.i("onCreateViewIn","")
-            Log.i("TEXT-IN",binding.typeActivityTitle.text.toString())
             when(savedInstanceState.getString(TYPE_OF_LOG)) {
                 RUN -> binding.activityOptions.check(R.id.option_run)
                 BIKE -> binding.activityOptions.check(R.id.option_bike)
@@ -98,7 +91,7 @@ class AddTrainingLog : Fragment() {
     }
 
     /**
-     * Returns true if the EditText is not empty
+     * Vrati true ak je vzdialenost spravna
      */
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
@@ -107,7 +100,7 @@ class AddTrainingLog : Fragment() {
     }
 
     /**
-     * Binds views with the passed in TrainingLog information.
+     * Bindovanie view s datami z workoutu
      */
     private fun bind(trainingLogRow: TrainingLogRow) {
 
@@ -133,7 +126,7 @@ class AddTrainingLog : Fragment() {
     }
 
     /**
-     * Inserts the new Item into database and navigates up to list fragment.
+     * Vlozi novy item do databazy a vrati sa naspat na fragment s listom workoutov
      */
     private fun addNewTrainingLogRow() {
         if (isEntryValid()) {
@@ -157,7 +150,7 @@ class AddTrainingLog : Fragment() {
     }
 
     /**
-     * Updates an existing Item in the database and navigates up to list fragment.
+     * Aktualizuje workout v databaze a vrati sa naspat na fragment s listom workoutov
      */
     private fun updateTrainingLogRow() {
         if (isEntryValid()) {
@@ -187,6 +180,9 @@ class AddTrainingLog : Fragment() {
         }
     }
 
+    /**
+     * Funkcia ktora zavola TimePickerDialog a s nim si budem moct vybrat dany cas ktory sa nabinduje ako text pre button
+     */
     private fun setTime() {
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -197,6 +193,9 @@ class AddTrainingLog : Fragment() {
         TimePickerDialog(requireContext(), timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
+    /**
+     * Funkcia ktora zavola DAtePickerDialog a s nim si budem moct vybrat dany datum ktory sa nabinduje ako text pre button
+     */
     private fun setDate() {
         val cal = Calendar.getInstance()
         val dateSetListener = DatePickerDialog.OnDateSetListener { datePicker,year, monthOfYear, dayOfMonth ->
@@ -210,9 +209,9 @@ class AddTrainingLog : Fragment() {
 
     /**
      * Called when the view is created.
-     * The itemId Navigation argument determines the edit item  or add new item.
-     * If the itemId is positive, this method retrieves the information from the database and
-     * allows the user to update it.
+
+     * Metoda zavolana potom ako sa vytvorilo view a na zaklade id workoutu sa rozhodne ci,
+     * sa workout ide upravovat (vytiahne data z databazy), alebo vytvarat novy
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -236,8 +235,10 @@ class AddTrainingLog : Fragment() {
 
     }
 
+    /**
+     * Zmenenie nadpistu workoutu podla toho aky je zvoleny radio button
+     */
     private fun changeTitleTypeByRadioButton() {
-        //Sometimes can happen that it is changed in advance
         if (binding.optionBike.isChecked)
             binding.typeActivityTitle.text = "Bike"
         else if (binding.optionRun.isChecked)
@@ -245,15 +246,15 @@ class AddTrainingLog : Fragment() {
         else if (binding.optionSwim.isChecked)
             binding.typeActivityTitle.text = "Swim"
 
-        binding.optionRun.setOnClickListener() {
+        binding.optionRun.setOnClickListener {
             binding.typeActivityTitle.text = "Run"
         }
 
-        binding.optionBike.setOnClickListener() {
+        binding.optionBike.setOnClickListener {
             binding.typeActivityTitle.text = "Bike"
         }
 
-        binding.optionSwim.setOnClickListener() {
+        binding.optionSwim.setOnClickListener {
             binding.typeActivityTitle.text = "Swim"
         }
     }
@@ -262,7 +263,7 @@ class AddTrainingLog : Fragment() {
 
 
     /**
-     * Called before fragment is destroyed.
+     * Bindovanie nastavni na null a skryje klavesnicu
      */
     override fun onDestroyView() {
         super.onDestroyView()
@@ -273,6 +274,9 @@ class AddTrainingLog : Fragment() {
         _binding = null
     }
 
+    /**
+     * Metoda zavolana na ulozenie dat pred tym ako je aktivita zabita
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(TYPE_OF_LOG,binding.typeActivityTitle.text.toString())
@@ -283,20 +287,27 @@ class AddTrainingLog : Fragment() {
         outState.putInt(SECOND_OF_DURATION,binding.numberPickerSeconds.value)
     }
 
+    /**
+     * Vytvorenie kanalu pre notifikacie
+     */
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Notification title"
-            val descriptionText = "Notification Description"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelID,name,importance).apply {
-                description = descriptionText
-            }
-            val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+        val name = "Notification title"
+        val descriptionText = "Notification Description"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID,name,importance).apply {
+            description = descriptionText
         }
+        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+
     }
 
-
+    /**
+     * Zobrazenie notifikacie podla typu a splnenej vzdialenosti
+     *
+     * @param logType typ aktivity - String
+     * @param distance vzdialenost aktivity - Double
+     */
     private fun sendNotification(logType: String,distance:Double) {
         Log.i("SEND notification","Outer")
         when(logType) {
@@ -318,10 +329,15 @@ class AddTrainingLog : Fragment() {
         }
     }
 
+    /**
+     * Zobrazenie notifikacie podla typy
+     *
+     * @param logType typ aktivity - String
+     */
     private fun sendNotificationByType(logType:String) {
-        var title:String = "ERROR"
-        var description:String = "ERROR"
-        var notificationID:Int = 2
+        var title= "ERROR"
+        var description = "ERROR"
+        var notificationID = 2
         var icon:Int = R.drawable.bike
         Log.i("SEND notificationbytype","outer")
         when(logType) {

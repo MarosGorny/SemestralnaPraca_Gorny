@@ -8,8 +8,9 @@ import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
 import kotlinx.coroutines.launch
 
 
+
 /**
- * View Model to keep a reference to the Inventory repository and an up-to-date list of all items.
+ * View Model ktory uchovava odkaz na ulozisko vsetkych workoutov
  */
 class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val achievementDao: AchievementDao) : ViewModel() {
 
@@ -19,7 +20,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
 
 
     /**
-     * Updates an existing TrainingLogRow in the database.
+     * Aktualizuje existujuci workout v databaze
      */
     fun updateTrainingLogRow(
         id:Long,
@@ -38,7 +39,8 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     /**
-     * Launching a new coroutine to update an trainingLogRow in a non-blocking way
+     * Spusti korutinu na aktializaciuje workoutu bez blokovania
+     * @param trainingLogRow workout - TrainingLogRow
      */
     private fun updateTrainingLogRow(trainingLogRow: TrainingLogRow) {
         viewModelScope.launch {
@@ -47,7 +49,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     /**
-     * Inserts the new TrainingLogRow into database.
+     * Vlozi novy workout do databazy
      */
     fun addNewTrainingLogRow(
                                      logTypeTitle:String,
@@ -62,7 +64,9 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     /**
-     * Launching a new coroutine to insert a trainingLogRow in a non-blocking way
+     * Spusti korutinu na vlozenie workoutu bez blokovania
+     *
+     * @param trainingLogRow workout - TrainingLogRow
      */
     private fun insertItem(trainingLogRow: TrainingLogRow) {
         val logType:String = trainingLogRow.logTypeTitle
@@ -76,7 +80,9 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     /**
-     * Launching a new coroutine to delete a trainingLogRow in a non-blocking way
+     * Spusti korutinu na vymazanie workoutu bez blokovania
+     *
+     * @param trainingLogRow workout - TrainingLogRow
      */
     fun deleteItem(trainingLogRow: TrainingLogRow) {
         val logType:String = trainingLogRow.logTypeTitle
@@ -89,7 +95,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     /**
-     * Launching a new coroutine to delete all trainingLogsRows in a non-blocking way
+     * Spusti korutinu na vymazanie vsetkych workoutov bez blokovania
      */
     fun deleteAllItems() {
         viewModelScope.launch {
@@ -100,12 +106,24 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
 
 
     /**
-     * Retrieve a trainingLogRow from the repository.
+     * Ziskanie workoutu z uloziska
+     *
+     * @param id id workoutu - Long
+     *
+     * @return LiveData<TrainingLogRow>
      */
     fun retrieveItem(id: Long): LiveData<TrainingLogRow> {
         return trainingLogRowDao.getItem(id).asLiveData()
     }
 
+
+    /**
+     * Ziskanie vzdialenosti workoutu podla typu z uloziska
+     *
+     * @param logType typ workoutu - String
+     *
+     * @return LiveData<Double>
+     */
     fun getDistance(logType: String): LiveData<Double> {
             return trainingLogRowDao.getDistance(logType).asLiveData()
     }
@@ -118,7 +136,10 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     }
 
     /**
-     * Returns true if the Distance EditText is not empty
+     * Vrati true ak vzdialenost v EditTexte nie je prazdna alebo nulova
+     *
+     * @param distance vzdialenost workout v tvar hh:mm:ss - String
+     * @return TRUE/FALSE - Boolean
      */
     fun isEntryValid(distance: String): Boolean {
         if (distance.isBlank() ) {
@@ -132,10 +153,15 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     /**
      * Returns an instance of the TrainingLogRow entity class with the item info entered by the user.
      * This will be used to add a new entry to the TrainingLogRow database.
+     *
+     * Vrati objekt workoutu ktory ma informacie ktore zadal pouzivatel
+     * Tato metoda bude pouzita na vlozenie workoutu do databazy
+     *
+     * @return novy workout - TraningLogRow
      */
     private fun getNewTrainingLogEntry(logType: String, date: String, time: String, duration: String, distance:Double): TrainingLogRow {
-        var fourthColumnTitle:String = "empty"
-        var fourthColumnStats:String  = "empty"
+        var fourthColumnTitle = "empty"
+        var fourthColumnStats = "empty"
         var newDate:String = date
         var newTime:String = time
         if (date.uppercase() == "SELECT DATE")
@@ -172,8 +198,10 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
 
 
     /**
-     * Called to update an existing entry in the TrainingLog database.
-     * Returns an instance of the TrainingLogRow entity class with the item info updated by the user.
+     * Aktualizuje existujuci workout v databaze na zaklade zadanych parametrov
+     * a vrati novy objekt workoutu s aktualizovanymi datami
+     *
+     * @return aktualizovany workout - TrainingLogRow
      */
     private fun getUpdatedItemEntry(
         trainingLogId:Long,
@@ -203,7 +231,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
 }
 
 /**
- * Factory class to instantiate the ViewModel instance.
+ * Factory class pre vytvorenie ViewModel instancie
  */
 class LogViewModelFactory(private val trainingLogRowDao: TrainingLogRowDao, private val achievementDao: AchievementDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
