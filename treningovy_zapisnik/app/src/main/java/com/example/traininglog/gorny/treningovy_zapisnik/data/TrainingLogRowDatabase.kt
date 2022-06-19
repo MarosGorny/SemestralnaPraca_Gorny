@@ -29,7 +29,6 @@ abstract class TrainingLogRowDatabase: RoomDatabase() {
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
-                    //.allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 // return instance

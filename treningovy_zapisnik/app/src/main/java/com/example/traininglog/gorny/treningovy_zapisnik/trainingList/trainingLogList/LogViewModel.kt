@@ -1,18 +1,10 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
-import android.content.Context
-import android.os.Build
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.traininglog.gorny.treningovy_zapisnik.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.AchievementDao
-import com.example.traininglog.gorny.treningovy_zapisnik.data.DataSource
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRowDao
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 

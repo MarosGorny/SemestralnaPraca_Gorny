@@ -30,7 +30,6 @@ abstract class AchievementDatabase: RoomDatabase() {
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .createFromAsset("database/achievements.db")
-                    //.allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 // return instance

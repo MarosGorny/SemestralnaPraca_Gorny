@@ -214,18 +214,14 @@ class AddTrainingLog : Fragment() {
      * If the itemId is positive, this method retrieves the information from the database and
      * allows the user to update it.
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val id = navigationArgs.logId
 
-
-
         if (id > 0) {
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {selectedTrainingLog ->
                 trainingLogRow = selectedTrainingLog
-                Log.i("onViewCreatedObserver",trainingLogRow.logTypeTitle)
                 bind(trainingLogRow)
         }
         } else {
@@ -233,8 +229,6 @@ class AddTrainingLog : Fragment() {
                 addNewTrainingLogRow()
             }
         }
-
-
 
         changeTitleTypeByRadioButton()
         binding.timeButton.setOnClickListener{ setTime() }
@@ -271,7 +265,6 @@ class AddTrainingLog : Fragment() {
      * Called before fragment is destroyed.
      */
     override fun onDestroyView() {
-        Log.i("onDestroyView","")
         super.onDestroyView()
         // Hide keyboard.
         val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as
@@ -281,7 +274,6 @@ class AddTrainingLog : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        Log.i("onSaveInstanceState","")
         super.onSaveInstanceState(outState)
         outState.putString(TYPE_OF_LOG,binding.typeActivityTitle.text.toString())
         outState.putString(DATE_OF_LOG,binding.dateButton.text.toString())
@@ -289,11 +281,8 @@ class AddTrainingLog : Fragment() {
         outState.putInt(HOUR_OF_DURATION,binding.numberPickerHour.value)
         outState.putInt(MINUTE_OF_DURATION,binding.numberPickerMinutes.value)
         outState.putInt(SECOND_OF_DURATION,binding.numberPickerSeconds.value)
-
-        Log.i("TEXT-OUT",binding.typeActivityTitle.text.toString())
     }
 
-    //https://developer.android.com/training/notify-user/channels
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notification title"

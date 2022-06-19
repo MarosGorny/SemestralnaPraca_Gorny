@@ -1,6 +1,5 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.data
 
-import android.icu.text.UnicodeSet.CASE
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
