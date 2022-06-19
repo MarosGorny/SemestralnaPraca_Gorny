@@ -73,7 +73,7 @@ class TrainingLogDetail : Fragment() {
             }
 
             removeButton.setOnClickListener{showConfirmationDialog() }
-            editTrainigLog.setOnClickListener { editTrainigLog() }
+            editTrainingLog.setOnClickListener { editTrainigLog() }
         }
     }
 

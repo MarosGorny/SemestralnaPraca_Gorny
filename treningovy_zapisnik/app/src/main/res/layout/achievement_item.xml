@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:contentDescription="image of type"
+            android:contentDescription="@string/image_of_type"
             android:maxWidth="42dp"
             android:maxHeight="42dp"
             android:scaleType="fitCenter"
@@ -45,7 +45,7 @@
             android:textAlignment="viewEnd" />
 
         <TextView
-            android:id="@+id/dividor"
+            android:id="@+id/dividorCurMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

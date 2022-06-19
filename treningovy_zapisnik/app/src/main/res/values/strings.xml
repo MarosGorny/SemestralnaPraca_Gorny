@@ -3,4 +3,27 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_fragment_title">Add Training Log</string>
+    <string name="image_of_type">Image of type</string>
+    <string name="hour_number_picker">Hour number picker</string>
+    <string name="minute_number_picker">Minute number picker</string>
+    <string name="second_number_picker">Second number picker</string>
+    <string name="run">Run</string>
+    <string name="bike">Bike</string>
+    <string name="swim">Swim</string>
+    <string name="double_dot">:</string>
+    <string name="hh_mm_ss">hh:mm:ss</string>
+    <string name="done">Done</string>
+    <string name="duration">Duration:</string>
+    <string name="distance_of_your_workout">distance of your workout</string>
+    <string name="distance">Distance:</string>
+    <string name="select_date">Select Date</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="select_time">Select Time</string>
+    <string name="type">Type:</string>
+    <string name="remove_this_workout">Remove this workout</string>
+    <string name="edit_training_workout">Edit training workout</string>
+    <string name="tempo">Tempo:</string>
+    <string name="delete_workout">delete workout</string>
+
 </resources>

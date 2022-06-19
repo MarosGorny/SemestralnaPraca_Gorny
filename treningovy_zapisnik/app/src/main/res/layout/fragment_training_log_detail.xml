@@ -23,15 +23,15 @@
         android:layout_height="64dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="483dp"
-        android:layout_marginEnd="156dp"
+        android:layout_marginEnd="77dp"
         android:layout_marginBottom="224dp"
-        android:text="Remove this log" />
+        android:layout_toStartOf="@+id/edit_training_log"
+        android:text="@string/remove_this_workout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit_trainig_log"
+        android:id="@+id/edit_training_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -39,7 +39,7 @@
         android:layout_marginTop="487dp"
         android:layout_marginEnd="23dp"
         android:clickable="true"
-        android:contentDescription="Edit training log"
+        android:contentDescription="@string/edit_training_workout"
         android:src="@drawable/ic_edit" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +59,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:gravity="center|bottom"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/duration_title_detail"
             app:layout_constraintTop_toBottomOf="@+id/distance_detail"
             tools:text="23:23:23"
@@ -72,7 +72,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:gravity="center|bottom"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/distance_title_detail"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="23:23:23" />
@@ -83,9 +83,9 @@
             android:layout_height="64dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:gravity="right|bottom"
-            android:text="Distance:"
-            android:textSize="30dp"
+            android:gravity="start|bottom"
+            android:text="@string/distance"
+            android:textSize="30sp"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -95,8 +95,8 @@
             android:layout_width="92dp"
             android:layout_height="32dp"
             android:layout_marginTop="40dp"
-            android:gravity="left|bottom"
-            android:textSize="12dp"
+            android:gravity="start|bottom"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toEndOf="@+id/distance_detail"
@@ -108,9 +108,9 @@
             android:layout_width="92dp"
             android:layout_height="32dp"
             android:layout_marginTop="56dp"
-            android:gravity="left|bottom"
-            android:text="hh:mm:ss"
-            android:textSize="12dp"
+            android:gravity="start|bottom"
+            android:text="@string/hh_mm_ss"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toEndOf="@+id/time_detail"
@@ -122,8 +122,8 @@
             android:layout_width="92dp"
             android:layout_height="32dp"
             android:layout_marginTop="48dp"
-            android:gravity="left|bottom"
-            android:textSize="12dp"
+            android:gravity="start|bottom"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toEndOf="@+id/pace_detail"
@@ -138,7 +138,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:gravity="center|bottom"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/pace_title_detail"
             app:layout_constraintTop_toBottomOf="@+id/time_detail"
             tools:text="23:23:23"
@@ -151,8 +151,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="end|bottom"
-            android:text="Tempo:"
-            android:textSize="30dp"
+            android:text="@string/tempo"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/duration_title_detail" />
 
@@ -163,8 +163,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="end|bottom"
-            android:text="Duration:"
-            android:textSize="30dp"
+            android:text="@string/duration"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/distance_title_detail" />
 

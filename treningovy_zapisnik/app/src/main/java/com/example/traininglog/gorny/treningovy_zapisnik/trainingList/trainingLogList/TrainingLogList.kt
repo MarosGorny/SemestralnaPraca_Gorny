@@ -106,7 +106,7 @@ class TrainingLogList : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.floatingButtondeleted.setOnClickListener {
+        binding.floatingButtonDelete.setOnClickListener {
             showConfirmationDialog()
         }
 

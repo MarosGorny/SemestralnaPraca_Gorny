@@ -27,7 +27,7 @@
             android:layout_weight="1.5"
             android:autoSizeTextType="uniform"
             android:gravity="center|start"
-            android:text="Type"
+            android:text="@string/type"
             android:textAppearance="?attr/textAppearanceHeadline4" />
 
         <RadioGroup
@@ -45,21 +45,22 @@
                 android:id="@+id/option_run"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Run"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:text="@string/run"
+                android:textAppearance="?attr/textAppearanceBody1"
+                tools:ignore="TextContrastCheck" />
 
             <RadioButton
                 android:id="@+id/option_bike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bike"
+                android:text="@string/bike"
                 android:textAppearance="?attr/textAppearanceBody1" />
 
             <RadioButton
                 android:id="@+id/option_swim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Swim"
+                android:text="@string/swim"
                 android:textAppearance="?attr/textAppearanceBody1" />
         </RadioGroup>
     </LinearLayout>
@@ -80,7 +81,7 @@
             android:layout_weight="1.5"
             android:autoSizeTextType="uniform"
             android:gravity="center|start"
-            android:text="Time"
+            android:text="@string/time"
             android:textAppearance="?attr/textAppearanceHeadline4" />
 
         <Button
@@ -89,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Select Time"
+            android:text="@string/select_time"
             android:textAppearance="?attr/textAppearanceBody1" />
 
 
@@ -111,7 +112,7 @@
             android:layout_weight="1.5"
             android:autoSizeTextType="uniform"
             android:gravity="center|start"
-            android:text="Date"
+            android:text="@string/date"
             android:textAppearance="?attr/textAppearanceHeadline4" />
 
         <Button
@@ -120,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Select Date"
+            android:text="@string/select_date"
             android:textAppearance="?attr/textAppearanceBody1" />
 
 
@@ -142,7 +143,7 @@
             android:layout_weight="1.5"
             android:autoSizeTextType="uniform"
             android:gravity="center|start"
-            android:text="Distance"
+            android:text="@string/distance"
             android:textAppearance="?attr/textAppearanceHeadline4" />
 
         <EditText
@@ -151,10 +152,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:autoSizeTextType="uniform"
+            android:importantForAutofill="no"
             android:gravity="center|bottom"
-            android:hint="distance of your workout"
+            android:hint="@string/distance_of_your_workout"
             android:inputType="numberDecimal"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 
@@ -174,8 +177,8 @@
             android:layout_weight="1.5"
             android:autoSizeTextType="uniform"
             android:gravity="center|start"
-            android:hint="hh:mm:ss"
-            android:text="Duration"
+            android:hint="@string/hh_mm_ss"
+            android:text="@string/duration"
             android:textAppearance="?attr/textAppearanceHeadline4" />
 
         <LinearLayout
@@ -198,7 +201,8 @@
                 app:np_value="0"
                 app:np_wheelItemCount="1"
                 app:np_width="64dp"
-                app:np_wrapSelectorWheel="false">
+                app:np_wrapSelectorWheel="false"
+                android:contentDescription="@string/hour_number_picker">
 
             </com.shawnlin.numberpicker.NumberPicker>
 
@@ -208,7 +212,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text=":"
+                android:text="@string/double_dot"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -226,7 +230,8 @@
                 app:np_value="0"
                 app:np_wheelItemCount="1"
                 app:np_width="64dp"
-                app:np_wrapSelectorWheel="false" />
+                app:np_wrapSelectorWheel="false"
+                android:contentDescription="@string/minute_number_picker"/>
 
             <TextView
                 android:id="@+id/distance_minute_info"
@@ -234,7 +239,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text=":"
+                android:text="@string/double_dot"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -252,7 +257,8 @@
                 app:np_value="0"
                 app:np_wheelItemCount="1"
                 app:np_width="64dp"
-                app:np_wrapSelectorWheel="false" />
+                app:np_wrapSelectorWheel="false"
+                android:contentDescription="@string/second_number_picker"/>
 
             <TextView
                 android:id="@+id/distance_second_info"
@@ -261,7 +267,7 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="start|bottom"
                 android:maxLines="1"
-                android:text="hh:mm:ss"
+                android:text="@string/hh_mm_ss"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -277,7 +283,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginHorizontal="100dp"
         android:paddingTop="20dp"
-        android:text="Done"
+        android:text="@string/done"
         android:textAppearance="?attr/textAppearanceButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

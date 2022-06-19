@@ -29,10 +29,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Swim"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:gravity="center"/>
+                android:gravity="center"
+                tools:text = "@string/bike"/>
 
             <TextView
                 android:id="@+id/dateOfWorkout"
@@ -40,9 +40,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="@dimen/item_info_half"
-                android:text="TextView"
                 android:textSize="16sp"
-                android:gravity="center|bottom"/>
+                android:gravity="center|bottom"
+                tools:text = "13.3.2022"/>
 
             <TextView
                 android:id="@+id/startTimeOfWorkout"
@@ -50,9 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="@dimen/item_info_half"
-                android:text="TextView"
                 android:textSize="16sp"
-                android:gravity="center|top"/>
+                android:gravity="center|top"
+                tools:text = "14:44"/>
 
         </LinearLayout>
 
@@ -75,10 +75,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Duration"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:gravity="center"/>
+                android:gravity="center"
+                tools:text = "Time"/>
 
             <TextView
                 android:id="@+id/timeSpendWorkout"
@@ -86,9 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="@dimen/item_info_full"
-                android:text="TextView"
                 android:gravity="center_horizontal|center_vertical"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                tools:text = "23:23:23"/>
         </LinearLayout>
         <View
             android:layout_width="2dp"
@@ -106,10 +106,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Distance"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:gravity="center"/>
+                android:gravity="center"
+                tools:text = "Distance"/>
 
             <TextView
                 android:id="@+id/distanceStats"
@@ -117,9 +117,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="@dimen/item_info_full"
-                android:text="TextView"
                 android:gravity="center_horizontal|center_vertical"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                tools:text = "24.4"/>
         </LinearLayout>
         <View
             android:layout_width="2dp"
@@ -138,10 +138,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Duration"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:gravity="center"
+                tools:text = "km/h"
                 />
 
             <TextView
@@ -150,9 +150,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="@dimen/item_info_full"
-                android:text="TextView"
                 android:gravity="center_horizontal|center_vertical"
                 android:textSize="16sp"
+                tools:text = "24:4"
                 />
         </LinearLayout>
     </LinearLayout>
