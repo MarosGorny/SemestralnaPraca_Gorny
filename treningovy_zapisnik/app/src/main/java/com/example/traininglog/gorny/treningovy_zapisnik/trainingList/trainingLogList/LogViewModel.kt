@@ -2,6 +2,7 @@ package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingL
 
 import android.content.Context
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.traininglog.gorny.treningovy_zapisnik.*
@@ -74,7 +75,6 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
         val newTrainingLogRow = getNewTrainingLogEntry(logTypeTitle,dateOfLog,timeOfLog,durationOfLog,
             distance)
         insertItem(newTrainingLogRow)
-        //dataSource.addDistance(newTrainingLogRow.logTypeTitle,distance)
     }
 
     /**
@@ -95,8 +95,12 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
      * Launching a new coroutine to delete a trainingLogRow in a non-blocking way
      */
     fun deleteItem(trainingLogRow: TrainingLogRow) {
+        val logType:String = trainingLogRow.logTypeTitle
+        val distance:Double = -trainingLogRow.distance
         viewModelScope.launch {
             trainingLogRowDao.delete(trainingLogRow)
+            achievementDao.updateCurrent("Duration",logType,distance)
+            achievementDao.updateCompletedStatus()
         }
     }
 
@@ -106,6 +110,7 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
     fun deleteAllItems() {
         viewModelScope.launch {
             trainingLogRowDao.deleteAllItems()
+            achievementDao.resetCurrent()
         }
     }
 
@@ -157,15 +162,15 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
 
         when(logType) {
             "Run" -> {
-                fourthColumnTitle = "min/km"
+                fourthColumnTitle = getTempoPostFix(logType)
                 fourthColumnStats = calculateRunPace(distance,duration)
             }
             "Bike" -> {
-                fourthColumnTitle = "km/h"
+                fourthColumnTitle = getTempoPostFix(logType)
                 fourthColumnStats = calculateKilometerPerHour(distance,duration)
             }
             "Swim" -> {
-                fourthColumnTitle = "min/100m"
+                fourthColumnTitle = getTempoPostFix(logType)
                 fourthColumnStats = calculateSwimPace100m(distance,duration)
             }
         }

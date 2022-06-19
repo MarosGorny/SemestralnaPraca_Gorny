@@ -16,11 +16,9 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.traininglog.gorny.treningovy_zapisnik.R
+import com.example.traininglog.gorny.treningovy_zapisnik.*
 import com.example.traininglog.gorny.treningovy_zapisnik.data.TrainingLogRow
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentAddTrainingLogBinding
-import com.example.traininglog.gorny.treningovy_zapisnik.parseDurationNumbersToString
-import com.example.traininglog.gorny.treningovy_zapisnik.parseDurationStringToHashMap
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogDetail.TrainingLogDetailArgs
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList.LogViewModel
@@ -155,19 +153,28 @@ class AddTrainingLog : Fragment() {
      */
     private fun updateTrainingLogRow() {
         if (isEntryValid()) {
+            val logType = this.binding.typeActivityTitle.text.toString()
+            val distance = this.binding.distanceInputNumber.text.toString().toDouble()
+            val duration = parseDurationNumbersToString(
+                                this.binding.numberPickerHour.value,
+                                this.binding.numberPickerMinutes.value,
+                                this.binding.numberPickerSeconds.value)
             viewModel.updateTrainingLogRow(
                 this.navigationArgs.logId,
-                this.binding.typeActivityTitle.text.toString(),
+                logType,
                 this.binding.dateButton.text.toString(),
                 this.binding.timeButton.text.toString(),
-                parseDurationNumbersToString(
-                    this.binding.numberPickerHour.value,
-                    this.binding.numberPickerMinutes.value,
-                    this.binding.numberPickerSeconds.value),
-            this.binding.distanceActivityTitle.text.toString(),
-            this.binding.distanceInputNumber.text.toString().toDouble(),
-            "Treba nastait",
-            "Treba nastavit")
+                duration,
+                this.binding.distanceActivityTitle.text.toString(),
+                distance,
+                //TODO tu to treba vypocitat
+                getTempoPostFix(logType),
+                getPaceOfType(logType,distance,duration)
+            )
+            val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
+            findNavController().navigate(action)
+        } else {
+            Toast.makeText(requireContext(),"Distance is required!",Toast.LENGTH_SHORT).show()
         }
     }
 

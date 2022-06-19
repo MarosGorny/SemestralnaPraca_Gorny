@@ -92,4 +92,21 @@ fun getCurrentTime():String {
     return formattedDate
 }
 
+fun getTempoPostFix(logType:String):String  {
+    when(logType) {
+        "Run" -> return "min/km"
+        "Bike" -> return "km/h"
+        "Swim" -> return "min/100m"
+    }
+    return "ERROR"
+}
+
+fun getPaceOfType(logType: String,distance:Double,duration:String):String {
+    when(logType) {
+        "Run" -> return calculateRunPace(distance,duration)
+        "Bike" -> return calculateKilometerPerHour(distance,duration)
+        "Swim" -> return calculateSwimPace100m(distance,duration)
+    }
+    return "ERROR"
+}
 

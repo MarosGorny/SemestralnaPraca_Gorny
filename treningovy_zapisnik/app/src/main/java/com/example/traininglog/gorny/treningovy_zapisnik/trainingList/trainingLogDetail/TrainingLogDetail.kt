@@ -54,6 +54,23 @@ class TrainingLogDetail : Fragment() {
             titleDetail.text = trainingLogRow.logTypeTitle
             distanceDetail.text = trainingLogRow.distance.toString()
             timeDetail.text = trainingLogRow.durationOfLog
+            paceDetail.text = trainingLogRow.fourthColumnMinPKm
+            durationPostfixDetail.text = "hh:mm:ss"
+
+            when(trainingLogRow.logTypeTitle) {
+                "Run" -> {
+                    distancePostfixDetail.text = "km"
+                    pacePostfixDetail.text = "min/km"
+                }
+                "Bike" -> {
+                    distancePostfixDetail.text = "km"
+                    pacePostfixDetail.text = "km/h"
+                }
+                "Swim" -> {
+                    distancePostfixDetail.text = "m"
+                    pacePostfixDetail.text = "min/100m"
+                }
+            }
 
             removeButton.setOnClickListener{showConfirmationDialog() }
             editTrainigLog.setOnClickListener { editTrainigLog() }
@@ -65,7 +82,7 @@ class TrainingLogDetail : Fragment() {
      */
     private fun editTrainigLog() {
         val action = TrainingLogDetailDirections.actionTrainingLogItemToAddTrainingLog(
-            "Edit trainig log",
+            "Edit training log",
             trainingLogRow.id
         )
         this.findNavController().navigate(action)

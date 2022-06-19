@@ -16,6 +16,9 @@ interface AchievementDao {
     @Query("SELECT * from achievements where current >= max")
     fun getCompleted(): Flow<List<AchievementRow>>
 
+    @Query("UPDATE achievements SET current = 0.0")
+    suspend fun resetCurrent()
+
     @Query("UPDATE achievements " +
             "SET current = current + :addedValue " +
             "WHERE achType = :achType " +
