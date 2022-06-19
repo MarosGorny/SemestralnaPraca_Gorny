@@ -1,16 +1,23 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogList
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
+import com.example.traininglog.gorny.treningovy_zapisnik.R
 import com.example.traininglog.gorny.treningovy_zapisnik.databinding.FragmentTraininglogListBinding
 import com.example.traininglog.gorny.treningovy_zapisnik.trainingList.LogListApplication
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -21,6 +28,7 @@ import kotlin.math.log
  * Main fragment displaying details for all items in the database.
  */
 class TrainingLogList : Fragment() {
+
 
     private val viewModel: LogViewModel by activityViewModels {
         LogViewModelFactory(
@@ -80,27 +88,16 @@ class TrainingLogList : Fragment() {
         }
 
         val listOf = listOf("Run","Swim","Bike")
+
+
+
         for (logType in listOf) {
             viewModel.getDistance(logType).observe(this.viewLifecycleOwner) { totalDistance ->
                 setAchievementDistanceByType(logType,totalDistance?: 0.0)
             }
         }
 
-/*
-        viewModel.getDistance("Run").observe(this.viewLifecycleOwner) { totalDistance ->
-            setAchievementDistanceByType("Run",totalDistance?: 0.0)
-        }
 
-        viewModel.getDistance("Bike").observe(this.viewLifecycleOwner) { totalDistance ->
-            setAchievementDistanceByType("Bike",totalDistance?: 0.0)
-        }
-
-        viewModel.getDistance("Swim").observe(this.viewLifecycleOwner) { totalDistance ->
-            setAchievementDistanceByType("Swim",totalDistance?: 0.0)
-        }
-
-
- */
 
 
 
@@ -112,8 +109,6 @@ class TrainingLogList : Fragment() {
         binding.floatingButtondeleted.setOnClickListener {
             showConfirmationDialog()
         }
-
-
 
     }
 
@@ -150,6 +145,8 @@ class TrainingLogList : Fragment() {
             }
             .show()
     }
+
+
 
 
 

@@ -1,8 +1,11 @@
 package com.example.traininglog.gorny.treningovy_zapisnik.trainingList.trainingLogAdd
 
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +16,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -40,6 +47,9 @@ const val SECOND_OF_DURATION = "secondOfDuration"
  */
 class AddTrainingLog : Fragment() {
 
+    private val CHANNEL_ID = "chanel_id_66"
+    private val NOTIFICATION_ID = 66
+    private var achievementCompleted = 0
 
     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     // to share the ViewModel across fragments.
@@ -84,7 +94,7 @@ class AddTrainingLog : Fragment() {
 
 
         }
-
+        createNotificationChannel()
         return binding.root
 
     }
@@ -140,7 +150,9 @@ class AddTrainingLog : Fragment() {
                     binding.numberPickerSeconds.value),
                 binding.distanceInputNumber.text.toString().toDouble()
             )
-
+            if(binding.distanceInputNumber.text.toString().toDouble() >= 42.2) {
+                sendNotification()
+            }
             val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
             findNavController().navigate(action)
         } else {
@@ -167,10 +179,13 @@ class AddTrainingLog : Fragment() {
                 duration,
                 this.binding.distanceActivityTitle.text.toString(),
                 distance,
-                //TODO tu to treba vypocitat
                 getTempoPostFix(logType),
                 getPaceOfType(logType,distance,duration)
             )
+
+            if(distance >= 42.2) {
+                sendNotification()
+            }
             val action = AddTrainingLogDirections.actionAddTrainingLogToTrainingLogList()
             findNavController().navigate(action)
         } else {
@@ -207,14 +222,13 @@ class AddTrainingLog : Fragment() {
      */
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.i("onViewCreated","")
-        Log.i("onViewCreated",binding.typeActivityTitle.text.toString())
         super.onViewCreated(view, savedInstanceState)
 
-        Log.i("addAchiDistance", viewModel.getDistance("Run").value.toString())
         val id = navigationArgs.logId
+
+
+
         if (id > 0) {
-            //TODO tu sa meni radio button na Run, z nejakeho dovodu, alebo teda na default TYPE
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {selectedTrainingLog ->
                 trainingLogRow = selectedTrainingLog
                 Log.i("onViewCreatedObserver",trainingLogRow.logTypeTitle)
@@ -223,9 +237,10 @@ class AddTrainingLog : Fragment() {
         } else {
             binding.buttonDone.setOnClickListener {
                 addNewTrainingLogRow()
-
             }
         }
+
+
 
         changeTitleTypeByRadioButton()
         binding.timeButton.setOnClickListener{ setTime() }
@@ -255,6 +270,9 @@ class AddTrainingLog : Fragment() {
         }
     }
 
+
+
+
     /**
      * Called before fragment is destroyed.
      */
@@ -280,4 +298,30 @@ class AddTrainingLog : Fragment() {
 
         Log.i("TEXT-OUT",binding.typeActivityTitle.text.toString())
     }
+
+    //https://developer.android.com/training/notify-user/channels
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Notification title"
+            val descriptionText = "Notification Description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+                description = descriptionText
+            }
+            val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotification() {
+        val builder = NotificationCompat.Builder(requireContext(),CHANNEL_ID)
+            .setSmallIcon(R.drawable.bike)
+            .setContentTitle("Marathon distance done!")
+            .setContentText("Keep going and be like Emil Zatopek!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        with(NotificationManagerCompat.from(requireContext())) {
+            notify(NOTIFICATION_ID,builder.build())
+        }
+    }
+
 }

@@ -126,6 +126,10 @@ class LogViewModel(private val trainingLogRowDao: TrainingLogRowDao, private val
             return trainingLogRowDao.getDistance(logType).asLiveData()
     }
 
+    fun sumCompletedAchievements(): LiveData<Int> {
+        return achievementDao.sumCompletedAchievement().asLiveData()
+    }
+
     fun setAchievementDistance(logType: String, newDistance:Double) {
         viewModelScope.launch {
             achievementDao.setDistanceOfType(logType,newDistance)

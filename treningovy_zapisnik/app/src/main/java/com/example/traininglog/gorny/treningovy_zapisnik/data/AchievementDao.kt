@@ -35,6 +35,9 @@ interface AchievementDao {
             "WHERE logType =:logType ")
     suspend fun setDistanceOfType(logType: String, newDistance:Double)
 
+    @Query("SELECT SUM(completed) from achievements")
+    fun sumCompletedAchievement(): Flow<Int>
+
 
     // Specify the conflict strategy as IGNORE, when the user tries to add an
     // existing Item into the database Room ignores the conflict.
