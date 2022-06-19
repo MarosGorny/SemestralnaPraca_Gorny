@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,58 +8,56 @@
 
     <LinearLayout
         android:id="@+id/achievement_linear_layout"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/achievement_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:contentDescription="image of type"
             android:maxWidth="42dp"
             android:maxHeight="42dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@android:drawable/presence_online"
-            android:contentDescription="image of type"
-            />
+            app:srcCompat="@android:drawable/presence_online" />
 
         <TextView
             android:id="@+id/achievement_description"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:maxWidth="20dp"
+            android:layout_width="200dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="10"
             android:gravity="center|start"
-            android:layout_marginStart="10dp"
-            tools:text="Cycling total 1000 km"
-            android:text="" />
+            android:text=""
+            tools:text="Cycling total 1000 km" />
 
         <TextView
             android:id="@+id/achievement_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAlignment="viewEnd"
-            android:text="" />
+            android:text=""
+            android:textAlignment="viewEnd" />
 
         <TextView
             android:id="@+id/dividor"
-            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="/" />
+            android:text="/"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/achievement_max"
-            android:textAlignment="textStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text= "" />
+            android:text=""
+            android:textAlignment="textStart" />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
